@@ -1,0 +1,297 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 480">
+  <defs>
+    <linearGradient id="ls-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8edf5"/>
+      <stop offset="100%" stop-color="#d0d8e8"/>
+    </linearGradient>
+    <linearGradient id="ls-chassis" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2c3a52"/>
+      <stop offset="40%" stop-color="#1e2b40"/>
+      <stop offset="100%" stop-color="#111b2e"/>
+    </linearGradient>
+    <linearGradient id="ls-top" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3d5170"/>
+      <stop offset="100%" stop-color="#2c3a52"/>
+    </linearGradient>
+    <linearGradient id="ls-right" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#111b2e"/>
+      <stop offset="100%" stop-color="#0a1220"/>
+    </linearGradient>
+    <linearGradient id="ls-amber" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="ls-bay" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#141e30"/>
+      <stop offset="100%" stop-color="#0b1422"/>
+    </linearGradient>
+    <linearGradient id="ls-panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0e1928"/>
+      <stop offset="100%" stop-color="#080f1c"/>
+    </linearGradient>
+    <linearGradient id="ls-screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#041018"/>
+      <stop offset="100%" stop-color="#000a14"/>
+    </linearGradient>
+    <filter id="ls-shadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10"/>
+      <feOffset dx="4" dy="14" result="blur"/>
+      <feFlood flood-color="#000" flood-opacity="0.4"/>
+      <feComposite in2="blur"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="ls-glow-green">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="ls-glow-amber">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="780" height="480" fill="url(#ls-bg)"/>
+  <circle cx="390" cy="240" r="280" fill="rgba(255,255,255,0.12)"/>
+
+  <!-- === 3D SERVER BODY === -->
+  <!-- Right side face -->
+  <polygon points="670,95 714,72 714,345 670,368" fill="url(#ls-right)" opacity="0.85"/>
+  <!-- Top face -->
+  <polygon points="60,95 670,95 714,72 104,72" fill="url(#ls-top)" opacity="0.9"/>
+  <!-- Main front face -->
+  <rect x="60" y="95" width="610" height="273" rx="5" fill="url(#ls-chassis)" filter="url(#ls-shadow)"/>
+  <!-- Top highlight line -->
+  <rect x="60" y="95" width="610" height="5" rx="3" fill="#4a6080"/>
+
+  <!-- === AMBER BRAND STRIPE === -->
+  <rect x="60" y="100" width="610" height="32" fill="url(#ls-amber)"/>
+  <text x="90" y="122" font-family="'Arial', sans-serif" font-size="13" font-weight="bold" fill="#1a1200" letter-spacing="2">iSafeGuard</text>
+  <text x="210" y="122" font-family="'Arial', sans-serif" font-size="11" fill="#3d2800" letter-spacing="1">LARGE AI SAFETY SERVER</text>
+  <text x="582" y="122" font-family="'Arial', monospace" font-size="10" fill="#3d2800" text-anchor="middle">32CH</text>
+
+  <!-- === LEFT PANEL: DRIVE BAYS === -->
+  <rect x="72" y="140" width="298" height="210" rx="3" fill="#09121e"/>
+
+  <!-- Bay group label -->
+  <text x="82" y="156" font-family="'Arial', monospace" font-size="8" fill="#334155" letter-spacing="1">STORAGE ARRAY</text>
+
+  <!-- Bays: 4 rows × 4 bays -->
+  <!-- Row 1 -->
+  <rect x="78" y="160" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="81" y="163" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="84" y="168" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="84" y="177" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="134" cy="165" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="148" y="160" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="151" y="163" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="154" y="168" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="154" y="177" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="204" cy="165" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="218" y="160" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="221" y="163" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="224" y="168" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="224" y="177" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="274" cy="165" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="288" y="160" width="68" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="291" y="163" width="60" height="33" rx="1" fill="#0d1825"/>
+  <rect x="294" y="168" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="294" y="177" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="348" cy="165" r="3.5" fill="#f59e0b" filter="url(#ls-glow-amber)"/>
+
+  <!-- Row 2 -->
+  <rect x="78" y="206" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="81" y="209" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="84" y="214" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="84" y="223" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="134" cy="211" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="148" y="206" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="151" y="209" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="154" y="214" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="154" y="223" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="204" cy="211" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="218" y="206" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="221" y="209" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="224" y="214" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="224" y="223" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="274" cy="211" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="288" y="206" width="68" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="291" y="209" width="60" height="33" rx="1" fill="#0d1825"/>
+  <rect x="294" y="214" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="294" y="223" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="348" cy="211" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <!-- Row 3 -->
+  <rect x="78" y="252" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="81" y="255" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="84" y="260" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="84" y="269" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="134" cy="257" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="148" y="252" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="151" y="255" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="154" y="260" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="154" y="269" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="204" cy="257" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="218" y="252" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="221" y="255" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="224" y="260" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="224" y="269" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="274" cy="257" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="288" y="252" width="68" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="291" y="255" width="60" height="33" rx="1" fill="#0d1825"/>
+  <rect x="294" y="260" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="294" y="269" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="348" cy="257" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <!-- Row 4 -->
+  <rect x="78" y="298" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="81" y="301" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="84" y="306" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="84" y="315" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="134" cy="303" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="148" y="298" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="151" y="301" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="154" y="306" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="154" y="315" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="204" cy="303" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="218" y="298" width="66" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="221" y="301" width="58" height="33" rx="1" fill="#0d1825"/>
+  <rect x="224" y="306" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="224" y="315" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="274" cy="303" r="3.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+
+  <rect x="288" y="298" width="68" height="42" rx="2" fill="url(#ls-bay)" stroke="#1a2840" stroke-width="1"/>
+  <rect x="291" y="301" width="60" height="33" rx="1" fill="#0d1825"/>
+  <rect x="294" y="306" width="40" height="5" rx="1" fill="#141f30"/>
+  <rect x="294" y="315" width="30" height="3" rx="1" fill="#192435"/>
+  <circle cx="348" cy="303" r="3.5" fill="#3b82f6"/>
+
+  <!-- === RIGHT PANEL: CONTROL === -->
+  <rect x="378" y="140" width="282" height="210" rx="3" fill="url(#ls-panel)"/>
+
+  <!-- NPU Cores Label -->
+  <text x="388" y="157" font-family="'Arial', monospace" font-size="8" fill="#475569" letter-spacing="1">NPU PROCESSING CORES</text>
+
+  <!-- NPU core blocks (2 rows of 5) -->
+  <rect x="388" y="162" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="401" y="177" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N0</text>
+  <rect x="418" y="162" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="431" y="177" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N1</text>
+  <rect x="448" y="162" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="461" y="177" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N2</text>
+  <rect x="478" y="162" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="491" y="177" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N3</text>
+  <rect x="508" y="162" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="521" y="177" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N4</text>
+  <rect x="538" y="162" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="551" y="177" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N5</text>
+  <rect x="568" y="162" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="581" y="177" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N6</text>
+  <rect x="598" y="162" width="26" height="22" rx="3" fill="#102040" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="611" y="177" font-family="Arial, monospace" font-size="7" fill="#60a5fa" text-anchor="middle">N7</text>
+  <rect x="628" y="162" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="641" y="177" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N8</text>
+  <rect x="388" y="188" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="401" y="203" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N9</text>
+  <rect x="418" y="188" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="431" y="203" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N10</text>
+  <rect x="448" y="188" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="461" y="203" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N11</text>
+  <rect x="478" y="188" width="26" height="22" rx="3" fill="#102040" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="491" y="203" font-family="Arial, monospace" font-size="7" fill="#60a5fa" text-anchor="middle">N12</text>
+  <rect x="508" y="188" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="521" y="203" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N13</text>
+  <rect x="538" y="188" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="551" y="203" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N14</text>
+  <rect x="568" y="188" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="581" y="203" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N15</text>
+  <rect x="598" y="188" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="611" y="203" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N16</text>
+  <rect x="628" y="188" width="26" height="22" rx="3" fill="#0c2218" stroke="#14532d" stroke-width="1"/>
+  <text x="641" y="203" font-family="Arial, monospace" font-size="7" fill="#4ade80" text-anchor="middle">N17</text>
+
+  <!-- System Status Screen -->
+  <rect x="388" y="218" width="148" height="80" rx="3" fill="url(#ls-screen)" stroke="#0e2030" stroke-width="1"/>
+  <rect x="390" y="220" width="144" height="3" rx="1" fill="#0a1e30"/>
+  <text x="398" y="234" font-family="'Courier New', monospace" font-size="8" fill="#22c55e">SYSTEM MONITOR</text>
+  <text x="398" y="247" font-family="'Courier New', monospace" font-size="7.5" fill="#4ade80">CPU ████░░░░ 42%</text>
+  <text x="398" y="259" font-family="'Courier New', monospace" font-size="7.5" fill="#4ade80">MEM ██████░░ 61%</text>
+  <text x="398" y="271" font-family="'Courier New', monospace" font-size="7.5" fill="#4ade80">TEMP  43°C  OK</text>
+  <text x="398" y="283" font-family="'Courier New', monospace" font-size="7.5" fill="#4ade80">NET  1GbE  ▲▼</text>
+  <text x="398" y="293" font-family="'Courier New', monospace" font-size="7.5" fill="#22c55e">CCTV CH: 32/32 LIVE</text>
+
+  <!-- Power Button -->
+  <circle cx="570" cy="252" r="26" fill="#080f1c" stroke="#1e293b" stroke-width="2"/>
+  <circle cx="570" cy="252" r="20" fill="#0c1525"/>
+  <circle cx="570" cy="252" r="16" fill="#0a1220" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
+  <line x1="570" y1="240" x2="570" y2="249" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M562 244 A11 11 0 1 0 578 244" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <circle cx="570" cy="252" r="5" fill="none" stroke="#4ade80" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- Status LED panel -->
+  <rect x="608" y="220" width="50" height="82" rx="3" fill="#060d18" stroke="#0e1e30" stroke-width="1"/>
+  <text x="633" y="234" font-family="Arial, sans-serif" font-size="7" fill="#334155" text-anchor="middle">STATUS</text>
+  <circle cx="620" cy="247" r="4.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+  <text x="648" y="251" font-family="Arial, sans-serif" font-size="7" fill="#475569">PWR</text>
+  <circle cx="620" cy="263" r="4.5" fill="#22c55e" filter="url(#ls-glow-green)"/>
+  <text x="648" y="267" font-family="Arial, sans-serif" font-size="7" fill="#475569">RDY</text>
+  <circle cx="620" cy="279" r="4.5" fill="#1e2d40"/>
+  <text x="648" y="283" font-family="Arial, sans-serif" font-size="7" fill="#2d3748">ALR</text>
+  <circle cx="620" cy="295" r="4.5" fill="#1e2d40"/>
+  <text x="648" y="299" font-family="Arial, sans-serif" font-size="7" fill="#2d3748">FLT</text>
+
+  <!-- Bottom port area divider -->
+  <rect x="378" y="308" width="282" height="1" fill="#1a2840"/>
+
+  <!-- Ports row -->
+  <rect x="385" y="314" width="22" height="14" rx="2" fill="#080f1c" stroke="#1e293b" stroke-width="1"/>
+  <rect x="389" y="317" width="14" height="8" rx="1" fill="#0f1e30"/>
+  <rect x="411" y="314" width="22" height="14" rx="2" fill="#080f1c" stroke="#1e293b" stroke-width="1"/>
+  <rect x="415" y="317" width="14" height="8" rx="1" fill="#0f1e30"/>
+  <rect x="437" y="316" width="14" height="10" rx="5" fill="#060d18" stroke="#1e293b" stroke-width="1"/>
+  <rect x="439" y="318" width="10" height="6" rx="3" fill="#0a1825"/>
+
+  <text x="470" y="325" font-family="'Courier New', monospace" font-size="7.5" fill="#334155" letter-spacing="0.8">SG-4U·32CH·NPU-RACK</text>
+
+  <!-- Ventilation grilles -->
+  <rect x="590" y="313" width="66" height="16" rx="2" fill="#060d18"/>
+  <line x1="596" y1="315" x2="596" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="601" y1="315" x2="601" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="606" y1="315" x2="606" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="611" y1="315" x2="611" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="616" y1="315" x2="616" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="621" y1="315" x2="621" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="626" y1="315" x2="626" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="631" y1="315" x2="631" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="636" y1="315" x2="636" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="641" y1="315" x2="641" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="646" y1="315" x2="646" y2="327" stroke="#1a2840" stroke-width="1"/>
+  <line x1="651" y1="315" x2="651" y2="327" stroke="#1a2840" stroke-width="1"/>
+
+  <!-- Rack mount ears -->
+  <rect x="44" y="100" width="16" height="268" rx="3" fill="#1a2840" stroke="#253550" stroke-width="1"/>
+  <rect x="48" y="130" width="8" height="12" rx="2" fill="#0e1928"/>
+  <rect x="48" y="180" width="8" height="12" rx="2" fill="#0e1928"/>
+  <rect x="48" y="230" width="8" height="12" rx="2" fill="#0e1928"/>
+  <rect x="48" y="280" width="8" height="12" rx="2" fill="#0e1928"/>
+  <rect x="670" y="100" width="16" height="268" rx="3" fill="#1a2840" stroke="#253550" stroke-width="1"/>
+  <rect x="674" y="130" width="8" height="12" rx="2" fill="#0e1928"/>
+  <rect x="674" y="180" width="8" height="12" rx="2" fill="#0e1928"/>
+  <rect x="674" y="230" width="8" height="12" rx="2" fill="#0e1928"/>
+  <rect x="674" y="280" width="8" height="12" rx="2" fill="#0e1928"/>
+
+  <!-- Caption -->
+  <text x="390" y="420" font-family="'Arial', sans-serif" font-size="14" fill="#64748b" text-anchor="middle" font-weight="600">Large AI Safety Server — 4U Enterprise Rack Mount</text>
+  <text x="390" y="440" font-family="'Arial', sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">32-Channel Simultaneous CCTV Analytics · High-Density NPU Hardware Acceleration</text>
+</svg>

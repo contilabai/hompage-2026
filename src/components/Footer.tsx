@@ -2,34 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 
 const productLinks = [
-  { label: "동영상 기록관리", href: "#video" },
-  { label: "엣지 AI CCTV", href: "#ai-cctv" },
-  { label: "스마트 안전장비", href: "#smart-safety" },
-  { label: "중대재해 예방", href: "#accident-prevention" },
-  { label: "공정관리 시스템", href: "#process-management" },
-];
-
-const featureLinks = [
-  { label: "위험성 평가", href: "#" },
-  { label: "모바일 TBM", href: "#" },
-  { label: "AI 안전감지", href: "#" },
-  { label: "영상 편집 서비스", href: "#" },
-  { label: "원격 감리", href: "#" },
-  { label: "관계사 협업 포털", href: "#" },
-];
-
-const supportLinks = [
-  { label: "전문가 컨설팅", href: "#consulting" },
-  { label: "도입 문의", href: "#inquiry" },
-  { label: "소식·공지", href: "#news" },
-  { label: "블로그", href: "#blog" },
-  { label: "고객센터", href: "#support" },
+  { label: "ISafePlatform Core", href: "/platform" },
+  { label: "ISafePlanner", href: "/isafe-planner" },
+  { label: "ISafeMeta", href: "/isafe-meta" },
+  { label: "ISafeGuard", href: "/isafe-guard" },
+  { label: "ISafeChain", href: "/isafe-chain" },
 ];
 
 const companyLinks = [
-  { label: "회사소개", href: "#company" },
+  { label: "회사소개", href: "/about" },
+  { label: "R&D History", href: "/about#rnd" },
+  { label: "파트너 및 고객사", href: "/about#partners" },
+  { label: "특허 및 인증", href: "/about#patents" },
   { label: "채용", href: "#jobs" },
-  { label: "파트너십", href: "#partner" },
 ];
 
 const socialLinks = [
@@ -83,13 +68,14 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300">
-      {/* Main footer */}
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-12">
-          {/* Products */}
+        {/* 3-column grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+
+          {/* 제품 */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-4">제품</h4>
-            <ul className="space-y-2.5">
+            <h4 className="text-sm font-bold text-white mb-5">제품</h4>
+            <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
@@ -100,38 +86,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Features */}
+          {/* 회사 */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-4">기능</h4>
-            <ul className="space-y-2.5">
-              {featureLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div>
-            <h4 className="text-sm font-bold text-white mb-4">지원</h4>
-            <ul className="space-y-2.5">
-              {supportLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="text-sm font-bold text-white mb-4">회사</h4>
-            <ul className="space-y-2.5">
+            <h4 className="text-sm font-bold text-white mb-5">회사</h4>
+            <ul className="space-y-3">
               {companyLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
@@ -142,76 +100,76 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* 문의 */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-4">문의</h4>
-            <div className="space-y-3">
+            <h4 className="text-sm font-bold text-white mb-5">문의</h4>
+            <div className="space-y-4">
               <div>
-                <p className="text-xs text-gray-500 mb-0.5">대표전화</p>
-                <a href="tel:1666-1967" className="text-sm font-semibold text-white hover:text-blue-400 transition-colors">
-                  1666-1967
+                <p className="text-xs text-gray-500 mb-1">이메일</p>
+                <a
+                  href="mailto:contilab@contilab.co.kr"
+                  className="text-sm font-semibold text-white hover:text-blue-400 transition-colors"
+                >
+                  contilab@contilab.co.kr
                 </a>
               </div>
               <div>
-                <p className="text-xs text-gray-500 mb-0.5">이메일</p>
-                <a href="mailto:info@contilab.kr" className="text-sm text-gray-400 hover:text-white transition-colors">
-                  info@contilab.kr
-                </a>
+                <p className="text-xs text-gray-500 mb-1">주소</p>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  서울특별시 동작구 흑석로 84<br />
+                  중앙대학교 208관 201호
+                </p>
               </div>
               <div>
-                <p className="text-xs text-gray-500 mb-0.5">운영시간</p>
-                <p className="text-sm text-gray-400">평일 09:00 ~ 18:00</p>
+                <Link
+                  href="/news"
+                  className="text-sm text-gray-400 hover:text-white transition-colors block"
+                >
+                  소식·공지
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
-        <hr className="border-gray-700 mb-8" />
+        <hr className="border-gray-800 mb-8" />
 
         {/* Bottom */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-          {/* Company info */}
           <div>
             <div className="flex items-center gap-3 mb-3">
               <Image
                 src="/images/logo-full.png"
                 alt="ConTILab"
-                width={140}
-                height={36}
+                width={130}
+                height={34}
                 className="object-contain"
               />
-              <span className="px-2 py-0.5 text-[10px] font-bold text-green-400 border border-green-600 rounded">
-                ISO/IEC 27001
-              </span>
             </div>
-            <p className="text-xs text-gray-500 leading-relaxed max-w-lg">
-              (주)콘티랩 · 대표이사: 홍길동<br />
-              서울특별시 강남구 테헤란로 123, OO빌딩 7층
+            <p className="text-xs text-gray-500 leading-relaxed">
+              ConTILab · 중앙대학교 건설 및 산업기술 연구실<br />
+              서울특별시 동작구 흑석로 84 중앙대학교 208관 201호
             </p>
           </div>
 
-          {/* Social + Legal */}
           <div className="flex flex-col items-start lg:items-end gap-4">
-            {/* Social icons */}
             <div className="flex items-center gap-3">
               {socialLinks.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  className="w-8 h-8 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center text-gray-400 hover:text-white transition-colors"
+                  className="w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:text-white transition-colors"
                 >
                   {s.icon}
                 </a>
               ))}
             </div>
-
-            {/* Legal links */}
             <div className="flex flex-wrap gap-4 text-xs text-gray-500">
               <Link href="#terms" className="hover:text-white transition-colors">이용약관</Link>
-              <Link href="#privacy" className="hover:text-white transition-colors font-semibold">개인정보처리방침</Link>
-              <Link href="#company" className="hover:text-white transition-colors">회사소개</Link>
-              <Link href="#partner" className="hover:text-white transition-colors">하우스플래너</Link>
+              <Link href="#privacy" className="hover:text-white transition-colors">개인정보처리방침</Link>
+              <Link href="/about" className="hover:text-white transition-colors">회사소개</Link>
+              <a href="mailto:contilab@contilab.co.kr" className="hover:text-white transition-colors">파트너십 문의</a>
             </div>
           </div>
         </div>

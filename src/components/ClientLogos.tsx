@@ -33,10 +33,10 @@ export default function ClientLogos() {
           고객사
         </p>
         <h2 className="text-3xl font-black text-gray-900">
-          <span className="text-blue-600">4,500개</span>가 넘는 현장에 도입
+          국내 최고 기관이 신뢰하는 <span className="text-blue-600">ISafePlatform</span>
         </h2>
         <p className="mt-3 text-gray-500 text-base">
-          국내 주요 건설사, 공공기관이 신뢰하는 플랫폼입니다
+          공공기관 및 국내외 탑티어 건설사들과 협력하며 기술 검증을 완료했습니다
         </p>
       </div>
 
@@ -59,8 +59,8 @@ export default function ClientLogos() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { value: "4,500+", label: "도입 현장 수" },
-            { value: "150,000+", label: "누적 작업자 수" },
-            { value: "98%", label: "고객 재계약률" },
+            { value: "99%", label: "AI 감지 정확도" },
+            { value: "4종", label: "핵심 AI 모듈" },
             { value: "24/7", label: "기술 지원" },
           ].map((stat) => (
             <div key={stat.label} className="text-center py-6 px-4 bg-white rounded-xl border border-gray-100 shadow-sm">

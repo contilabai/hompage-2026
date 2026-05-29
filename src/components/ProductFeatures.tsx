@@ -10,6 +10,7 @@ interface FeatureItem {
   bullets: string[];
   ctaText: string;
   ctaHref: string;
+  ctaBg: string;
   reverse?: boolean;
   bgClass: string;
   mockupBg: string;
@@ -19,108 +20,84 @@ interface FeatureItem {
 
 const features: FeatureItem[] = [
   {
-    id: "ai-cctv",
-    tag: "엣지 AI CCTV",
+    id: "module-license",
+    tag: "ISafePlatform Core",
     tagColor: "bg-blue-100 text-blue-700",
-    title: "CCTV 교체없이\n현장에서 바로 사용가능한 AI",
-    subtitle: "기존 CCTV 인프라를 그대로 활용",
-    desc: "별도 서버 없이 엣지 디바이스 하나로 기존 CCTV에 AI 기능을 추가합니다. 안전모 미착용, 위험구역 침입, 화재 감지 등 현장에 꼭 필요한 기능만 담았습니다.",
+    title: "필요한 모듈만 켭니다.\n쓰지 않는 기능에\n비용을 낼 필요가 없습니다",
+    subtitle: "플러그인 방식으로 필요한 시점에 즉시 활성화",
+    desc: "4개 모듈은 각각 독립 라이선스로 제공됩니다. 지금 당장 필요한 모듈부터 시작하고, 현장이 성장하면 추가로 해금하세요. 온프레미스 서버에서 구동되어 기업 데이터는 외부로 나가지 않습니다.",
     bullets: [
-      "안전모/안전벨트 미착용 실시간 감지",
-      "위험구역 무단 침입 알림",
-      "화재·연기 조기 감지",
-      "야간 및 악천후 환경 대응",
-      "기존 CCTV 100% 호환",
+      "ISafePlanner·Meta·Guard·Chain 개별 선택 구매",
+      "모듈 추가 시 서비스 중단 없이 즉시 적용",
+      "가상 사설망(VPN) 내 안전 구동",
+      "온프레미스 서버 기반, 데이터 외부 유출 없음",
+      "실시간 모듈 활성화 상태 중앙 모니터링",
     ],
-    ctaText: "AI CCTV 상세보기",
-    ctaHref: "#ai-cctv",
+    ctaText: "Platform Core 알아보기",
+    ctaHref: "/platform",
+    ctaBg: "bg-blue-600 hover:bg-blue-700",
     reverse: false,
     bgClass: "bg-white",
-    mockupBg: "bg-gradient-to-br from-blue-900 to-blue-700",
+    mockupBg: "bg-gradient-to-br from-[#0d1b2a] to-[#1b2a3b]",
     mockupIcon: (
       <svg className="w-16 h-16 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 10l4.553-2.069A1 1 0 0121 8.87v6.26a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
       </svg>
     ),
-    mockupLabel: "AI CCTV 모니터링 화면",
+    mockupLabel: "ISafePlatform Core 관제 화면",
   },
   {
-    id: "video",
-    tag: "동영상 기록관리",
+    id: "role-access",
+    tag: "통합 권한 관리",
     tagColor: "bg-slate-100 text-slate-700",
-    title: "촬영계획서, 장비, 편집\n모두 한 플랫폼에서",
-    subtitle: "법정 영상기록 의무화 완벽 대응",
-    desc: "건설기술진흥법에 따른 영상기록 의무를 손쉽게 이행하세요. 촬영계획서 자동 생성부터 편집 대행까지, 영상기록에 필요한 모든 것을 제공합니다.",
+    title: "현장 소장이 볼 화면과\n근로자가 볼 화면은\n달라야 합니다",
+    subtitle: "역할별로 딱 필요한 정보만, 딱 그 사람에게만",
+    desc: "최고 관리자는 전체 현황을, 현장 소장은 담당 현장을, 근로자는 본인 안전 정보만 봅니다. 각 역할에 맞는 화면과 데이터만 표출하여 보안 사고를 원천 차단합니다.",
     bullets: [
-      "공종별 촬영계획서 자동 생성",
-      "드론·카메라 장비 렌탈 서비스",
-      "전문 편집팀 편집 대행",
-      "클라우드 안전 보관 (10년 이상)",
-      "발주처 제출용 보고서 자동 생성",
+      "관리자·소장·안전관리자·근로자 4단계 역할 권한",
+      "역할별 접근 가능 모듈 및 메뉴 독립 설정",
+      "생체 인식 및 보안 로그인 지원",
+      "접근 이력·감사 로그 영구 보존으로 내부 감사 대응",
+      "복수 현장 통합 관리 대시보드",
     ],
-    ctaText: "동영상 기록관리 보기",
-    ctaHref: "#video",
+    ctaText: "Platform Core 알아보기",
+    ctaHref: "/platform",
+    ctaBg: "bg-slate-700 hover:bg-slate-800",
     reverse: true,
     bgClass: "bg-gray-50",
     mockupBg: "bg-gradient-to-br from-slate-800 to-slate-600",
     mockupIcon: (
       <svg className="w-16 h-16 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
       </svg>
     ),
-    mockupLabel: "영상 관리 플랫폼 화면",
+    mockupLabel: "역할 기반 권한 관리 화면",
   },
   {
-    id: "smart-safety",
-    tag: "스마트 안전장비",
-    tagColor: "bg-orange-100 text-orange-700",
-    title: "작업자 중심의\n스마트 안전장비 시스템",
-    subtitle: "IoT 기반 안전관리 혁신",
-    desc: "스마트 안전모와 스마트 조끼를 통해 작업자의 위치, 생체신호, 위험상황을 실시간으로 모니터링합니다. 안전관리 비용도 투명하게 배분하세요.",
+    id: "data-pipeline",
+    tag: "데이터 통합 파이프라인",
+    tagColor: "bg-green-100 text-green-700",
+    title: "각 모듈이 따로 돌아도\n데이터는 항상\n하나로 모입니다",
+    subtitle: "ISafePlanner에서 시작한 데이터가 ISafeChain까지 자동으로 흐릅니다",
+    desc: "도면 위험 분석, 가상 훈련 이수, 현장 감지 이벤트, 블록체인 기록. 각 모듈의 데이터가 끊김 없이 연결됩니다. ISafeChain이 이 데이터를 분석하여 ISafePlanner 위험도를 조정하고, ISafeMeta 훈련을 재편성하고, ISafeGuard 임계치를 강화합니다.",
     bullets: [
-      "GPS 기반 작업자 위치 추적",
-      "심박·체온 이상 즉시 알림",
-      "작업자별 영상기록 자동화",
-      "협력사별 안전관리 비용 자동 배분",
-      "스마트 장비 통합 관리 포털",
+      "4개 모듈 데이터 실시간 중앙 수집·동기화",
+      "ISafeChain → Planner·Meta·Guard 자동 피드백",
+      "누적 데이터로 플랫폼 전체 정확도 자동 개선",
+      "단일 데이터베이스로 통합 관리, 중복 입력 없음",
     ],
-    ctaText: "스마트 장비 알아보기",
-    ctaHref: "#smart-safety",
+    ctaText: "Platform Core 알아보기",
+    ctaHref: "/platform",
+    ctaBg: "bg-green-700 hover:bg-green-800",
     reverse: false,
     bgClass: "bg-white",
-    mockupBg: "bg-gradient-to-br from-orange-800 to-orange-600",
-    mockupIcon: (
-      <svg className="w-16 h-16 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-    ),
-    mockupLabel: "스마트 안전장비 대시보드",
-  },
-  {
-    id: "process-management",
-    tag: "공정관리 시스템",
-    tagColor: "bg-green-100 text-green-700",
-    title: "현장일보, 공정표,\n원격 감리까지 디지털로",
-    subtitle: "공정관리 디지털 전환",
-    desc: "종이 현장일보, 수작업 공정표에서 벗어나세요. 모바일로 현장일보를 작성하고, AI가 공정표를 자동으로 업데이트합니다. 발주처도 실시간으로 현장 상황을 확인할 수 있습니다.",
-    bullets: [
-      "모바일 현장일보 작성",
-      "AI 기반 공정표 자동 갱신",
-      "원격 감리 영상 통화",
-      "협력사 협업 포털",
-      "발주처 실시간 현장 모니터링",
-    ],
-    ctaText: "공정관리 시스템 보기",
-    ctaHref: "#process-management",
-    reverse: true,
-    bgClass: "bg-gray-50",
-    mockupBg: "bg-gradient-to-br from-green-800 to-green-600",
+    mockupBg: "bg-gradient-to-br from-green-900 to-green-700",
     mockupIcon: (
       <svg className="w-16 h-16 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
       </svg>
     ),
-    mockupLabel: "공정관리 대시보드",
+    mockupLabel: "중앙 데이터 파이프라인 시각화",
   },
 ];
 
@@ -147,7 +124,7 @@ function FeatureBlock({ feature }: { feature: FeatureItem }) {
       </ul>
       <Link
         href={feature.ctaHref}
-        className="inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors w-fit"
+        className={`inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white ${feature.ctaBg} rounded-lg transition-colors w-fit`}
       >
         {feature.ctaText}
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -4,32 +4,38 @@ const solutions = [
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
       </svg>
     ),
-    iconBg: "bg-red-100",
-    iconColor: "text-red-600",
-    badgeColor: "bg-red-50 text-red-700",
-    badge: "중대재해처벌법 대응",
-    title: "중대재해 예방",
-    desc: "위험성 평가와 모바일 TBM으로 중대재해를 사전에 예방하세요.",
-    items: ["위험성 평가 자동화", "모바일 TBM 작성", "안전교육 이력 관리", "아차사고 신고"],
-    href: "#accident-prevention",
+    iconBg: "bg-green-100",
+    iconColor: "text-green-700",
+    badgeColor: "bg-green-50 text-green-700",
+    badge: "Plan",
+    title: "ISafePlanner",
+    question: "근로자가 투입되기 전, 그 현장에 어떤 위험이 있는지 알고 계십니까?",
+    desc: "도면을 올리면 AI가 3D 공정 지도와 위험도 등급을 자동으로 만들어줍니다. 기상 데이터까지 반영해 \"오늘 비가 오면 이 구역은 HIGH\"처럼 구체적으로 알려줍니다.",
+    outcomes: ["도면 한 장 → 3D 위험 지도 자동 생성", "기상 연동 실시간 위험 지수", "최적 카메라 배치까지 AI 추천"],
+    href: "/isafe-planner",
+    ctaColor: "text-green-600",
+    borderHover: "hover:border-green-200",
   },
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
-    iconBg: "bg-orange-100",
-    iconColor: "text-orange-600",
-    badgeColor: "bg-orange-50 text-orange-700",
-    badge: "IoT 안전장비",
-    title: "스마트 안전장비",
-    desc: "작업자 중심의 스마트 안전장비로 현장 안전수준을 높이세요.",
-    items: ["스마트 안전모/조끼", "작업자별 영상기록", "안전관리 비용 배분", "장비 현황 모니터링"],
-    href: "#smart-safety",
+    iconBg: "bg-red-100",
+    iconColor: "text-red-700",
+    badgeColor: "bg-red-50 text-red-700",
+    badge: "Train",
+    title: "ISafeMeta",
+    question: "매년 똑같은 안전 교육, 근로자가 정말 위험을 이해하고 있을까요?",
+    desc: "오늘 들어갈 현장과 똑같은 3D 공간에서 추락, 낙하, 충돌을 직접 체험합니다. 한 번 몸으로 겪은 위험은 잊히지 않습니다. 20개국 언어로 외국인 근로자도 동일하게.",
+    outcomes: ["실제 현장 3D 환경에서 위험 선체험", "AI 아바타 1:1 안전 교육", "이수 기록 자동 블록체인 저장"],
+    href: "/isafe-meta",
+    ctaColor: "text-red-600",
+    borderHover: "hover:border-red-200",
   },
   {
     icon: (
@@ -38,28 +44,34 @@ const solutions = [
       </svg>
     ),
     iconBg: "bg-blue-100",
-    iconColor: "text-blue-600",
+    iconColor: "text-blue-700",
     badgeColor: "bg-blue-50 text-blue-700",
-    badge: "법정 영상 기록",
-    title: "동영상 기록관리",
-    desc: "촬영부터 편집, 관리까지 건설현장 영상기록 전 과정을 한 곳에서.",
-    items: ["촬영계획서 자동 생성", "장비 대여/관리", "영상 편집 서비스", "클라우드 보관"],
-    href: "#video",
+    badge: "Monitor",
+    title: "ISafeGuard",
+    question: "퇴근 후 현장에서 사고가 난다면, 알 수 있는 방법이 있습니까?",
+    desc: "AI가 32채널을 동시에 분석하고 이상 징후가 감지되면 즉시 알림을 보냅니다. 보고서도 AI가 씁니다. 관리자는 검토·승인만 하면 됩니다.",
+    outcomes: ["32채널 24시간 AI 자동 감시", "이상 감지 즉시 모바일 알림", "AI 안전 보고서 자동 생성"],
+    href: "/isafe-guard",
+    ctaColor: "text-blue-600",
+    borderHover: "hover:border-blue-200",
   },
   {
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
       </svg>
     ),
-    iconBg: "bg-green-100",
-    iconColor: "text-green-600",
-    badgeColor: "bg-green-50 text-green-700",
-    badge: "디지털 전환",
-    title: "공정관리 시스템",
-    desc: "일보, 공정표, 원격 감리로 현장 공정관리를 디지털화하세요.",
-    items: ["일일 현장일보", "공정표 자동 생성", "원격 감리 지원", "관계사 협업 포털"],
-    href: "#process-management",
+    iconBg: "bg-orange-100",
+    iconColor: "text-orange-700",
+    badgeColor: "bg-orange-50 text-orange-700",
+    badge: "Measure",
+    title: "ISafeChain",
+    question: "사고 발생 후 '관리를 했다'는 증거를 지금 당장 제출할 수 있습니까?",
+    desc: "모든 안전 활동이 자동으로 블록체인에 기록됩니다. 위변조가 불가능하므로 법적 분쟁에서 완벽한 증거가 됩니다. 동시에 근로자에게는 자동으로 보상이 지급됩니다.",
+    outcomes: ["모든 안전 기록 자동 블록체인 저장", "위변조 불가 법적 증빙 완비", "스마트 컨트랙트 자동 인센티브"],
+    href: "/isafe-chain",
+    ctaColor: "text-orange-600",
+    borderHover: "hover:border-orange-200",
   },
 ];
 
@@ -68,12 +80,12 @@ export default function SolutionCards() {
     <section className="py-20 bg-white">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
         <div className="text-center mb-14">
-          <p className="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">솔루션</p>
+          <p className="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">4대 핵심 모듈</p>
           <h2 className="text-3xl font-black text-gray-900 mb-4">
-            건설현장에 필요한 모든 솔루션
+            안전 관리에서 반복되는 4가지 문제,<br className="hidden sm:block" /> 각각에 답이 있습니다
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            중대재해 예방부터 공정관리 디지털 전환까지, 현장의 모든 요구사항을 하나의 플랫폼으로 해결합니다.
+            한 모듈씩 도입해도, 전체를 조합해도 작동합니다. 지금 가장 급한 문제부터 해결하세요.
           </p>
         </div>
 
@@ -82,7 +94,7 @@ export default function SolutionCards() {
             <Link
               key={sol.title}
               href={sol.href}
-              className="group p-6 rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-lg transition-all duration-200 bg-white flex flex-col"
+              className={`group p-6 rounded-2xl border border-gray-100 ${sol.borderHover} hover:shadow-lg transition-all duration-200 bg-white flex flex-col`}
             >
               <div className={`w-12 h-12 ${sol.iconBg} ${sol.iconColor} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                 {sol.icon}
@@ -92,19 +104,27 @@ export default function SolutionCards() {
                 {sol.badge}
               </span>
 
-              <h3 className="text-[17px] font-bold text-gray-900 mb-2">{sol.title}</h3>
+              <h3 className="text-[17px] font-bold text-gray-900 mb-3">{sol.title}</h3>
+
+              {/* Problem question */}
+              <p className="text-sm font-semibold text-gray-700 mb-3 leading-snug italic">
+                &ldquo;{sol.question}&rdquo;
+              </p>
+
               <p className="text-sm text-gray-500 mb-5 leading-relaxed flex-1">{sol.desc}</p>
 
-              <ul className="space-y-2">
-                {sol.items.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
+              <ul className="space-y-2 mb-5">
+                {sol.outcomes.map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-sm text-gray-600">
+                    <svg className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
                     {item}
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-5 flex items-center gap-1 text-sm font-medium text-blue-600">
+              <div className={`flex items-center gap-1 text-sm font-medium ${sol.ctaColor}`}>
                 자세히 보기
                 <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
