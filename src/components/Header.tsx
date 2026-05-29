@@ -94,7 +94,6 @@ export default function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1">
-            {/* 제품 dropdown */}
             <div
               ref={dropdownRef}
               className="relative"
@@ -114,7 +113,6 @@ export default function Header() {
                 />
               </button>
 
-              {/* Dropdown panel */}
               {productOpen && (
                 <div className="absolute top-full left-0 mt-1 w-72 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden">
                   <div className="p-2">
@@ -144,7 +142,6 @@ export default function Header() {
               )}
             </div>
 
-            {/* 회사소개 */}
             <Link
               href="/about"
               className="px-4 py-2 text-[13.5px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
@@ -152,7 +149,6 @@ export default function Header() {
               회사소개
             </Link>
 
-            {/* 소식 */}
             <Link
               href="/news"
               className="px-4 py-2 text-[13.5px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-md transition-colors"
@@ -186,7 +182,6 @@ export default function Header() {
       {mobileOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100">
           <nav className="px-4 py-2">
-            {/* 제품 accordion */}
             <button
               onClick={() => setMobileProductOpen(!mobileProductOpen)}
               className="w-full flex items-center justify-between py-3 text-sm font-semibold text-gray-700 border-b border-gray-50"
