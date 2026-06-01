@@ -114,7 +114,7 @@ export default function HeroSection() {
 
   return (
     <section
-      className="relative pt-[64px] min-h-[540px] flex flex-col"
+      className="relative pt-[88px] min-h-[540px] flex flex-col"
       style={{
         background: `linear-gradient(135deg, ${slide.gradientFrom} 0%, ${slide.gradientTo} 100%)`,
         transition: "background 0.7s ease",

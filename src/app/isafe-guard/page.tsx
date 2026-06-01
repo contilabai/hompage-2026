@@ -21,7 +21,7 @@ export default function ISafeGuardPage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="pt-[64px] bg-gradient-to-br from-[#060f1a] via-[#0c2340] to-[#1d6fa4] text-white overflow-hidden">
+        <section className="pt-[88px] bg-gradient-to-br from-[#060f1a] via-[#0c2340] to-[#1d6fa4] text-white overflow-hidden">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 lg:py-24">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>

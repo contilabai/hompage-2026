@@ -290,7 +290,7 @@ export default function NewsPage() {
       <Header />
       <main>
         {/* Hero */}
-        <section className="pt-[64px] bg-gradient-to-br from-[#050d18] via-[#0d1b2a] to-[#1b2a3b] text-white">
+        <section className="pt-[88px] bg-gradient-to-br from-[#050d18] via-[#0d1b2a] to-[#1b2a3b] text-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 lg:py-20">
             <p className="text-xs font-semibold text-blue-300 uppercase tracking-widest mb-4">소식</p>
             <h1 className="text-[36px] lg:text-[48px] font-black leading-tight mb-4">
