@@ -217,11 +217,12 @@ function ModelTab() {
         </div>
 
         {/* Package cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12 items-start">
           {modelPackages.map((pkg) => (
             <div
               key={pkg.id}
-              className={`rounded-2xl border-2 ${pkg.borderColor} overflow-hidden relative ${pkg.popular ? "shadow-xl" : ""}`}
+              onClick={() => setOpenPackage(openPackage === pkg.id ? "" : pkg.id)}
+              className={`rounded-2xl border-2 ${pkg.borderColor} overflow-hidden relative cursor-pointer select-none transition-shadow hover:shadow-lg ${pkg.popular ? "shadow-xl" : ""}`}
             >
               {pkg.popular && (
                 <div className="absolute top-4 right-4 z-10 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">
@@ -250,30 +251,28 @@ function ModelTab() {
                 </div>
               </div>
 
-              {/* Model list toggle */}
+              {/* Model list */}
               <div className="px-6 py-5">
-                <button
-                  onClick={() => setOpenPackage(openPackage === pkg.id ? "" : pkg.id)}
-                  className="flex items-center justify-between w-full text-sm font-semibold text-gray-700 mb-3"
-                >
-                  <span>포함 AI 모델 ({pkg.models.length}개)</span>
+                {/* Toggle hint row */}
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm font-semibold text-gray-700">포함 AI 모델 ({pkg.models.length}개)</span>
                   <svg
-                    className={`w-4 h-4 text-gray-400 transition-transform ${openPackage === pkg.id ? "rotate-180" : ""}`}
+                    className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${openPackage === pkg.id ? "rotate-180" : ""}`}
                     fill="none" stroke="currentColor" viewBox="0 0 24 24"
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
-                </button>
+                </div>
 
                 {openPackage === pkg.id && (
-                  <ul className="space-y-3 mb-5">
+                  <ul className="space-y-4 mb-4 pt-2 border-t border-gray-100">
                     {pkg.models.map((model) => (
-                      <li key={model.name} className="text-sm">
-                        <p className="font-semibold text-gray-900 mb-0.5">{model.name}</p>
-                        <p className="text-gray-500 text-xs leading-relaxed mb-1">{model.detail}</p>
-                        <div className="flex flex-wrap gap-1">
+                      <li key={model.name} className="pt-3">
+                        <p className="text-base font-bold text-gray-900 mb-1">{model.name}</p>
+                        <p className="text-sm text-gray-500 leading-relaxed mb-2">{model.detail}</p>
+                        <div className="flex flex-wrap gap-1.5">
                           {model.tags.map((tag) => (
-                            <span key={tag} className="px-2 py-0.5 bg-gray-100 text-gray-500 text-[10px] rounded-md">
+                            <span key={tag} className="px-2.5 py-1 bg-gray-100 text-gray-500 text-xs rounded-md">
                               {tag}
                             </span>
                           ))}
@@ -285,13 +284,17 @@ function ModelTab() {
 
                 <a
                   href="mailto:contilab@contilab.co.kr"
-                  className={`flex items-center justify-center w-full py-2.5 text-sm font-semibold rounded-xl transition-colors border-2 ${
+                  onClick={(e) => e.stopPropagation()}
+                  className={`inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-colors border ${
                     pkg.popular
                       ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
                       : `border-current ${pkg.accentColor} hover:bg-gray-50`
                   }`}
                 >
                   {pkg.cta}
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                  </svg>
                 </a>
               </div>
             </div>

@@ -221,51 +221,6 @@ export default function Header() {
 
           {/* Desktop nav — centered, click-only dropdown */}
           <nav className="hidden lg:flex flex-1 justify-center items-center gap-2">
-            <div ref={dropdownRef} className="relative">
-              <button
-                onClick={() => setProductOpen(!productOpen)}
-                className={`flex items-center gap-1.5 px-5 py-3 text-[30px] font-semibold rounded-lg transition-colors ${
-                  productOpen ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-                }`}
-              >
-                제품
-                <ChevronDown
-                  size={20}
-                  className={`transition-transform duration-200 ${productOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-
-              {productOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[420px] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
-                  <div className="p-3">
-                    {products.map((p) => (
-                      <Link
-                        key={p.href}
-                        href={p.href}
-                        onClick={() => setProductOpen(false)}
-                        className="flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-gray-50 transition-colors group"
-                      >
-                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${p.iconBg} ${p.iconColor}`}>
-                          {p.icon}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2.5 mb-0.5">
-                            <span className="text-[17px] font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
-                              {p.label}
-                            </span>
-                            <span className={`px-2 py-0.5 text-[11px] font-bold rounded-md ${p.badgeColor}`}>
-                              {p.badge}
-                            </span>
-                          </div>
-                          <p className="text-[13px] text-gray-400 leading-snug">{p.desc}</p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
             {/* 회사소개 dropdown */}
             <div ref={aboutRef} className="relative">
               <button
@@ -315,6 +270,52 @@ export default function Header() {
               )}
             </div>
 
+            {/* 제품 dropdown */}
+            <div ref={dropdownRef} className="relative">
+              <button
+                onClick={() => setProductOpen(!productOpen)}
+                className={`flex items-center gap-1.5 px-5 py-3 text-[30px] font-semibold rounded-lg transition-colors ${
+                  productOpen ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+                }`}
+              >
+                제품
+                <ChevronDown
+                  size={20}
+                  className={`transition-transform duration-200 ${productOpen ? "rotate-180" : ""}`}
+                />
+              </button>
+
+              {productOpen && (
+                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[420px] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+                  <div className="p-3">
+                    {products.map((p) => (
+                      <Link
+                        key={p.href}
+                        href={p.href}
+                        onClick={() => setProductOpen(false)}
+                        className="flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-gray-50 transition-colors group"
+                      >
+                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${p.iconBg} ${p.iconColor}`}>
+                          {p.icon}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2.5 mb-0.5">
+                            <span className="text-[17px] font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">
+                              {p.label}
+                            </span>
+                            <span className={`px-2 py-0.5 text-[11px] font-bold rounded-md ${p.badgeColor}`}>
+                              {p.badge}
+                            </span>
+                          </div>
+                          <p className="text-[13px] text-gray-400 leading-snug">{p.desc}</p>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
             <Link
               href="/news"
               className="px-5 py-3 text-[30px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
@@ -345,34 +346,6 @@ export default function Header() {
       {mobileOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100">
           <nav className="px-4 py-2">
-            <button
-              onClick={() => setMobileProductOpen(!mobileProductOpen)}
-              className="w-full flex items-center justify-between py-3 text-sm font-semibold text-gray-700 border-b border-gray-50"
-            >
-              제품
-              <ChevronDown
-                size={16}
-                className={`text-gray-400 transition-transform ${mobileProductOpen ? "rotate-180" : ""}`}
-              />
-            </button>
-            {mobileProductOpen && (
-              <div className="py-1 pl-3">
-                {products.map((p) => (
-                  <Link
-                    key={p.href}
-                    href={p.href}
-                    className="flex items-center gap-3 py-2.5 text-sm text-gray-600 hover:text-blue-600"
-                    onClick={() => { setMobileOpen(false); setMobileProductOpen(false); }}
-                  >
-                    <div className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 ${p.iconBg} ${p.iconColor}`}>
-                      {p.icon}
-                    </div>
-                    {p.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-
             {/* 회사소개 mobile accordion */}
             <button
               onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
@@ -408,6 +381,35 @@ export default function Header() {
                 ))}
               </div>
             )}
+
+            <button
+              onClick={() => setMobileProductOpen(!mobileProductOpen)}
+              className="w-full flex items-center justify-between py-3 text-sm font-semibold text-gray-700 border-b border-gray-50"
+            >
+              제품
+              <ChevronDown
+                size={16}
+                className={`text-gray-400 transition-transform ${mobileProductOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+            {mobileProductOpen && (
+              <div className="py-1 pl-3">
+                {products.map((p) => (
+                  <Link
+                    key={p.href}
+                    href={p.href}
+                    className="flex items-center gap-3 py-2.5 text-sm text-gray-600 hover:text-blue-600"
+                    onClick={() => { setMobileOpen(false); setMobileProductOpen(false); }}
+                  >
+                    <div className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 ${p.iconBg} ${p.iconColor}`}>
+                      {p.icon}
+                    </div>
+                    {p.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+
             <Link
               href="/news"
               className="block py-3 text-sm font-medium text-gray-700 border-b border-gray-50 hover:text-blue-600"
