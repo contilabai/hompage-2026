@@ -137,17 +137,21 @@ function SolutionTab() {
 
 // ───────────── AI 모델 탭 ─────────────
 
+// Basic CTA 경로 — 추후 라이선스 자동화 페이지 생성 시 이 값만 변경
+const BASIC_CTA_HREF = "/contact";
+
 const modelPackages = [
   {
     id: "basic",
     tier: "Basic",
-    tierColor: "bg-gray-100 text-gray-700 border-gray-200",
-    headerBg: "bg-gradient-to-br from-gray-700 to-gray-900",
-    accentColor: "text-gray-600",
-    borderColor: "border-gray-200",
-    badge: "기본 패키지",
+    tierColor: "bg-green-100 text-green-800 border-green-300",
+    headerBg: "bg-gradient-to-br from-[#052e16] to-[#166534]",
+    accentColor: "text-green-600",
+    borderColor: "border-green-300",
+    badge: "기본 모델 무료 제공",
+    freeLabel: undefined,
     headline: "어느 현장에서나\n즉시 쓸 수 있는\n필수 감지 모델",
-    target: "처음 AI 관제를 도입하는 현장, 공통 공정이 대부분인 중소형 현장",
+    target: "처음 AI 관제를 도입하는 현장, 공통 공정이 대부분인 중소형 현장.\nISafePlatform Core, 관제 뷰어, 필수 AI 모델 5종을 전문 엔지니어가 현장에 직접 무상으로 설치해 드립니다.",
     valuePoint: "튜닝 없이 설치 당일부터 감지 시작",
     models: [
       { name: "개인 보호구 감지", detail: "안전모 착용 여부 실시간 파악", tags: ["외부비계", "사다리", "크레인", "터파기 등 대부분 공정"] },
@@ -156,7 +160,8 @@ const modelPackages = [
       { name: "장비·근로자 충돌 방지", detail: "장비-작업자 간 안전거리 최소 유지 범위 파악", tags: ["터파기", "백호", "지게차"] },
       { name: "현장 기본 안전 수칙", detail: "지게차 제한속도 준수, 소화기 비치 여부", tags: ["물류 및 화기 작업"] },
     ],
-    cta: "Basic 패키지 문의",
+    cta: "무료 방문 설치 신청",
+    ctaHref: BASIC_CTA_HREF,
   },
   {
     id: "pro",
@@ -166,6 +171,7 @@ const modelPackages = [
     accentColor: "text-blue-600",
     borderColor: "border-blue-300",
     badge: "기본+특화 패키지",
+    freeLabel: undefined,
     headline: "크레인 양중 중\n하방에 사람이 들어가는 것,\nBasic으로는 못 잡습니다",
     target: "타워크레인·고소작업 등 특수 공정이 포함된 중대형 현장",
     valuePoint: "Basic 전체 포함 + 복합 행동 분석·공정별 전문 모델 추가",
@@ -177,6 +183,7 @@ const modelPackages = [
       { name: "가설구조물·환경 안전", detail: "외부비계 상하부 동시작업 통제, 철근캡·개구부 덮개·안전난간 설치 확인", tags: ["외부비계", "개구부", "철근"] },
     ],
     cta: "Pro 패키지 문의",
+    ctaHref: "mailto:contilab@contilab.co.kr",
     popular: true,
   },
   {
@@ -187,6 +194,7 @@ const modelPackages = [
     accentColor: "text-orange-600",
     borderColor: "border-orange-200",
     badge: "맞춤 제작 패키지",
+    freeLabel: undefined,
     headline: "다른 현장에서\n학습한 AI는\n우리 현장에 맞지 않습니다",
     target: "특수 장비·자재를 보유한 대형 건설사, 자체 안전 내규가 있는 엔터프라이즈 현장",
     valuePoint: "현장 실측 데이터로 처음부터 학습, 전담 엔지니어 지속 관리",
@@ -197,6 +205,7 @@ const modelPackages = [
       { name: "지속 파인튜닝 지원", detail: "전담 엔지니어가 오탐지 데이터를 지속 필터링하고 백엔드 모델 가중치 업데이트 유지", tags: ["전담 엔지니어 관리"] },
     ],
     cta: "Custom 패키지 문의",
+    ctaHref: "mailto:contilab@contilab.co.kr",
   },
 ];
 
@@ -216,8 +225,9 @@ function ModelTab() {
           </p>
         </div>
 
-        {/* Package cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12 items-start">
+        {/* Package cards — outer wrapper */}
+        <div className="bg-gray-50 border border-gray-200 rounded-3xl p-5 mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
           {modelPackages.map((pkg) => (
             <div
               key={pkg.id}
@@ -232,13 +242,20 @@ function ModelTab() {
 
               {/* Header */}
               <div className={`${pkg.headerBg} px-6 pt-6 pb-8`}>
-                <span className={`inline-block px-3 py-1 text-xs font-bold rounded-full mb-4 ${pkg.tierColor} border`}>
-                  {pkg.badge}
-                </span>
+                <div className="flex items-center gap-2 flex-wrap mb-4">
+                  <span className={`inline-block px-3 py-1 text-xs font-bold rounded-full ${pkg.tierColor} border`}>
+                    {pkg.badge}
+                  </span>
+                  {pkg.freeLabel && (
+                    <span className="inline-block px-3 py-1 text-xs font-black rounded-full bg-green-400 text-green-950">
+                      {pkg.freeLabel}
+                    </span>
+                  )}
+                </div>
                 <h3 className="text-[22px] font-black text-white whitespace-pre-line leading-tight mb-3">
                   {pkg.headline}
                 </h3>
-                <p className="text-white/70 text-xs leading-relaxed">{pkg.target}</p>
+                <p className="text-white/70 text-xs leading-relaxed whitespace-pre-line">{pkg.target}</p>
               </div>
 
               {/* Value point */}
@@ -282,23 +299,37 @@ function ModelTab() {
                   </ul>
                 )}
 
-                <a
-                  href="mailto:contilab@contilab.co.kr"
-                  onClick={(e) => e.stopPropagation()}
-                  className={`inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-colors border ${
-                    pkg.popular
-                      ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
-                      : `border-current ${pkg.accentColor} hover:bg-gray-50`
-                  }`}
-                >
-                  {pkg.cta}
-                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
+                {pkg.ctaHref?.startsWith("/") ? (
+                  <Link
+                    href={pkg.ctaHref}
+                    onClick={(e) => e.stopPropagation()}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-colors border bg-green-500 text-white border-green-500 hover:bg-green-600"
+                  >
+                    {pkg.cta}
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                ) : (
+                  <a
+                    href={pkg.ctaHref}
+                    onClick={(e) => e.stopPropagation()}
+                    className={`inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-colors border ${
+                      pkg.popular
+                        ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
+                        : `border-current ${pkg.accentColor} hover:bg-gray-50`
+                    }`}
+                  >
+                    {pkg.cta}
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                )}
               </div>
             </div>
           ))}
+          </div>
         </div>
 
         {/* Note */}
@@ -338,6 +369,7 @@ const hardwareProducts = [
       "기존 CCTV 교체 방식으로 간편 도입",
     ],
     iconBg: "bg-green-700",
+    image: "/images/on-device.png",
   },
   {
     name: "AI 엣지 박스",
@@ -355,6 +387,7 @@ const hardwareProducts = [
       "별도 AI 연산 PC 불필요",
     ],
     iconBg: "bg-blue-700",
+    image: "/images/edge-ai.png",
   },
   {
     name: "멀티채널 NPU PC 서버",

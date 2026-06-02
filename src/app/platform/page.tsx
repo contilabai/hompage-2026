@@ -61,7 +61,7 @@ const modules = [
     name: "ISafeGuard",
     badge: "Monitor",
     badgeColor: "bg-blue-100 text-blue-700",
-    desc: "훈련받은 근로자가 현장에 투입되면 AI가 32채널을 실시간 감시하고 위반 즉시 알림을 보냅니다.",
+    desc: "교육받은 근로자가 현장에 투입되면 AI가 32채널을 실시간 관제합니다. 기본 AI 모델 5종은 조건 없이 무료 제공됩니다.",
     href: "/isafe-guard",
     color: "border-blue-200 hover:border-blue-400",
     gradientFrom: "#0c2340",
@@ -83,7 +83,7 @@ const modules = [
 
 const steps = [
   { step: "01", title: "서버 환경 구성", desc: "온프레미스 또는 클라우드 서버에 ISafePlatform을 설치합니다. VPN 등 폐쇄망 환경에서도 온프레미스 구조로 운영할 수 있습니다." },
-  { step: "02", title: "모듈 라이선스 해금", desc: "구매한 모듈의 라이선스 키를 입력하면 즉시 해당 모듈이 활성화됩니다. 필요에 따라 모듈을 추가 구매할 수 있습니다." },
+  { step: "02", title: "모듈 라이선스 해금", desc: "ISafeGuard 기본 모델은 무상 제공됩니다. 추가 패키지나 다른 모듈은 라이선스 키 입력으로 즉시 활성화되며, 필요에 따라 단계적으로 확장할 수 있습니다." },
   { step: "03", title: "사용자 권한 설정", desc: "관리자, 현장 소장, 안전 관리자, 근로자 등 역할을 설정하고 각 역할에 맞는 화면과 데이터 접근 권한을 구성합니다." },
 ];
 
