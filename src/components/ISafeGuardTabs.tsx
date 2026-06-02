@@ -21,7 +21,7 @@ const solutionFeatures = [
     reverse: false,
     tag: "웹 관제 플랫폼",
     tagColor: "bg-blue-100 text-blue-700",
-    headline: "몸이 열 개라도\n32개 카메라를 동시에\n볼 수는 없습니다",
+    headline: "몸이 열 개라도\n100CH+ 카메라를 동시에\n볼 수는 없습니다",
     subhead: "ISafeGuard가 모든 채널을 동시에 분석하고 이상 징후만 알립니다",
     desc: "브라우저 하나로 현장 전체 카메라를 동시에 관제합니다. AI가 매 프레임을 분석하고 위험 카테고리별로 분류하여 이상 상황만 즉시 화면에 띄웁니다. 안전 관리자는 진짜 위험 상황에만 집중할 수 있습니다.",
     bullets: [

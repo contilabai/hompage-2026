@@ -138,7 +138,7 @@ export default function ISafeGuardPage() {
               {[
                 { value: "100CH+", label: "동시 AI 관제" },
                 { value: "24/7", label: "무중단 자동 운영" },
-                { value: "0분", label: "VLM 보고서 작성 시간" },
+                { value: "10초", label: "VLM 보고서 작성 시간" },
                 { value: "기본 무료", label: "필수 AI 모델 5종 제공" },
               ].map((s) => (
                 <div key={s.label} className="text-center px-6 first:pl-0 last:pr-0">
