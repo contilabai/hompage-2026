@@ -323,41 +323,55 @@ function ModelTab() {
 
 const hardwareProducts = [
   {
-    name: "대형 가속 서버",
-    nameEn: "High-Performance NPU Server",
-    badge: "최고 성능",
+    name: "온디바이스 AI 카메라",
+    nameEn: "On-Device AI Camera",
+    badge: "설치 간편",
+    badgeColor: "bg-green-100 text-green-700",
+    channels: "카메라 단독",
+    target: "별도 AI PC 없이 즉시 도입이 필요한 모든 현장",
+    headline: "카메라 자체에서 AI가 분석합니다",
+    desc: "NPU 모듈이 내장된 AI 카메라. 별도의 AI 연산 PC 없이 카메라 단에서 직접 AI 분석을 수행하고, 분석 결과만 ISafePlatform으로 전송합니다. 네트워크 대역폭을 최소화하면서 즉시 관제를 시작할 수 있습니다.",
+    features: [
+      "NPU 모듈 내장 — 별도 AI PC 불필요",
+      "카메라 단 실시간 AI 분석 처리",
+      "분석 결과만 플랫폼 전송 (대역폭 절약)",
+      "기존 CCTV 교체 방식으로 간편 도입",
+    ],
+    iconBg: "bg-green-700",
+  },
+  {
+    name: "AI 엣지 박스",
+    nameEn: "AI Edge Box",
+    badge: "중소현장",
     badgeColor: "bg-blue-100 text-blue-700",
-    channels: "32CH",
-    target: "대형 건설현장, 동시 관제 채널 수가 많은 현장",
-    headline: "현장 전체를 한 서버로 커버합니다",
-    desc: "고성능 NPU 보드를 탑재한 대형 가속 서버가 동시 32채널을 정밀 분석합니다. 대형 건설현장의 수십 대 카메라를 단일 장비로 처리합니다.",
-    features: ["고성능 지능형 NPU 보드 탑재", "동시 32채널 정밀 AI 분석 처리", "랙 마운트형 설계", "이중화 전원 공급"],
+    channels: "최대 10CH",
+    target: "기존 CCTV를 그대로 활용하는 중소형 현장",
+    headline: "기존 CCTV 그대로, 랜선만 연결하세요",
+    desc: "현장에 이미 설치된 CCTV에 랜선으로 연결하는 소형 AI 분석 장비. 별도의 AI 연산 PC 없이 최대 10채널 영상을 NPU로 분석하고 결과를 ISafePlatform으로 전송합니다.",
+    features: [
+      "기존 설치·운영 중인 CCTV에 즉시 적용",
+      "랜선 연결만으로 설치 완료",
+      "NPU 기반 — 최대 10채널 동시 AI 분석",
+      "별도 AI 연산 PC 불필요",
+    ],
     iconBg: "bg-blue-700",
   },
   {
-    name: "중형 컴팩트 서버",
-    nameEn: "Compact NPU Server",
-    badge: "공간 효율",
-    badgeColor: "bg-green-100 text-green-700",
-    channels: "16CH",
-    target: "공간이 협소한 현장사무소, 중소형 현장",
-    headline: "좁은 공간에서도 16채널을 처리합니다",
-    desc: "공간이 협소한 현장에 맞춘 컴팩트 섀시로 동시 16채널 가속 처리를 제공합니다. 설치 공간의 제약 없이 AI 관제를 시작하세요.",
-    features: ["공간 절약형 컴팩트 섀시", "동시 16채널 AI 가속 처리", "저소음 쿨링 시스템", "간편 설치"],
-    iconBg: "bg-green-600",
-  },
-  {
-    name: "단독형 NPU 카메라",
-    nameEn: "ISafeGuard-Edge",
-    badge: "올인원",
+    name: "멀티채널 NPU PC 서버",
+    nameEn: "Multi-Channel NPU Server",
+    badge: "대형현장",
     badgeColor: "bg-orange-100 text-orange-700",
-    channels: "독립 운용",
-    target: "인터넷이 없는 오지 현장, 이동 설치가 필요한 공정",
-    headline: "인터넷도 서버도 없는 현장에서 혼자 작동합니다",
-    desc: "LTE 모뎀, 경광등, 고출력 스피커가 내장된 올인원 엣지 카메라입니다. 배터리로 48시간 독자 연산하며 무선 OTA 펌웨어로 원격 업데이트합니다.",
-    features: ["LTE 모뎀 내장 (무선 연결)", "경광등·고출력 스피커 탑재", "배터리 기반 48시간 독자 구동", "무선 OTA 펌웨어 업데이트"],
-    iconBg: "bg-orange-500",
-    image: "/images/moving1.png",
+    channels: "100CH+",
+    target: "대형 건설사, 100대 이상 CCTV를 운영하는 현장",
+    headline: "100채널 이상 CCTV를 한 서버로 분석합니다",
+    desc: "NPU 기반 고성능 PC 서버를 현장에 구축해 100채널 이상의 대규모 CCTV를 동시에 AI 분석합니다. 대형 건설사의 멀티 현장 통합 관제 및 대용량 영상 처리에 최적화되어 있습니다.",
+    features: [
+      "NPU 기반 고성능 서버 아키텍처",
+      "100채널 이상 대용량 동시 AI 분석",
+      "대형 건설사 멀티 현장 통합 관제",
+      "온프레미스 또는 클라우드 구축 모두 지원",
+    ],
+    iconBg: "bg-orange-700",
   },
 ];
 
@@ -371,7 +385,7 @@ function DeviceTab() {
             현장 규모에 맞는 엣지 AI 디바이스를 선택하세요
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            소형 현장부터 수십 채널의 대형 현장, 인터넷이 없는 오지 현장까지. 모두 동일한 ISafeGuard 플랫폼으로 관제합니다.
+            카메라 한 대부터 100채널 이상 대형 현장까지. 기존 CCTV 활용 여부와 현장 규모에 맞는 장비를 선택하세요. 모두 동일한 ISafeGuard 플랫폼으로 관제합니다.
           </p>
         </div>
 
@@ -436,9 +450,9 @@ function DeviceTab() {
         <div className="mt-12 bg-gray-50 rounded-2xl p-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             {[
-              { label: "서버 장비가 필요 없는 현장", value: "단독형 NPU 카메라" },
-              { label: "16채널 이하 중소형 현장", value: "중형 컴팩트 서버" },
-              { label: "17채널 이상 대형 현장", value: "대형 가속 서버" },
+              { label: "AI PC 없이 카메라 교체만으로 도입", value: "온디바이스 AI 카메라" },
+              { label: "기존 CCTV 활용 · 10채널 이하 중소현장", value: "AI 엣지 박스" },
+              { label: "100채널 이상 대형 건설사", value: "멀티채널 NPU PC 서버" },
             ].map((item) => (
               <div key={item.label}>
                 <p className="text-xs text-gray-500 mb-1">{item.label}</p>
