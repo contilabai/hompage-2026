@@ -8,7 +8,7 @@ import ImagePlaceholder from "@/components/ImagePlaceholder";
 
 const featureGifs: Record<string, string> = {
   "smart-contract": "/gif/reward.gif",
-  "feedback-loop": "/gif/6 iSafeMeta Token Economy Technology.mp4",
+  "feedback-loop": "/gif/6 iSafeMeta Token Economy Technology.gif",
 };
 
 const getChainFeatures = (language: "ko" | "en") => [
@@ -341,27 +341,13 @@ export default function ISafeChainPage() {
                   </a>
                 </div>
                 {featureGifs[feature.id] ? (
-                  featureGifs[feature.id].endsWith(".mp4") ? (
-                    <div className="rounded-2xl overflow-hidden">
-                      <video
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="w-full h-full object-cover rounded-2xl"
-                      >
-                        <source src={featureGifs[feature.id]} type="video/mp4" />
-                      </video>
-                    </div>
-                  ) : (
-                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
-                      <img
-                        src={featureGifs[feature.id]}
-                        alt={feature.placeholder.title}
-                        className="absolute inset-0 w-full h-full object-cover"
-                      />
-                    </div>
-                  )
+                  <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+                    <img
+                      src={featureGifs[feature.id]}
+                      alt={feature.placeholder.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
                 ) : (
                   <ImagePlaceholder
                     title={feature.placeholder.title}

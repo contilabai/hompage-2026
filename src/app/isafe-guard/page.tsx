@@ -131,16 +131,11 @@ export default function ISafeGuardPage() {
                     </span>
                   </div>
                   <div className="relative aspect-video bg-gray-800 rounded-xl overflow-hidden mb-3">
-                    <video
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
+                    <img
+                      src="/gif/detection.gif"
+                      alt={language === "ko" ? "AI 위험 감지" : "AI Hazard Detection"}
                       className="w-full h-full object-cover"
-                    >
-                      <source src="/gif/detection.mp4" type="video/mp4" />
-                      {language === "ko" ? "비디오를 재생할 수 없습니다" : "Your browser does not support the video tag"}
-                    </video>
+                    />
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2.5 bg-gray-800/60 rounded-lg px-3 py-2.5">

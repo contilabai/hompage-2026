@@ -288,16 +288,11 @@ export default function ISafeMetaPage() {
                     </span>
                   </div>
                   <div className="relative aspect-video rounded-xl overflow-hidden mb-3">
-                    <video
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
+                    <img
+                      src="/gif/iSafeMeta Reality Capture and Mesh based Training.gif"
+                      alt={language === "ko" ? "리얼리티 캡처 메쉬 훈련" : "Reality Capture Mesh Training"}
                       className="w-full h-full object-cover"
-                    >
-                      <source src="/gif/iSafeMeta Reality Capture and Mesh based Training.mp4" type="video/mp4" />
-                      {language === "ko" ? "비디오를 재생할 수 없습니다" : "Your browser does not support the video tag"}
-                    </video>
+                    />
                   </div>
                   <div className="space-y-1.5">
                     <div className="flex items-start gap-2.5 bg-gray-800/60 rounded-lg px-3 py-2.5">

@@ -50,3 +50,6 @@ next-env.d.ts
 /public/gif/reward2.gif
 /public/gif/iSafeChain.mp4
 /public/gif/iSafePlanner-IFC transform.gif
+
+# 대용량 mp4 — gif로 대체, 푸시 제외 (로컬 보관)
+/public/gif/*.mp4
