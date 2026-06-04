@@ -239,8 +239,8 @@ export default function AboutPage() {
                     title: language === "ko" ? "Linked Data 건설안전 플랫폼" : "Linked Data Safety Platform",
                     desc: language === "ko" ? "Linked Data 기반 건설안전 소셜 네트워크 플랫폼 개발" : "Developed Linked Data-based construction safety social network platform",
                   },
-                ].map((item) => (
-                  <div key={item.period} className="reveal bg-white rounded-xl border border-blue-50 p-5 hover:border-blue-200 transition-colors">
+                ].map((item, ii) => (
+                  <div key={ii} className="reveal bg-white rounded-xl border border-blue-50 p-5 hover:border-blue-200 transition-colors">
                     <span className="inline-block px-2 py-0.5 bg-blue-50 text-blue-500 rounded text-[10px] font-bold mb-2">{item.period}</span>
                     <p className="text-sm font-bold text-gray-800 mb-1.5">{item.title}</p>
                     <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
@@ -284,8 +284,8 @@ export default function AboutPage() {
                       ? "메타버스 기반 건설안전 훈련 환경 개발 — iSafeMeta의 원형 연구 착수"
                       : "Developed metaverse-based safety training environment — prototype research for iSafeMeta",
                   },
-                ].map((item) => (
-                  <div key={item.period} className="reveal bg-white rounded-xl border border-orange-50 p-5 hover:border-orange-200 transition-colors">
+                ].map((item, ii) => (
+                  <div key={ii} className="reveal bg-white rounded-xl border border-orange-50 p-5 hover:border-orange-200 transition-colors">
                     <span className="inline-block px-2 py-0.5 bg-orange-50 text-orange-500 rounded text-[10px] font-bold mb-2">{item.period}</span>
                     <p className="text-sm font-bold text-gray-800 mb-1.5">{item.title}</p>
                     <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
