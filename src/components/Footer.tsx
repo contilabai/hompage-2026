@@ -1,20 +1,22 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
-const productLinks = [
-  { label: "ISafePlatform Core", href: "/platform" },
-  { label: "ISafePlanner", href: "/isafe-planner" },
-  { label: "ISafeMeta", href: "/isafe-meta" },
-  { label: "ISafeGuard", href: "/isafe-guard" },
-  { label: "ISafeChain", href: "/isafe-chain" },
+const getProductLinks = (language: "ko" | "en") => [
+  { label: "iSafePlatform Core", href: "/platform" },
+  { label: "iSafePlanner", href: "/isafe-planner" },
+  { label: "iSafeMeta", href: "/isafe-meta" },
+  { label: "iSafeGuard", href: "/isafe-guard" },
+  { label: "iSafeChain", href: "/isafe-chain" },
 ];
 
-const companyLinks = [
-  { label: "회사소개", href: "/about" },
+const getCompanyLinks = (language: "ko" | "en") => [
+  { label: language === "ko" ? "회사소개" : "About", href: "/about" },
   { label: "R&D History", href: "/about#rnd" },
-  { label: "파트너 및 고객사", href: "/about#partners" },
-  { label: "특허 및 인증", href: "/about#patents" },
-  { label: "채용", href: "#jobs" },
+  { label: language === "ko" ? "파트너 및 고객사" : "Partners & Clients", href: "/about#partners" },
+  { label: language === "ko" ? "특허 및 인증" : "Patents & Certifications", href: "/about#patents" },
+  { label: language === "ko" ? "채용" : "Careers", href: "#jobs" },
 ];
 
 const socialLinks = [
@@ -65,7 +67,14 @@ const socialLinks = [
   },
 ];
 
-export default function Footer() {
+interface FooterProps {
+  language?: "ko" | "en";
+}
+
+export default function Footer({ language = "ko" }: FooterProps) {
+  const productLinks = getProductLinks(language);
+  const companyLinks = getCompanyLinks(language);
+
   return (
     <footer className="bg-gray-900 text-gray-300">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-14">
@@ -74,7 +83,9 @@ export default function Footer() {
 
           {/* 제품 */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-5">제품</h4>
+            <h4 className="text-sm font-bold text-white mb-5">
+              {language === "ko" ? "제품" : "Products"}
+            </h4>
             <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.label}>
@@ -88,7 +99,9 @@ export default function Footer() {
 
           {/* 회사 */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-5">회사</h4>
+            <h4 className="text-sm font-bold text-white mb-5">
+              {language === "ko" ? "회사" : "Company"}
+            </h4>
             <ul className="space-y-3">
               {companyLinks.map((link) => (
                 <li key={link.label}>
@@ -102,10 +115,14 @@ export default function Footer() {
 
           {/* 문의 */}
           <div>
-            <h4 className="text-sm font-bold text-white mb-5">문의</h4>
+            <h4 className="text-sm font-bold text-white mb-5">
+              {language === "ko" ? "문의" : "Contact"}
+            </h4>
             <div className="space-y-4">
               <div>
-                <p className="text-xs text-gray-500 mb-1">이메일</p>
+                <p className="text-xs text-gray-500 mb-1">
+                  {language === "ko" ? "이메일" : "Email"}
+                </p>
                 <a
                   href="mailto:contilab@contilab.co.kr"
                   className="text-sm font-semibold text-white hover:text-blue-400 transition-colors"
@@ -114,10 +131,21 @@ export default function Footer() {
                 </a>
               </div>
               <div>
-                <p className="text-xs text-gray-500 mb-1">주소</p>
+                <p className="text-xs text-gray-500 mb-1">
+                  {language === "ko" ? "주소" : "Address"}
+                </p>
                 <p className="text-sm text-gray-400 leading-relaxed">
-                  서울특별시 동작구 흑석로 84<br />
-                  중앙대학교 208관 201호
+                  {language === "ko" ? (
+                    <>
+                      서울특별시 동작구 흑석로 84<br />
+                      중앙대학교 208관 201호
+                    </>
+                  ) : (
+                    <>
+                      Rm 201, Building 208, Chung-Ang University<br />
+                      84 Heukseok-ro, Dongjak-gu, Seoul
+                    </>
+                  )}
                 </p>
               </div>
               <div>
@@ -125,7 +153,7 @@ export default function Footer() {
                   href="/news"
                   className="text-sm text-gray-400 hover:text-white transition-colors block"
                 >
-                  소식·공지
+                  {language === "ko" ? "소식·공지" : "News & Updates"}
                 </Link>
               </div>
             </div>
@@ -147,8 +175,17 @@ export default function Footer() {
               />
             </div>
             <p className="text-xs text-gray-500 leading-relaxed">
-              ConTILab · 중앙대학교 건설 및 산업기술 연구실<br />
-              서울특별시 동작구 흑석로 84 중앙대학교 208관 201호
+              {language === "ko" ? (
+                <>
+                  ConTILab · 중앙대학교 건설 및 산업기술 연구실<br />
+                  서울특별시 동작구 흑석로 84 중앙대학교 208관 201호
+                </>
+              ) : (
+                <>
+                  ConTILab · Construction & Industry Technology Lab, Chung-Ang University<br />
+                  Rm 201, Building 208, 84 Heukseok-ro, Dongjak-gu, Seoul
+                </>
+              )}
             </p>
           </div>
 
@@ -166,10 +203,18 @@ export default function Footer() {
               ))}
             </div>
             <div className="flex flex-wrap gap-4 text-xs text-gray-500">
-              <Link href="#terms" className="hover:text-white transition-colors">이용약관</Link>
-              <Link href="#privacy" className="hover:text-white transition-colors">개인정보처리방침</Link>
-              <Link href="/about" className="hover:text-white transition-colors">회사소개</Link>
-              <a href="mailto:contilab@contilab.co.kr" className="hover:text-white transition-colors">파트너십 문의</a>
+              <Link href="#terms" className="hover:text-white transition-colors">
+                {language === "ko" ? "이용약관" : "Terms"}
+              </Link>
+              <Link href="#privacy" className="hover:text-white transition-colors">
+                {language === "ko" ? "개인정보처리방침" : "Privacy"}
+              </Link>
+              <Link href="/about" className="hover:text-white transition-colors">
+                {language === "ko" ? "회사소개" : "About"}
+              </Link>
+              <a href="mailto:contilab@contilab.co.kr" className="hover:text-white transition-colors">
+                {language === "ko" ? "파트너십 문의" : "Partnership Inquiry"}
+              </a>
             </div>
           </div>
         </div>

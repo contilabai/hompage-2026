@@ -42,3 +42,11 @@ next-env.d.ts
 
 # claude code
 .claude
+
+#pdf
+*.pdf
+
+# 미사용 미디어 (로컬 보관, 푸시 제외 — 추후 사용 가능)
+/public/gif/reward2.gif
+/public/gif/iSafeChain.mp4
+/public/gif/iSafePlanner-IFC transform.gif

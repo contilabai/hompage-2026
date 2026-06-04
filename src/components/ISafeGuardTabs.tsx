@@ -22,16 +22,16 @@ const solutionFeatures = [
     tag: "웹 관제 플랫폼",
     tagColor: "bg-blue-100 text-blue-700",
     headline: "몸이 열 개라도\n100CH+ 카메라를 동시에\n볼 수는 없습니다",
-    subhead: "ISafeGuard가 모든 채널을 동시에 분석하고 이상 징후만 알립니다",
+    subhead: "iSafeGuard가 모든 채널을 동시에 분석하고 이상 징후만 알립니다",
     desc: "브라우저 하나로 현장 전체 카메라를 동시에 관제합니다. AI가 매 프레임을 분석하고 위험 카테고리별로 분류하여 이상 상황만 즉시 화면에 띄웁니다. 안전 관리자는 진짜 위험 상황에만 집중할 수 있습니다.",
     bullets: [
-      "최대 32채널 동시 AI 분석·관제",
+      "최대 100+채널 동시 AI 분석·관제",
       "위험 카테고리 자동 분류 및 알람 리스트업",
       "이벤트 전후 2분 영상 클립 자동 보존",
       "근로자·중장비 간 실제 거리 실시간 측정",
       "모바일 앱으로 현장 밖에서도 즉시 확인",
     ],
-    placeholder: { title: "ISafeGuard 32채널 웹 관제 화면", description: "브라우저에서 32개 카메라를 동시에 모니터링하는 실제 대시보드 스크린샷" },
+    placeholder: { title: "iSafeGuard 100+채널 웹 관제 화면", description: "브라우저에서 100+개 카메라를 동시에 모니터링하는 실제 대시보드 스크린샷" },
     ctaBg: "bg-blue-600 hover:bg-blue-700",
     bgClass: "bg-white",
   },
@@ -151,7 +151,7 @@ const modelPackages = [
     badge: "기본 모델 무료 제공",
     freeLabel: undefined,
     headline: "어느 현장에서나\n즉시 쓸 수 있는\n필수 감지 모델",
-    target: "처음 AI 관제를 도입하는 현장, 공통 공정이 대부분인 중소형 현장.\nISafePlatform Core, 관제 뷰어, 필수 AI 모델 5종을 전문 엔지니어가 현장에 직접 무상으로 설치해 드립니다.",
+    target: "처음 AI 관제를 도입하는 현장, 공통 공정이 대부분인 중소형 현장.\niSafePlatform Core, 관제 뷰어, 필수 AI 모델 5종을 전문 엔지니어가 현장에 직접 무상으로 설치해 드립니다.",
     valuePoint: "튜닝 없이 설치 당일부터 감지 시작",
     models: [
       { name: "개인 보호구 감지", detail: "안전모 착용 여부 실시간 파악", tags: ["외부비계", "사다리", "크레인", "터파기 등 대부분 공정"] },
@@ -361,7 +361,7 @@ const hardwareProducts = [
     channels: "카메라 단독",
     target: "별도 AI PC 없이 즉시 도입이 필요한 모든 현장",
     headline: "카메라 자체에서 AI가 분석합니다",
-    desc: "NPU 모듈이 내장된 AI 카메라. 별도의 AI 연산 PC 없이 카메라 단에서 직접 AI 분석을 수행하고, 분석 결과만 ISafePlatform으로 전송합니다. 네트워크 대역폭을 최소화하면서 즉시 관제를 시작할 수 있습니다.",
+    desc: "NPU 모듈이 내장된 AI 카메라. 별도의 AI 연산 PC 없이 카메라 단에서 직접 AI 분석을 수행하고, 분석 결과만 iSafePlatform으로 전송합니다. 네트워크 대역폭을 최소화하면서 즉시 관제를 시작할 수 있습니다.",
     features: [
       "NPU 모듈 내장 — 별도 AI PC 불필요",
       "카메라 단 실시간 AI 분석 처리",
@@ -379,7 +379,7 @@ const hardwareProducts = [
     channels: "최대 10CH",
     target: "기존 CCTV를 그대로 활용하는 중소형 현장",
     headline: "기존 CCTV 그대로, 랜선만 연결하세요",
-    desc: "현장에 이미 설치된 CCTV에 랜선으로 연결하는 소형 AI 분석 장비. 별도의 AI 연산 PC 없이 최대 10채널 영상을 NPU로 분석하고 결과를 ISafePlatform으로 전송합니다.",
+    desc: "현장에 이미 설치된 CCTV에 랜선으로 연결하는 소형 AI 분석 장비. 별도의 AI 연산 PC 없이 최대 10채널 영상을 NPU로 분석하고 결과를 iSafePlatform으로 전송합니다.",
     features: [
       "기존 설치·운영 중인 CCTV에 즉시 적용",
       "랜선 연결만으로 설치 완료",
@@ -405,6 +405,7 @@ const hardwareProducts = [
       "온프레미스 또는 클라우드 구축 모두 지원",
     ],
     iconBg: "bg-orange-700",
+    image: "/images/Multi channel NPU server.png",
   },
 ];
 
@@ -418,7 +419,7 @@ function DeviceTab() {
             현장 규모에 맞는 엣지 AI 디바이스를 선택하세요
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
-            카메라 한 대부터 100채널 이상 대형 현장까지. 기존 CCTV 활용 여부와 현장 규모에 맞는 장비를 선택하세요. 모두 동일한 ISafeGuard 플랫폼으로 관제합니다.
+            카메라 한 대부터 100채널 이상 대형 현장까지. 기존 CCTV 활용 여부와 현장 규모에 맞는 장비를 선택하세요. 모두 동일한 iSafeGuard 플랫폼으로 관제합니다.
           </p>
         </div>
 

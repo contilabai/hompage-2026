@@ -3,14 +3,14 @@
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Globe } from "lucide-react";
 
-const products = [
+const getProducts = (language: "ko" | "en") => [
   {
-    label: "ISafePlatform Core",
+    label: "iSafePlatform Core",
     href: "/platform",
     badge: "Core",
-    desc: "모듈 관리 · 권한 제어 · 데이터 파이프라인",
+    desc: language === "ko" ? "모듈 관리 · 권한 제어 · 데이터 파이프라인" : "Module Management · Access Control · Data Pipeline",
     badgeColor: "bg-gray-100 text-gray-600",
     iconBg: "bg-gray-100",
     iconColor: "text-gray-600",
@@ -21,10 +21,10 @@ const products = [
     ),
   },
   {
-    label: "ISafePlanner",
+    label: "iSafePlanner",
     href: "/isafe-planner",
     badge: "Plan",
-    desc: "BIM 기반 공정 분석 · 위험도 예측",
+    desc: language === "ko" ? "BIM 기반 공정 분석 · 위험도 예측" : "BIM-based Schedule Analysis · Risk Prediction",
     badgeColor: "bg-green-50 text-green-700",
     iconBg: "bg-green-50",
     iconColor: "text-green-600",
@@ -35,10 +35,10 @@ const products = [
     ),
   },
   {
-    label: "ISafeMeta",
+    label: "iSafeMeta",
     href: "/isafe-meta",
     badge: "Train",
-    desc: "가상 현장 훈련 · 다국어 AI 아바타",
+    desc: language === "ko" ? "가상 현장 훈련 · 다국어 AI 아바타" : "Virtual Site Training · Multilingual AI Avatars",
     badgeColor: "bg-red-50 text-red-700",
     iconBg: "bg-red-50",
     iconColor: "text-red-500",
@@ -49,10 +49,10 @@ const products = [
     ),
   },
   {
-    label: "ISafeGuard",
+    label: "iSafeGuard",
     href: "/isafe-guard",
     badge: "Monitor",
-    desc: "32채널 AI 관제 · VLM 자동 보고서",
+    desc: language === "ko" ? "32채널 AI 관제 · VLM 자동 보고서" : "32-Channel AI Monitoring · VLM Auto-Reports",
     badgeColor: "bg-blue-50 text-blue-700",
     iconBg: "bg-blue-50",
     iconColor: "text-blue-600",
@@ -63,10 +63,10 @@ const products = [
     ),
   },
   {
-    label: "ISafeChain",
+    label: "iSafeChain",
     href: "/isafe-chain",
     badge: "Measure",
-    desc: "블록체인 기록 · 스마트 컨트랙트 리워드",
+    desc: language === "ko" ? "블록체인 기록 · 스마트 컨트랙트 리워드" : "Blockchain Records · Smart Contract Rewards",
     badgeColor: "bg-orange-50 text-orange-700",
     iconBg: "bg-orange-50",
     iconColor: "text-orange-500",
@@ -78,14 +78,14 @@ const products = [
   },
 ];
 
-const aboutSections = [
+const getAboutSections = (language: "ko" | "en") => [
   {
-    group: "About",
+    group: language === "ko" ? "회사" : "Company",
     items: [
       {
-        label: "ConTILab",
+        label: language === "ko" ? "ConTILab" : "ConTILab",
         href: "/about",
-        desc: "회사 소개 · 파트너십 현황",
+        desc: language === "ko" ? "회사 소개 · 파트너십" : "Company Overview · Partnerships",
         iconBg: "bg-gray-100",
         iconColor: "text-gray-600",
         icon: (
@@ -94,27 +94,15 @@ const aboutSections = [
           </svg>
         ),
       },
-      {
-        label: "Our Journey",
-        href: "/about#history",
-        desc: "2003년 연구실부터 현재까지의 연혁",
-        iconBg: "bg-amber-50",
-        iconColor: "text-amber-500",
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        ),
-      },
     ],
   },
   {
-    group: "연구",
+    group: language === "ko" ? "연구" : "Research",
     items: [
       {
-        label: "Research Areas",
+        label: language === "ko" ? "연구" : "Research",
         href: "/about/research",
-        desc: "비전 AI · 합성 데이터 · LLM 핵심 연구",
+        desc: language === "ko" ? "R&D · 기술 혁신 · 특허" : "R&D · Technology Innovation · Patents",
         iconBg: "bg-blue-50",
         iconColor: "text-blue-600",
         icon: (
@@ -123,41 +111,16 @@ const aboutSections = [
           </svg>
         ),
       },
-      {
-        label: "인증 & 특허",
-        href: "/about/research#credentials",
-        desc: "KTL · ONYCOM 인증 · 29건 특허 포트폴리오",
-        iconBg: "bg-green-50",
-        iconColor: "text-green-600",
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-          </svg>
-        ),
-      },
     ],
   },
   {
-    group: "채용",
+    group: language === "ko" ? "채용" : "Careers",
     items: [
       {
-        label: "우리의 비전",
+        label: language === "ko" ? "비전 및 채용" : "Vision & Careers",
         href: "/about/careers",
-        desc: "ConTI Lab이 함께 만드는 안전의 가치",
+        desc: language === "ko" ? "우리의 가치 · 채용 공고" : "Our Values · Job Openings",
         iconBg: "bg-purple-50",
-        iconColor: "text-purple-600",
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-        ),
-      },
-      {
-        label: "채용 공고",
-        href: "/about/careers",
-        desc: "AI Engineer · 건설안전 프로젝트 매니저",
-        iconBg: "bg-rose-50",
         iconColor: "text-rose-500",
         icon: (
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -176,8 +139,25 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
+  const [language, setLanguage] = useState<"ko" | "en">("ko");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedLang = localStorage.getItem("language") as "ko" | "en" | null;
+      if (savedLang) setLanguage(savedLang);
+    }
+  }, []);
+
+  const handleLanguageChange = (lang: "ko" | "en") => {
+    setLanguage(lang);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("language", lang);
+      // 커스텀 이벤트로 다른 컴포넌트에 알림
+      window.dispatchEvent(new CustomEvent("languageChange", { detail: lang }));
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -229,7 +209,7 @@ export default function Header() {
                   aboutOpen ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                 }`}
               >
-                회사소개
+                {language === "ko" ? "회사소개" : "About"}
                 <ChevronDown
                   size={20}
                   className={`transition-transform duration-200 ${aboutOpen ? "rotate-180" : ""}`}
@@ -239,7 +219,7 @@ export default function Header() {
               {aboutOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[400px] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
                   <div className="p-3 space-y-1">
-                    {aboutSections.map((section, si) => (
+                    {getAboutSections(language).map((section, si) => (
                       <div key={section.group}>
                         {si > 0 && <div className="my-2 border-t border-gray-100" />}
                         <p className="px-4 pt-2 pb-1 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
@@ -278,7 +258,7 @@ export default function Header() {
                   productOpen ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                 }`}
               >
-                제품
+                {language === "ko" ? "제품" : "Products"}
                 <ChevronDown
                   size={20}
                   className={`transition-transform duration-200 ${productOpen ? "rotate-180" : ""}`}
@@ -288,7 +268,7 @@ export default function Header() {
               {productOpen && (
                 <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[420px] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
                   <div className="p-3">
-                    {products.map((p) => (
+                    {getProducts(language).map((p) => (
                       <Link
                         key={p.href}
                         href={p.href}
@@ -320,22 +300,53 @@ export default function Header() {
               href="/news"
               className="px-5 py-3 text-[30px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
-              소식
+              {language === "ko" ? "소식" : "News"}
             </Link>
 
             <Link
               href="/contact"
               className="px-5 py-3 text-[30px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
-              문의하기
+              {language === "ko" ? "문의하기" : "Contact"}
             </Link>
           </nav>
 
+          {/* Language Toggle */}
+          <div className="flex items-center gap-0.5 bg-gray-100 rounded-lg p-1.5 mr-4 cursor-pointer">
+            <button
+              onClick={() => {
+                console.log("KO clicked");
+                handleLanguageChange("ko");
+              }}
+              className={`px-4 py-2 text-sm font-bold rounded transition-all ${
+                language === "ko"
+                  ? "bg-white text-gray-900 shadow-md border border-gray-200"
+                  : "text-gray-700 hover:text-gray-900"
+              }`}
+            >
+              한국어
+            </button>
+            <button
+              onClick={() => {
+                console.log("EN clicked");
+                handleLanguageChange("en");
+              }}
+              className={`flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded transition-all ${
+                language === "en"
+                  ? "bg-white text-gray-900 shadow-md border border-gray-200"
+                  : "text-gray-700 hover:text-gray-900"
+              }`}
+            >
+              <Globe size={16} />
+              <span>EN</span>
+            </button>
+          </div>
+
           {/* Mobile toggle */}
           <button
-            className="lg:hidden ml-auto p-2 text-gray-600"
+            className="lg:hidden p-2 text-gray-600"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="메뉴 열기"
+            aria-label={language === "ko" ? "메뉴 열기" : "Open menu"}
           >
             {mobileOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
@@ -351,7 +362,7 @@ export default function Header() {
               onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
               className="w-full flex items-center justify-between py-3 text-sm font-semibold text-gray-700 border-b border-gray-50"
             >
-              회사소개
+              {language === "ko" ? "회사소개" : "About"}
               <ChevronDown
                 size={16}
                 className={`text-gray-400 transition-transform ${mobileAboutOpen ? "rotate-180" : ""}`}
@@ -359,7 +370,7 @@ export default function Header() {
             </button>
             {mobileAboutOpen && (
               <div className="py-1 pl-3">
-                {aboutSections.map((section) => (
+                {getAboutSections(language).map((section) => (
                   <div key={section.group}>
                     <p className="pt-2 pb-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">
                       {section.group}
@@ -386,7 +397,7 @@ export default function Header() {
               onClick={() => setMobileProductOpen(!mobileProductOpen)}
               className="w-full flex items-center justify-between py-3 text-sm font-semibold text-gray-700 border-b border-gray-50"
             >
-              제품
+              {language === "ko" ? "제품" : "Products"}
               <ChevronDown
                 size={16}
                 className={`text-gray-400 transition-transform ${mobileProductOpen ? "rotate-180" : ""}`}
@@ -394,7 +405,7 @@ export default function Header() {
             </button>
             {mobileProductOpen && (
               <div className="py-1 pl-3">
-                {products.map((p) => (
+                {getProducts(language).map((p) => (
                   <Link
                     key={p.href}
                     href={p.href}
@@ -415,14 +426,14 @@ export default function Header() {
               className="block py-3 text-sm font-medium text-gray-700 border-b border-gray-50 hover:text-blue-600"
               onClick={() => setMobileOpen(false)}
             >
-              소식
+              {language === "ko" ? "소식" : "News"}
             </Link>
             <Link
               href="/contact"
               className="block py-3 text-sm font-medium text-gray-700 hover:text-blue-600"
               onClick={() => setMobileOpen(false)}
             >
-              문의하기
+              {language === "ko" ? "문의하기" : "Contact"}
             </Link>
           </nav>
         </div>

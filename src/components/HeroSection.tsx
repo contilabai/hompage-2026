@@ -3,18 +3,22 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 
-const slides = [
+const getSlides = (language: "ko" | "en") => [
   {
-    tag: "ISafePlatform",
+    tag: "iSafePlatform",
     tagColor: "bg-blue-700",
     badge: "All-in-One Platform",
-    headline: "안전 사고,\n예측할 수 있다면\n막을 수 있습니다",
-    desc: "지금 이 순간에도 현장 어딘가에서 사고의 전조가 쌓이고 있습니다. ISafePlatform은 그 전조를 데이터로 읽어 사고가 일어나기 전에 개입합니다.",
+    headline: language === "ko"
+      ? "안전 사고,\n예측할 수 있다면\n막을 수 있습니다"
+      : "Safety accidents—\nif you can predict them,\nyou can prevent them",
+    desc: language === "ko"
+      ? "지금 이 순간에도 현장 어딘가에서 사고의 전조가 쌓이고 있습니다. iSafePlatform은 그 전조를 데이터로 읽어 사고가 일어나기 전에 개입합니다."
+      : "Right now, warning signs are accumulating somewhere on your site. iSafePlatform reads those signs as data and intervenes before accidents happen.",
     href: "/platform",
     gradientFrom: "#0d1b2a",
     gradientTo: "#1b2a3b",
     mockupBg: "bg-blue-900",
-    mockupLabel: "ISafePlatform Core 대시보드",
+    mockupLabel: language === "ko" ? "iSafePlatform Core 대시보드" : "iSafePlatform Core Dashboard",
     accentText: "text-blue-300",
     mockupIcon: (
       <svg className="w-8 h-8 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -23,16 +27,20 @@ const slides = [
     ),
   },
   {
-    tag: "ISafePlanner",
+    tag: "iSafePlanner",
     tagColor: "bg-green-600",
     badge: "Plan Module",
-    headline: "현장 투입 전,\n이미 모든 위험을\n알고 있습니다",
-    desc: "근로자가 들어가기 전에 그 공간의 위험을 먼저 파악해야 합니다. ISafePlanner는 도면 하나로 공정별 위험 지도를 자동으로 그립니다.",
+    headline: language === "ko"
+      ? "현장 투입 전,\n이미 모든 위험을\n알고 있습니다"
+      : "Before deployment,\nyou already know\nevery risk",
+    desc: language === "ko"
+      ? "근로자가 들어가기 전에 그 공간의 위험을 먼저 파악해야 합니다. iSafePlanner는 도면 하나로 공정별 위험 지도를 자동으로 그립니다."
+      : "You must understand a space's risks before workers enter. iSafePlanner automatically draws a phase-by-phase risk map from a single blueprint.",
     href: "/isafe-planner",
     gradientFrom: "#14532d",
     gradientTo: "#16a34a",
     mockupBg: "bg-green-800",
-    mockupLabel: "BIM 3D 공정 시뮬레이션",
+    mockupLabel: language === "ko" ? "BIM 3D 공정 시뮬레이션" : "BIM 3D Process Simulation",
     accentText: "text-green-300",
     mockupIcon: (
       <svg className="w-8 h-8 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,16 +49,20 @@ const slides = [
     ),
   },
   {
-    tag: "ISafeMeta",
+    tag: "iSafeMeta",
     tagColor: "bg-red-600",
     badge: "Train Module",
-    headline: "종이 교육으로\n근로자를 지킬 수\n없는 이유",
-    desc: "위험을 한 번도 겪어보지 못한 사람은 위험을 알아보지 못합니다. ISafeMeta는 실제 현장과 똑같은 공간에서 위험을 직접 체험하게 합니다.",
+    headline: language === "ko"
+      ? "종이 교육으로\n근로자를 지킬 수\n없는 이유"
+      : "Why paper training\ncan't protect\nyour workers",
+    desc: language === "ko"
+      ? "위험을 한 번도 겪어보지 못한 사람은 위험을 알아보지 못합니다. iSafeMeta는 실제 현장과 똑같은 공간에서 위험을 직접 체험하게 합니다."
+      : "Those who have never experienced danger can't recognize it. iSafeMeta lets workers experience hazards firsthand in a space identical to the real site.",
     href: "/isafe-meta",
     gradientFrom: "#7f1d1d",
     gradientTo: "#dc2626",
     mockupBg: "bg-red-800",
-    mockupLabel: "가상 안전 훈련 시뮬레이터",
+    mockupLabel: language === "ko" ? "가상 안전 훈련 시뮬레이터" : "Virtual Safety Training Simulator",
     accentText: "text-red-300",
     mockupIcon: (
       <svg className="w-8 h-8 text-red-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,16 +71,20 @@ const slides = [
     ),
   },
   {
-    tag: "ISafeGuard",
+    tag: "iSafeGuard",
     tagColor: "bg-blue-500",
     badge: "Monitor Module",
-    headline: "당신이 자리를\n비웠을 때도\nAI는 현장에 있습니다",
-    desc: "안전 관리자 한 명이 32개 카메라를 동시에 볼 수는 없습니다. ISafeGuard AI는 지치지 않고, 졸지 않으며, 매 프레임을 분석합니다.",
+    headline: language === "ko"
+      ? "당신이 자리를\n비웠을 때도\nAI는 현장에 있습니다"
+      : "Even when you\nstep away,\nAI stays on the job",
+    desc: language === "ko"
+      ? "안전 관리자 한 명이 32개 카메라를 동시에 볼 수는 없습니다. iSafeGuard AI는 지치지 않고, 졸지 않으며, 매 프레임을 분석합니다."
+      : "One safety manager can't watch 32 cameras at once. iSafeGuard AI never tires, never dozes, and analyzes every single frame.",
     href: "/isafe-guard",
     gradientFrom: "#0c2340",
     gradientTo: "#1d6fa4",
     mockupBg: "bg-blue-900",
-    mockupLabel: "다채널 실시간 관제 화면",
+    mockupLabel: language === "ko" ? "다채널 실시간 관제 화면" : "Multi-Channel Live Monitoring",
     accentText: "text-blue-300",
     mockupIcon: (
       <svg className="w-8 h-8 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,16 +93,20 @@ const slides = [
     ),
   },
   {
-    tag: "ISafeChain",
+    tag: "iSafeChain",
     tagColor: "bg-orange-500",
     badge: "Measure Module",
-    headline: "사고 이후\n기록이 없으면\n당신을 지킬 수 없습니다",
-    desc: "중대재해 발생 시 '우리는 교육했다', '우리는 관리했다'를 증명해야 합니다. ISafeChain은 그 증거를 위변조 불가 블록체인에 자동으로 쌓습니다.",
+    headline: language === "ko"
+      ? "사고 이후\n기록이 없으면\n당신을 지킬 수 없습니다"
+      : "After an accident,\nno record means\nno protection for you",
+    desc: language === "ko"
+      ? "중대재해 발생 시 '우리는 교육했다', '우리는 관리했다'를 증명해야 합니다. iSafeChain은 그 증거를 위변조 불가 블록체인에 자동으로 쌓습니다."
+      : "When a serious accident occurs, you must prove 'we trained' and 'we managed.' iSafeChain automatically stacks that evidence on a tamper-proof blockchain.",
     href: "/isafe-chain",
     gradientFrom: "#7c2d12",
     gradientTo: "#ea580c",
     mockupBg: "bg-orange-800",
-    mockupLabel: "블록체인 안전 거버넌스 대시보드",
+    mockupLabel: language === "ko" ? "블록체인 안전 거버넌스 대시보드" : "Blockchain Safety Governance Dashboard",
     accentText: "text-orange-300",
     mockupIcon: (
       <svg className="w-8 h-8 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,13 +116,14 @@ const slides = [
   },
 ];
 
-export default function HeroSection() {
+export default function HeroSection({ language = "ko" }: { language?: "ko" | "en" }) {
   const [current, setCurrent] = useState(0);
   const [paused, setPaused] = useState(false);
+  const slides = getSlides(language);
 
   const next = useCallback(() => {
     setCurrent((prev) => (prev + 1) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
     if (paused) return;
@@ -144,7 +165,7 @@ export default function HeroSection() {
               href={slide.href}
               className="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold text-gray-900 bg-white hover:bg-gray-100 rounded-lg transition-colors"
             >
-              상세보기
+              {language === "ko" ? "상세보기" : "Learn More"}
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>

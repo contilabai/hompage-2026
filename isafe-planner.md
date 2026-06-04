@@ -1,4 +1,4 @@
-# ISafePlanner: BIM 기반 동적 공정 및 안전 예측 스케줄러 (Plan Module)
+# iSafePlanner: BIM 기반 동적 공정 및 안전 예측 스케줄러 (Plan Module)
 
 철저한 데이터 기반 사전 계획으로 아차사고와 중대재해 가능성을 원천 차단합니다.
 
@@ -24,9 +24,9 @@
 ---
 
 ## 모듈 연동
-- ISafeMeta: ISafePlanner가 빌드한 현장 3D 모델을 ISafeMeta에 이식하여 가상 훈련 환경 구성
-- ISafeGuard: 카메라 위치 추천 결과를 ISafeGuard에 전달하여 최적 관제 배치 구현
-- ISafeChain: 위험도 분석 데이터를 ISafeChain 피드백 루프로 전달하여 위험도 가중치 자동 재조정
+- iSafeMeta: iSafePlanner가 빌드한 현장 3D 모델을 iSafeMeta에 이식하여 가상 훈련 환경 구성
+- iSafeGuard: 카메라 위치 추천 결과를 iSafeGuard에 전달하여 최적 관제 배치 구현
+- iSafeChain: 위험도 분석 데이터를 iSafeChain 피드백 루프로 전달하여 위험도 가중치 자동 재조정
 
 ---
 

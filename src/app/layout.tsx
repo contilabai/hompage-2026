@@ -11,7 +11,7 @@ const notoSansKR = Noto_Sans_KR({
 
 export const metadata: Metadata = {
   title: "ConTILab | 건설현장 안전관리 플랫폼",
-  description: "건설현장의 안전관리, 영상기록, 공정관리를 하나의 플랫폼에서. 4,500개 이상 현장 도입.",
+  description: "건설현장의 안전관리, 영상기록, 공정관리를 하나의 플랫폼에서. 100개 이상 현장 도입.",
 };
 
 export default function RootLayout({

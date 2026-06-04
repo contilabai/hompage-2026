@@ -1,4 +1,4 @@
-# ISafeGuard: 실시간 지능형 비전 관제 및 엣지 AI 솔루션 (Monitor Module)
+# iSafeGuard: 실시간 지능형 비전 관제 및 엣지 AI 솔루션 (Monitor Module)
 
 다채널 현장 피드를 한눈에 감시하고 엣지 단말기와 결합하여 즉각적인 현장 경고를 수행합니다.
 
@@ -32,7 +32,7 @@
 
 ---
 
-## 하드웨어 라인업 (ISafeGuard-Edge)
+## 하드웨어 라인업 (iSafeGuard-Edge)
 
 | 제품 | 채널 수 | 특징 |
 |------|---------|------|
@@ -43,8 +43,8 @@
 ---
 
 ## 모듈 연동
-- ISafePlanner: 카메라 추천 위치를 ISafeGuard 배치에 반영
-- ISafeChain: 위반 이벤트 데이터를 전달하여 객체 탐지 임계치 자동 재조정
+- iSafePlanner: 카메라 추천 위치를 iSafeGuard 배치에 반영
+- iSafeChain: 위반 이벤트 데이터를 전달하여 객체 탐지 임계치 자동 재조정
 
 ---
 

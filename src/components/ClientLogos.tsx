@@ -23,20 +23,59 @@ const logos = [
   "부산항만공사",
 ];
 
-export default function ClientLogos() {
-  const doubled = [...logos, ...logos];
+const logosEn = [
+  "Seoul Metropolitan Gov.",
+  "Seoul Housing & Communities",
+  "Ministry of Oceans & Fisheries",
+  "Ministry of Land & Transport",
+  "LH Korea Land & Housing",
+  "GS E&C",
+  "Samsung C&T",
+  "Hyundai E&C",
+  "Daewoo E&C",
+  "Lotte E&C",
+  "SK ecoplant",
+  "POSCO E&C",
+  "Hanwha E&C",
+  "HDC HYUNDAI",
+  "KEPCO",
+  "GS Power",
+  "SK Telecom",
+  "Samsung Electronics",
+  "Seoul Metro",
+  "Korea Expressway Corp.",
+  "KORAIL",
+  "Busan Port Authority",
+];
+
+export default function ClientLogos({ language = "ko" }: { language?: "ko" | "en" }) {
+  const list = language === "ko" ? logos : logosEn;
+  const doubled = [...list, ...list];
+
+  const stats = [
+    { value: "100+", label: language === "ko" ? "도입 현장 수" : "Deployment Sites" },
+    { value: "99%", label: language === "ko" ? "AI 감지 정확도" : "AI Detection Accuracy" },
+    { value: language === "ko" ? "4종" : "4", label: language === "ko" ? "핵심 AI 모듈" : "Core AI Modules" },
+    { value: "24/7", label: language === "ko" ? "기술 지원" : "Technical Support" },
+  ];
 
   return (
     <section className="py-16 bg-gray-50 overflow-hidden">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 mb-10 text-center">
         <p className="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">
-          고객사
+          {language === "ko" ? "고객사" : "Our Clients"}
         </p>
         <h2 className="text-3xl font-black text-gray-900">
-          국내 최고 기관이 신뢰하는 <span className="text-blue-600">ISafePlatform</span>
+          {language === "ko" ? (
+            <>국내 최고 기관이 신뢰하는 <span className="text-blue-600">iSafePlatform</span></>
+          ) : (
+            <><span className="text-blue-600">iSafePlatform</span>, trusted by Korea&apos;s leading institutions</>
+          )}
         </h2>
         <p className="mt-3 text-gray-500 text-base">
-          공공기관 및 국내외 탑티어 건설사들과 협력하며 기술 검증을 완료했습니다
+          {language === "ko"
+            ? "공공기관 및 국내외 탑티어 건설사들과 협력하며 기술 검증을 완료했습니다"
+            : "Technology validated through partnerships with public agencies and top-tier construction firms"}
         </p>
       </div>
 
@@ -57,12 +96,7 @@ export default function ClientLogos() {
       {/* Stats */}
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6 mt-12">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { value: "4,500+", label: "도입 현장 수" },
-            { value: "99%", label: "AI 감지 정확도" },
-            { value: "4종", label: "핵심 AI 모듈" },
-            { value: "24/7", label: "기술 지원" },
-          ].map((stat) => (
+          {stats.map((stat) => (
             <div key={stat.label} className="text-center py-6 px-4 bg-white rounded-xl border border-gray-100 shadow-sm">
               <p className="text-3xl font-black text-blue-600 mb-1">{stat.value}</p>
               <p className="text-sm text-gray-500">{stat.label}</p>

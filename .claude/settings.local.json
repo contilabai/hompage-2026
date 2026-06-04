@@ -1,8 +1,16 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:www.caas.works)",
-      "PowerShell(npm *)"
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Read(//d//**)",
+      "PowerShell(cd \"d:\\\\홈페이지\\\\caas-benchmark\\\\public\"; @\\(\"cert-ktl.png\",\"cert-onycom.png\",\"founder-park-chansik.png\",\"bg-construction-site.png\"\\) | ForEach-Object { Move-Item \"legacy-images\\\\$_\" \"images\\\\$_\" -Force; \"moved: $_\" })",
+      "PowerShell(cd \"d:\\\\홈페이지\\\\caas-benchmark\\\\public\"; Remove-Item \"legacy-images\" -Recurse -Force; \"legacy-images deleted: $\\(-not \\(Test-Path 'legacy-images'\\)\\)\")",
+      "PowerShell(cd \"d:\\\\홈페이지\\\\caas-benchmark\"; \"=== .gitignore diff ===\"; git diff .gitignore; \"=== public/pdf 존재? ===\"; Test-Path \"public\\\\pdf\"; \"=== public/gif 용량 ===\"; \"{0:N1} MB\" -f \\(\\(Get-ChildItem \"public\\\\gif\" -Recurse | Measure-Object Length -Sum\\).Sum/1MB\\); \"=== 새 이미지 용량 합 ===\"; \"{0:N1} MB\" -f \\(\\(Get-ChildItem \"public\\\\images\" -Recurse | Measure-Object Length -Sum\\).Sum/1MB\\))",
+      "PowerShell(cd \"d:\\\\홈페이지\\\\caas-benchmark\"; Get-ChildItem \"public\\\\gif\" -Recurse | Sort-Object Length -Descending | Select-Object @{N='MB';E={\"{0:N1}\" -f \\($_.Length/1MB\\)}}, Name)"
     ]
   }
 }

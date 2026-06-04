@@ -1,32 +1,54 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImagePlaceholder from "@/components/ImagePlaceholder";
+import ISafeMetaScenario from "@/components/ISafeMetaScenario";
 
-export const metadata: Metadata = {
-  title: "ISafeMeta | ConTILab - 현장 맞춤 가상 안전 교육 플랫폼",
-  description: "실제 현장의 3D 환경에서 교육하고, 디지털 수강 시스템으로 이수를 관리하며, 현장 특화 다국어 AI Agent 아바타가 근로자를 안내합니다.",
+const featureGifs: Record<string, string> = {
+  "virtual-env": "/gif/reality-capture-pipeline.gif",
+  "lms": "/gif/3 iSafeMeta Gangform Content Retrieval and training progress.gif",
+  "ai-agent": "/gif/synthetic-data-simulation.gif",
+  "certification": "/gif/reward.gif",
 };
 
-const metaFeatures = [
+const getMetaFeatures = (language: "ko" | "en") => [
   {
     id: "virtual-env",
     reverse: false,
-    tag: "현장 가상환경",
+    tag: language === "ko" ? "현장 가상환경" : "Site Virtual Environment",
     tagColor: "bg-red-100 text-red-700",
-    headline: "오늘 들어갈\n그 현장에서\n이미 훈련합니다",
-    subhead: "A 현장 훈련이 B 현장에서는 의미가 없습니다",
-    desc: "ISafePlanner의 3D BIM 모델을 그대로 가져오거나, 360도 카메라로 실제 현장을 촬영해 디지털 트윈을 구축합니다. 오늘 오전에 들어갈 외부비계 구역, 이번 주에 시작되는 용접 공정. 그 공간에서 미리 훈련합니다.",
-    bullets: [
-      "ISafePlanner 3D BIM 모델 즉시 연동",
-      "360도 카메라 촬영 → 디지털 트윈 자동 구축",
-      "실제 현장 구조·공정과 동일한 가상 훈련 환경",
-      "ISafeGuard 위험구역 설정도 훈련에 자동 반영",
-    ],
+    headline: language === "ko"
+      ? "오늘 들어갈\n그 현장에서\n미리 훈련합니다"
+      : "Train in the exact site\nyou'll enter today,\nbefore you start",
+    subhead: language === "ko"
+      ? "A 현장 훈련이 B 현장에서는 의미가 없습니다"
+      : "Training at Site A has no meaning at Site B—until now",
+    desc: language === "ko"
+      ? "iSafePlanner의 3D BIM 모델을 그대로 가져오거나, 360도 카메라로 실제 현장을 촬영해 디지털 트윈을 구축합니다. 오늘 오전에 들어갈 외부비계 구역, 이번 주에 시작되는 용접 공정. 그 공간에서 미리 훈련합니다."
+      : "Import iSafePlanner's 3D BIM models or capture live sites with 360° cameras to build digital twins. Train in the exact scaffolding area you'll enter this morning, or the welding process starting this week.",
+    bullets: language === "ko"
+      ? [
+          "iSafePlanner 3D BIM 모델 즉시 연동",
+          "360도 카메라 촬영 → 디지털 트윈 자동 구축",
+          "실제 현장 구조·공정과 동일한 가상 훈련 환경",
+          "iSafeGuard 위험구역 설정도 훈련에 자동 반영",
+        ]
+      : [
+          "Instant iSafePlanner 3D BIM integration",
+          "360° camera capture → Auto digital twin creation",
+          "Virtual training environment matching actual site conditions",
+          "iSafeGuard hazard zones auto-reflected in training",
+        ],
     placeholder: {
-      title: "ISafePlanner 연동 / 360카메라 디지털 트윈 가상환경",
-      description: "BIM 3D 모델 또는 360도 카메라로 구축한 실제 현장 가상 훈련 공간",
+      title: language === "ko"
+        ? "iSafePlanner 연동 / 360카메라 디지털 트윈 가상환경"
+        : "iSafePlanner Integration / 360° Digital Twin Virtual Environment",
+      description: language === "ko"
+        ? "BIM 3D 모델 또는 360도 카메라로 구축한 실제 현장 가상 훈련 공간"
+        : "BIM 3D model or 360° camera-built real-site virtual training space",
     },
     ctaBg: "bg-red-600 hover:bg-red-700",
     bgClass: "bg-white",
@@ -34,20 +56,37 @@ const metaFeatures = [
   {
     id: "lms",
     reverse: true,
-    tag: "디지털 수강 시스템",
+    tag: language === "ko" ? "디지털 수강 시스템" : "Digital Learning Management",
     tagColor: "bg-orange-100 text-orange-700",
-    headline: "현장별 맞춤\n교육 커리큘럼을\n디지털로 운영합니다",
-    subhead: "종이 출석부와 PPT 교육에서 벗어나세요",
-    desc: "건설 현장 안전 교육 자료를 디지털 수강 시스템으로 관리합니다. 공정별·직종별로 필요한 교육 콘텐츠를 배정하고, 근로자가 가상환경 안에서 수강합니다. 수강 진도·테스트 결과·이수 여부가 모두 자동으로 기록됩니다.",
-    bullets: [
-      "공정별·직종별 맞춤 교육 커리큘럼 구성",
-      "가상환경 내 몰입형 교육 콘텐츠 수강",
-      "수강 진도·테스트 결과 실시간 관리",
-      "미이수 근로자 자동 감지 및 재배정",
-    ],
+    headline: language === "ko"
+      ? "현장별 맞춤\n교육 커리큘럼을\n디지털로 운영합니다"
+      : "Run site-specific\ncustomized training\ndigitally",
+    subhead: language === "ko"
+      ? "종이 출석부와 PPT 교육에서 벗어나세요"
+      : "Say goodbye to paper rosters and PowerPoint training",
+    desc: language === "ko"
+      ? "건설 현장 안전 교육 자료를 디지털 수강 시스템으로 관리합니다. 공정별·직종별로 필요한 교육 콘텐츠를 배정하고, 근로자가 가상환경 안에서 수강합니다. 수강 진도·테스트 결과·이수 여부가 모두 자동으로 기록됩니다."
+      : "Manage construction safety training through our digital learning system. Assign phase and role-specific content, which workers complete in the virtual environment. All progress, test results, and completion status are automatically logged.",
+    bullets: language === "ko"
+      ? [
+          "공정별·직종별 맞춤 교육 커리큘럼 구성",
+          "가상환경 내 몰입형 교육 콘텐츠 수강",
+          "수강 진도·테스트 결과 실시간 관리",
+          "미이수 근로자 자동 감지 및 재배정",
+        ]
+      : [
+          "Phase and role-specific curriculum composition",
+          "Immersive training content within virtual environment",
+          "Real-time tracking of progress and test results",
+          "Auto-detect non-completion and reassign training",
+        ],
     placeholder: {
-      title: "공정별 디지털 수강 시스템 대시보드",
-      description: "근로자별 수강 현황, 공정별 커리큘럼 배정, 이수율 관리 화면",
+      title: language === "ko"
+        ? "공정별 디지털 수강 시스템 대시보드"
+        : "Phase-Based Digital Learning Dashboard",
+      description: language === "ko"
+        ? "근로자별 수강 현황, 공정별 커리큘럼 배정, 이수율 관리 화면"
+        : "Per-worker progress, phase curriculum assignments, completion tracking",
     },
     ctaBg: "bg-orange-600 hover:bg-orange-700",
     bgClass: "bg-gray-50",
@@ -55,20 +94,37 @@ const metaFeatures = [
   {
     id: "ai-agent",
     reverse: false,
-    tag: "현장 특화 AI Agent 아바타",
+    tag: language === "ko" ? "현장 특화 AI Agent 아바타" : "Site-Specific AI Agent Avatar",
     tagColor: "bg-pink-100 text-pink-700",
-    headline: "우리 현장을 아는\nAI가 20개 언어로\n근로자를 안내합니다",
-    subhead: "현장 도면·규정·공정 데이터를 학습한 전담 AI Agent",
-    desc: "단순 번역 수준이 아닙니다. 이 현장의 위험구역, 오늘의 공정 계획, 회사 안전 내규를 학습한 AI Agent 아바타가 근로자 곁에서 20여 개 언어로 실시간 안내합니다. 외국인 근로자도, 신입 근로자도 현장을 이해하고 투입됩니다.",
-    bullets: [
-      "현장 도면·위험구역·공정 데이터 기반 AI Agent",
-      "20개국 언어 실시간 질의응답 및 안전 안내",
-      "안전 법령·사내 내규 학습한 전문 지식 탑재",
-      "이해도 테스트 결과 자동 기록 및 이수 연동",
-    ],
+    headline: language === "ko"
+      ? "우리 현장을 아는\nAI가 20개 언어로\n근로자를 안내합니다"
+      : "Our site's AI guide,\nin 20 languages,\nby your side",
+    subhead: language === "ko"
+      ? "현장 도면·규정·공정 데이터를 학습한 전담 AI Agent"
+      : "AI trained on your site plans, regulations, and process data",
+    desc: language === "ko"
+      ? "단순 번역 수준이 아닙니다. 이 현장의 위험구역, 오늘의 공정 계획, 회사 안전 내규를 학습한 AI Agent 아바타가 근로자 곁에서 20여 개 언어로 실시간 안내합니다. 외국인 근로자도, 신입 근로자도 현장을 이해하고 투입됩니다."
+      : "Not just translation. This AI avatar learns your site's hazard zones, today's schedule, and company safety rules—then guides workers in 20+ languages in real time. Foreign workers and new hires understand the site before they start.",
+    bullets: language === "ko"
+      ? [
+          "현장 도면·위험구역·공정 데이터 기반 AI Agent",
+          "20개국 언어 실시간 질의응답 및 안전 안내",
+          "안전 법령·사내 내규 학습한 전문 지식 탑재",
+          "이해도 테스트 결과 자동 기록 및 이수 연동",
+        ]
+      : [
+          "AI agent trained on site plans, hazard zones, and process data",
+          "20+ languages for real-time Q&A and safety guidance",
+          "Expert knowledge of safety regulations and company policies",
+          "Auto-record comprehension tests and link to completion",
+        ],
     placeholder: {
-      title: "현장 특화 다국어 AI Agent 아바타 인터페이스",
-      description: "현장 데이터를 학습한 AI Agent가 근로자와 다국어로 질의응답하는 화면",
+      title: language === "ko"
+        ? "현장 특화 다국어 AI Agent 아바타 인터페이스"
+        : "Site-Specific Multilingual AI Agent Avatar Interface",
+      description: language === "ko"
+        ? "현장 데이터를 학습한 AI Agent가 근로자와 다국어로 질의응답하는 화면"
+        : "AI agent trained on site data answering worker Q&A in multiple languages",
     },
     ctaBg: "bg-pink-600 hover:bg-pink-700",
     bgClass: "bg-white",
@@ -76,69 +132,147 @@ const metaFeatures = [
   {
     id: "certification",
     reverse: true,
-    tag: "교육 이수 자동 기록",
+    tag: language === "ko" ? "교육 이수 자동 기록" : "Auto Training Records",
     tagColor: "bg-purple-100 text-purple-700",
-    headline: "\"교육을 했다\"\n증거가\n지금 있습니까?",
-    subhead: "모든 수강 이력이 ISafeChain에 자동으로 저장됩니다",
-    desc: "중대재해 발생 시 '우리는 교육을 충분히 했다'를 증명해야 합니다. 디지털 수강 시스템의 모든 이수 기록이 자동으로 ISafeChain에 전달되어 위변조 불가능한 법적 증빙으로 남습니다.",
-    bullets: [
-      "수강 완료 즉시 ISafeChain 블록체인에 자동 저장",
-      "테스트 통과 기준 설정 및 자동 이수 확인",
-      "개인별 교육 이력 관리 대시보드",
-      "부족 항목 감지 시 특화 교육 자동 재배정",
-    ],
+    headline: language === "ko"
+      ? "\"교육을 했다\"\n증거가\n지금 있습니까?"
+      : "\"We trained everyone\"\n—do you have proof\nright now?",
+    subhead: language === "ko"
+      ? "모든 수강 이력이 iSafeChain에 자동으로 저장됩니다"
+      : "Every completion automatically saved to iSafeChain",
+    desc: language === "ko"
+      ? "중대재해 발생 시 '우리는 교육을 충분히 했다'를 증명해야 합니다. 디지털 수강 시스템의 모든 이수 기록이 자동으로 iSafeChain에 전달되어 위변조 불가능한 법적 증빙으로 남습니다."
+      : "When accidents happen, you must prove you trained everyone. Our digital system auto-sends all completion records to iSafeChain—creating tamper-proof legal evidence that stays with you.",
+    bullets: language === "ko"
+      ? [
+          "수강 완료 즉시 iSafeChain 블록체인에 자동 저장",
+          "테스트 통과 기준 설정 및 자동 이수 확인",
+          "개인별 교육 이력 관리 대시보드",
+          "부족 항목 감지 시 특화 교육 자동 재배정",
+        ]
+      : [
+          "Auto-save to iSafeChain blockchain immediately upon completion",
+          "Set pass criteria and auto-confirm completion",
+          "Per-worker training history dashboard",
+          "Auto-detect gaps and reassign specialized training",
+        ],
     placeholder: {
-      title: "교육 이수 현황 및 ISafeChain 연동 대시보드",
-      description: "근로자별 수강 이력, 테스트 결과, 블록체인 저장 상태 확인 화면",
+      title: language === "ko"
+        ? "교육 이수 현황 및 iSafeChain 연동 대시보드"
+        : "Training Completion & iSafeChain Integration Dashboard",
+      description: language === "ko"
+        ? "근로자별 수강 이력, 테스트 결과, 블록체인 저장 상태 확인 화면"
+        : "Per-worker training history, test results, blockchain storage status",
     },
     ctaBg: "bg-purple-600 hover:bg-purple-700",
     bgClass: "bg-gray-50",
   },
 ];
 
-const steps = [
-  { step: "01", title: "현장 가상환경 구축", desc: "ISafePlanner 3D BIM 모델을 연동하거나, 360도 카메라로 실제 현장을 촬영해 디지털 트윈 가상환경을 구성합니다." },
-  { step: "02", title: "커리큘럼 배정 및 수강", desc: "공정별·직종별 교육 콘텐츠를 배정합니다. 근로자는 가상환경 안에서 AI Agent 아바타와 함께 수강합니다." },
-  { step: "03", title: "이수 기록 자동 저장", desc: "수강 완료 즉시 이수 기록이 ISafeChain에 자동 저장됩니다. 미이수자는 시스템이 자동으로 감지해 재배정합니다." },
+const getSteps = (language: "ko" | "en") => [
+  {
+    step: "01",
+    title: language === "ko" ? "현장 가상환경 구축" : "Build Site Virtual Environment",
+    desc: language === "ko"
+      ? "iSafePlanner 3D BIM 모델을 연동하거나, 360도 카메라로 실제 현장을 촬영해 디지털 트윈 가상환경을 구성합니다."
+      : "Link iSafePlanner's 3D BIM or capture the real site with 360° cameras to create the digital twin training environment.",
+  },
+  {
+    step: "02",
+    title: language === "ko" ? "커리큘럼 배정 및 수강" : "Assign Curriculum & Train",
+    desc: language === "ko"
+      ? "공정별·직종별 교육 콘텐츠를 배정합니다. 근로자는 가상환경 안에서 AI Agent 아바타와 함께 수강합니다."
+      : "Assign phase and role-specific content. Workers train in the virtual environment alongside the AI Agent avatar.",
+  },
+  {
+    step: "03",
+    title: language === "ko" ? "이수 기록 자동 저장" : "Auto-Save Completion Records",
+    desc: language === "ko"
+      ? "수강 완료 즉시 이수 기록이 iSafeChain에 자동 저장됩니다. 미이수자는 시스템이 자동으로 감지해 재배정합니다."
+      : "Completion records auto-save to iSafeChain immediately. System auto-detects non-completion and reassigns training.",
+  },
 ];
 
 export default function ISafeMetaPage() {
+  const [language, setLanguage] = useState<"ko" | "en">("ko");
+  const [activeTab, setActiveTab] = useState<"solution" | "scenario">("solution");
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem("language") as "ko" | "en" | null;
+    if (savedLang) {
+      setLanguage(savedLang);
+    }
+
+    const handleLanguageChange = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setLanguage(customEvent.detail);
+    };
+
+    window.addEventListener("languageChange", handleLanguageChange);
+    return () => window.removeEventListener("languageChange", handleLanguageChange);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <Header />
       <main>
         {/* Hero */}
         <section className="pt-[88px] bg-gradient-to-br from-[#3d0e0e] via-[#7f1d1d] to-[#dc2626] text-white overflow-hidden">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 lg:py-24">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 lg:py-24 relative">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <div className="flex items-center gap-2 mb-5">
-                  <span className="px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full">ISafeMeta</span>
-                  <span className="px-3 py-1 bg-white/10 text-red-200 text-xs rounded-full">Train Module</span>
+                  <span className="px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full">iSafeMeta</span>
+                  <span className="px-3 py-1 bg-white/10 text-red-200 text-xs rounded-full">
+                    {language === "ko" ? "훈련 모듈" : "Train Module"}
+                  </span>
                 </div>
                 <h1 className="text-[38px] lg:text-[48px] font-black text-white leading-tight mb-5">
-                  오늘 들어갈 현장을<br />
-                  <span className="text-red-300">가상으로 미리 경험하고</span><br />
-                  AI가 함께 안내합니다
+                  {language === "ko" ? (
+                    <>
+                      오늘 들어갈 현장을<br />
+                      <span className="text-red-300">가상으로 미리 경험하고</span><br />
+                      AI가 함께 안내합니다
+                    </>
+                  ) : (
+                    <>
+                      Experience the site<br />
+                      <span className="text-red-300">virtually before you enter,</span><br />
+                      with AI by your side
+                    </>
+                  )}
                 </h1>
                 <p className="text-red-100 text-base leading-relaxed mb-4 max-w-md">
-                  실제 현장의 3D 가상환경, 디지털 수강 시스템, 현장 특화 다국어 AI Agent 아바타. 세 가지가 하나로 작동합니다.
+                  {language === "ko"
+                    ? "실제 현장의 3D 가상환경, 디지털 수강 시스템, 현장 특화 다국어 AI Agent 아바타. 세 가지가 하나로 작동합니다."
+                    : "Real-site 3D virtual environment, digital learning system, and site-specific multilingual AI agent avatar—all working as one."}
                 </p>
                 <p className="text-white font-semibold text-base mb-8 max-w-md">
-                  ISafePlanner와 연동하거나 360도 카메라로 현장을 찍으면 즉시 가상 교육 환경이 만들어집니다.
+                  {language === "ko"
+                    ? "iSafePlanner와 연동하거나 360도 카메라로 현장을 찍으면 즉시 가상 교육 환경이 만들어집니다."
+                    : "Link iSafePlanner or capture the site with 360° cameras—instant virtual training environment."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
                     href="mailto:contilab@contilab.co.kr"
                     className="px-6 py-3 text-sm font-bold text-red-900 bg-white hover:bg-red-50 rounded-xl transition-colors shadow-lg"
                   >
-                    도입 문의하기
+                    {language === "ko" ? "도입 문의하기" : "Request Deployment"}
                   </a>
                   <Link
-                    href="#digital-twin"
+                    href="#virtual-env"
                     className="px-6 py-3 text-sm font-bold text-white border border-white/30 hover:border-white rounded-xl transition-colors"
                   >
-                    기능 살펴보기 ↓
+                    {language === "ko" ? "기능 살펴보기 ↓" : "Explore Features ↓"}
                   </Link>
                 </div>
               </div>
@@ -149,32 +283,38 @@ export default function ISafeMetaPage() {
                     <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-                    <span className="text-xs text-gray-400 ml-2 font-mono">ISafeMeta · 가상 안전 훈련</span>
-                    <span className="ml-auto flex items-center gap-1.5 text-xs text-green-400">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-400" />
-                      훈련 중
+                    <span className="text-xs text-gray-400 ml-2 font-mono">
+                      iSafeMeta · {language === "ko" ? "가상 현장 안전 훈련" : "Virtual Site Safety Training"}
                     </span>
                   </div>
-                  <div className="relative aspect-video bg-gray-900 rounded-xl overflow-hidden mb-3 flex items-center justify-center">
-                    <div className="absolute inset-0 bg-gradient-to-b from-red-900/30 to-gray-900/60" />
-                    <div className="relative text-center">
-                      <div className="text-4xl mb-2">🥽</div>
-                      <p className="text-red-300 text-sm font-bold">외부비계 추락 위험 체험</p>
-                      <p className="text-gray-400 text-xs mt-1">1인칭 시점 · 안전고리 미착용 상황</p>
-                    </div>
-                    <div className="absolute top-2 left-2 text-[10px] text-red-300 font-mono bg-black/40 px-2 py-1 rounded">훈련 진행률: 67%</div>
-                    <div className="absolute bottom-2 right-2 text-[10px] text-gray-400 font-mono bg-black/40 px-2 py-1 rounded">참여자: 박○○ · 한국어</div>
+                  <div className="relative aspect-video rounded-xl overflow-hidden mb-3">
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-full object-cover"
+                    >
+                      <source src="/gif/iSafeMeta Reality Capture and Mesh based Training.mp4" type="video/mp4" />
+                      {language === "ko" ? "비디오를 재생할 수 없습니다" : "Your browser does not support the video tag"}
+                    </video>
                   </div>
                   <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 bg-gray-800/60 rounded-lg px-3 py-2">
-                      <span className="text-blue-400 text-xs">🤖</span>
-                      <span className="text-[12px] text-gray-300">AI 아바타: 안전고리를 먼저 체결해야 합니다.</span>
-                      <span className="ml-auto text-[9px] text-gray-500">방금</span>
+                    <div className="flex items-start gap-2.5 bg-gray-800/60 rounded-lg px-3 py-2.5">
+                      <span className="text-red-400 text-sm flex-shrink-0">🏗️</span>
+                      <span className="text-[12px] text-gray-300 leading-snug">
+                        {language === "ko"
+                          ? "리얼리티 캡처로 실제 현장과 동일한 3D 메쉬 환경에서 위험을 직접 체험합니다."
+                          : "Reality capture builds a 3D mesh twin of the real site to experience hazards firsthand."}
+                      </span>
                     </div>
-                    <div className="flex items-center gap-2 bg-green-900/40 border border-green-500/40 rounded-lg px-3 py-2">
-                      <span className="text-green-400 text-xs">✓</span>
-                      <span className="text-[12px] text-gray-300 font-medium">단계 2 완료 — 이수 기록 저장 중</span>
-                      <span className="ml-auto text-[9px] text-gray-500">30초 전</span>
+                    <div className="flex items-start gap-2.5 bg-gray-800/60 rounded-lg px-3 py-2.5">
+                      <span className="text-blue-400 text-sm flex-shrink-0">🤖</span>
+                      <span className="text-[12px] text-gray-300 leading-snug">
+                        {language === "ko"
+                          ? "20개 언어 AI 아바타가 안내하고, 이수 기록은 자동으로 저장됩니다."
+                          : "AI avatars guide in 20+ languages, with completion records saved automatically."}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -183,15 +323,59 @@ export default function ISafeMetaPage() {
           </div>
         </section>
 
+        {/* Tab bar */}
+        <div className="sticky top-[64px] z-40 bg-white border-b border-gray-200 shadow-sm">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+            <div className="flex gap-0">
+              <button
+                onClick={() => setActiveTab("solution")}
+                className={`px-5 py-4 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                  activeTab === "solution"
+                    ? "border-red-600 text-red-600"
+                    : "border-transparent text-gray-500 hover:text-gray-800"
+                }`}
+              >
+                {language === "ko" ? "솔루션 소개" : "Solution"}
+              </button>
+              <button
+                onClick={() => setActiveTab("scenario")}
+                className={`px-5 py-4 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                  activeTab === "scenario"
+                    ? "border-red-600 text-red-600"
+                    : "border-transparent text-gray-500 hover:text-gray-800"
+                }`}
+              >
+                {language === "ko" ? "사용 시나리오" : "Use Scenario"}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {activeTab === "scenario" ? (
+          <ISafeMetaScenario language={language} />
+        ) : (
+        <>
         {/* Stats */}
         <section className="bg-red-600 text-white py-8">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-red-500">
               {[
-                { value: "20+", label: "AI Agent 지원 언어" },
-                { value: "2가지", label: "가상환경 구축 방식" },
-                { value: "디지털", label: "수강 시스템 운영" },
-                { value: "자동", label: "이수 기록 블록체인 저장" },
+                {
+                  value: "20+",
+                  label: language === "ko" ? "AI Agent 지원 언어" : "AI Agent Languages",
+                },
+                {
+                  value: language === "ko" ? "2가지" : "2 Ways",
+                  label: language === "ko" ? "가상환경 구축 방식" : "Build Virtual Environment",
+                },
+                {
+                  value: language === "ko" ? "디지털" : "Digital",
+                  label: language === "ko" ? "수강 시스템 운영" : "Learning System Operation",
+                },
+                {
+                  value: language === "ko" ? "자동" : "Auto",
+                  label: language === "ko" ? "이수 기록 블록체인 저장" : "Blockchain Record Storage",
+                },
               ].map((s) => (
                 <div key={s.label} className="text-center px-6 first:pl-0 last:pr-0">
                   <p className="text-2xl font-black text-white mb-1">{s.value}</p>
@@ -203,7 +387,7 @@ export default function ISafeMetaPage() {
         </section>
 
         {/* Feature sections */}
-        {metaFeatures.map((feature) => (
+        {getMetaFeatures(language).map((feature) => (
           <section key={feature.id} id={feature.id} className={`py-20 ${feature.bgClass}`}>
             <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
               <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${feature.reverse ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""}`}>
@@ -230,17 +414,37 @@ export default function ISafeMetaPage() {
                     href="mailto:contilab@contilab.co.kr"
                     className={`inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white ${feature.ctaBg} rounded-lg transition-colors w-fit`}
                   >
-                    도입 문의하기
+                    {language === "ko" ? "도입 문의하기" : "Request Deployment"}
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </a>
                 </div>
-                <ImagePlaceholder
-                  title={feature.placeholder.title}
-                  description={feature.placeholder.description}
-                  aspectRatio="4/3"
-                />
+                {featureGifs[feature.id] ? (
+                  feature.id === "certification" ? (
+                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+                      <img
+                        src={featureGifs[feature.id]}
+                        alt={feature.placeholder.title}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="rounded-2xl overflow-hidden">
+                      <img
+                        src={featureGifs[feature.id]}
+                        alt={feature.placeholder.title}
+                        className="w-full h-full object-cover rounded-2xl"
+                      />
+                    </div>
+                  )
+                ) : (
+                  <ImagePlaceholder
+                    title={feature.placeholder.title}
+                    description={feature.placeholder.description}
+                    aspectRatio="4/3"
+                  />
+                )}
               </div>
             </div>
           </section>
@@ -250,13 +454,23 @@ export default function ISafeMetaPage() {
         <section className="py-20 bg-gray-50">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
-              <p className="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3">도입 절차</p>
-              <h2 className="text-3xl font-black text-gray-900 mb-4">현장 구축부터 이수 기록까지 3단계</h2>
-              <p className="text-gray-500">ISafePlanner 연동 또는 360도 카메라 촬영으로 즉시 시작할 수 있습니다.</p>
+              <p className="text-sm font-semibold text-red-600 uppercase tracking-wider mb-3">
+                {language === "ko" ? "도입 절차" : "Implementation Process"}
+              </p>
+              <h2 className="text-3xl font-black text-gray-900 mb-4">
+                {language === "ko"
+                  ? "현장 구축부터 이수 기록까지 3단계"
+                  : "3 Steps from Site Setup to Training Records"}
+              </h2>
+              <p className="text-gray-500">
+                {language === "ko"
+                  ? "iSafePlanner 연동 또는 360도 카메라 촬영으로 즉시 시작할 수 있습니다."
+                  : "Start immediately with iSafePlanner integration or 360° camera capture."}
+              </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
               <div className="hidden md:block absolute top-12 left-[calc(16.7%+2rem)] right-[calc(16.7%+2rem)] h-0.5 bg-red-200" />
-              {steps.map((step) => (
+              {getSteps(language).map((step) => (
                 <div key={step.step} className="flex flex-col items-center text-center relative">
                   <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[#7f1d1d] to-[#dc2626] flex items-center justify-center mb-6 shadow-lg relative z-10">
                     <span className="text-2xl font-black text-white">{step.step}</span>
@@ -274,29 +488,47 @@ export default function ISafeMetaPage() {
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl font-black mb-4">우리 현장을 아는 AI가<br />20개 언어로 근로자를<br />직접 교육합니다</h2>
+                <h2 className="text-3xl font-black mb-4">
+                  {language === "ko" ? (
+                    <>
+                      우리 현장을 아는 AI가<br />
+                      20개 언어로 근로자를<br />
+                      직접 교육합니다
+                    </>
+                  ) : (
+                    <>
+                      AI that knows your site<br />
+                      teaches workers<br />
+                      in 20+ languages
+                    </>
+                  )}
+                </h2>
                 <p className="text-red-100 mb-8 leading-relaxed">
-                  현장 가상환경 + 디지털 수강 시스템 + 현장 특화 AI Agent 아바타. ISafeMeta는 세 가지를 하나의 플랫폼으로 제공합니다.
+                  {language === "ko"
+                    ? "현장 가상환경 + 디지털 수강 시스템 + 현장 특화 AI Agent 아바타. iSafeMeta는 세 가지를 하나의 플랫폼으로 제공합니다."
+                    : "Site virtual environment + digital learning system + site-specific AI agent avatar. iSafeMeta brings all three together in one platform."}
                 </p>
                 <div className="flex flex-wrap gap-4">
                   <a
                     href="mailto:contilab@contilab.co.kr"
                     className="px-8 py-3.5 text-sm font-bold text-red-800 bg-white hover:bg-red-50 rounded-xl transition-colors shadow-lg"
                   >
-                    도입 문의하기
+                    {language === "ko" ? "도입 문의하기" : "Request Deployment"}
                   </a>
                   <Link
                     href="/isafe-chain"
                     className="px-8 py-3.5 text-sm font-bold text-white border-2 border-white/40 hover:border-white rounded-xl transition-colors"
                   >
-                    ISafeChain 이수 기록 연동
+                    {language === "ko" ? "iSafeChain 이수 기록 연동" : "View iSafeChain Integration"}
                   </Link>
                 </div>
               </div>
               <div className="hidden lg:block">
                 <ImagePlaceholder
-                  title="ISafeMeta 훈련 현장 사진"
-                  description="근로자가 ISafeMeta 가상 안전 훈련을 진행하는 실제 현장 사진"
+                  title={language === "ko" ? "iSafeMeta 훈련 현장 사진" : "iSafeMeta Training in Action"}
+                  description={language === "ko"
+                    ? "근로자가 iSafeMeta 가상 안전 훈련을 진행하는 실제 현장 사진"
+                    : "Workers conducting iSafeMeta virtual safety training at a real site"}
                   aspectRatio="4/3"
                   className="border-white/20 bg-white/5"
                 />
@@ -304,8 +536,10 @@ export default function ISafeMetaPage() {
             </div>
           </div>
         </section>
+        </>
+        )}
       </main>
-      <Footer />
+      <Footer language={language} />
     </>
   );
 }

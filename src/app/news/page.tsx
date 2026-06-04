@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Globe } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -193,12 +194,12 @@ const items: NewsItem[] = [
   },
 ];
 
-const categoryLabels: Record<Category, string> = {
-  all: "전체",
-  news: "뉴스",
-  blog: "블로그",
-  media: "미디어",
-};
+const getCategoryLabels = (language: "ko" | "en"): Record<Category, string> => ({
+  all: language === "ko" ? "전체" : "All",
+  news: language === "ko" ? "뉴스" : "News",
+  blog: language === "ko" ? "블로그" : "Blog",
+  media: language === "ko" ? "미디어" : "Media",
+});
 
 const categoryColors: Record<string, string> = {
   news: "bg-blue-100 text-blue-700",
@@ -206,7 +207,7 @@ const categoryColors: Record<string, string> = {
   media: "bg-red-100 text-red-700",
 };
 
-function NewsCard({ item }: { item: NewsItem }) {
+function NewsCard({ item, categoryLabels, language }: { item: NewsItem; categoryLabels: Record<Category, string>; language: "ko" | "en" }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all overflow-hidden flex flex-col">
       {/* YouTube embed */}
@@ -260,7 +261,7 @@ function NewsCard({ item }: { item: NewsItem }) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 mt-auto"
           >
-            원문 보기
+            {language === "ko" ? "원문 보기" : "View Original"}
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
@@ -272,7 +273,32 @@ function NewsCard({ item }: { item: NewsItem }) {
 }
 
 export default function NewsPage() {
+  const [language, setLanguage] = useState<"ko" | "en">("ko");
   const [activeCategory, setActiveCategory] = useState<Category>("all");
+
+  useEffect(() => {
+    const savedLang = localStorage.getItem("language") as "ko" | "en" | null;
+    if (savedLang) {
+      setLanguage(savedLang);
+    }
+
+    const handleLanguageChange = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setLanguage(customEvent.detail);
+    };
+
+    window.addEventListener("languageChange", handleLanguageChange);
+    return () => window.removeEventListener("languageChange", handleLanguageChange);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   const filtered = activeCategory === "all"
     ? items
@@ -285,6 +311,8 @@ export default function NewsPage() {
     media: items.filter((i) => i.category === "media").length,
   };
 
+  const categoryLabels = getCategoryLabels(language);
+
   return (
     <>
       <Header />
@@ -292,12 +320,16 @@ export default function NewsPage() {
         {/* Hero */}
         <section className="pt-[88px] bg-gradient-to-br from-[#050d18] via-[#0d1b2a] to-[#1b2a3b] text-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 lg:py-20">
-            <p className="text-xs font-semibold text-blue-300 uppercase tracking-widest mb-4">소식</p>
+            <p className="text-xs font-semibold text-blue-300 uppercase tracking-widest mb-4">
+              {language === "ko" ? "소식" : "News"}
+            </p>
             <h1 className="text-[36px] lg:text-[48px] font-black leading-tight mb-4">
-              News & Blog
+              {language === "ko" ? "News & Blog" : "News & Blog"}
             </h1>
             <p className="text-blue-200 text-base max-w-lg leading-relaxed">
-              ConTILab의 최신 소식, 전시 참가, 기술 성과, 그리고 팀이 직접 쓰는 블로그를 모두 한 곳에서 확인하세요.
+              {language === "ko"
+                ? "ConTILab의 최신 소식, 전시 참가, 기술 성과, 그리고 팀이 직접 쓰는 블로그를 모두 한 곳에서 확인하세요."
+                : "Latest news, exhibitions, technical achievements, and direct insights from the ConTILab team—all in one place."}
             </p>
           </div>
         </section>
@@ -332,11 +364,13 @@ export default function NewsPage() {
         <section className="py-16 bg-gray-50">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
             {filtered.length === 0 ? (
-              <div className="text-center py-20 text-gray-400">등록된 콘텐츠가 없습니다.</div>
+              <div className="text-center py-20 text-gray-400">
+                {language === "ko" ? "등록된 콘텐츠가 없습니다." : "No content available."}
+              </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filtered.map((item) => (
-                  <NewsCard key={item.id} item={item} />
+                  <NewsCard key={item.id} item={item} categoryLabels={categoryLabels} language={language} />
                 ))}
               </div>
             )}
@@ -347,7 +381,9 @@ export default function NewsPage() {
         <section className="py-16 bg-white border-t border-gray-100">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 text-center">
             <p className="text-sm text-gray-500 mb-4">
-              ConTILab의 모든 영상 콘텐츠는 YouTube 채널에서 확인하세요
+              {language === "ko"
+                ? "ConTILab의 모든 영상 콘텐츠는 YouTube 채널에서 확인하세요"
+                : "Watch all ConTILab video content on our YouTube channel"}
             </p>
             <a
               href="https://www.youtube.com/@contilab"
@@ -358,12 +394,12 @@ export default function NewsPage() {
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z" />
               </svg>
-              YouTube 채널 방문
+              {language === "ko" ? "YouTube 채널 방문" : "Visit YouTube Channel"}
             </a>
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer language={language} />
     </>
   );
 }

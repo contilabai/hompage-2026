@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function ContactCTA() {
+export default function ContactCTA({ language = "ko" }: { language?: "ko" | "en" }) {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
@@ -13,15 +13,15 @@ export default function ContactCTA() {
               </svg>
             </div>
             <div className="flex-1">
-              <p className="text-xs font-medium text-gray-400 mb-1">자료 다운로드</p>
-              <h3 className="text-[15px] font-bold text-gray-900 mb-1">회사 소개서</h3>
-              <p className="text-sm text-gray-500">ConTILab 전체 솔루션 소개 및 도입 사례를 담은 브로셔</p>
+              <p className="text-xs font-medium text-gray-400 mb-1">{language === "ko" ? "자료 다운로드" : "Download"}</p>
+              <h3 className="text-[15px] font-bold text-gray-900 mb-1">{language === "ko" ? "회사 소개서" : "Company Brochure"}</h3>
+              <p className="text-sm text-gray-500">{language === "ko" ? "ConTILab 전체 솔루션 소개 및 도입 사례를 담은 브로셔" : "Brochure covering ConTILab's full solutions and case studies"}</p>
             </div>
             <Link
               href="#download-brochure"
               className="flex-shrink-0 px-4 py-2 text-sm font-medium text-blue-600 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors"
             >
-              다운로드
+              {language === "ko" ? "다운로드" : "Download"}
             </Link>
           </div>
 
@@ -32,15 +32,15 @@ export default function ContactCTA() {
               </svg>
             </div>
             <div className="flex-1">
-              <p className="text-xs font-medium text-gray-400 mb-1">자료 다운로드</p>
-              <h3 className="text-[15px] font-bold text-gray-900 mb-1">영상기록 장비 카탈로그</h3>
-              <p className="text-sm text-gray-500">드론, 카메라, 영상 장비 전체 라인업 카탈로그</p>
+              <p className="text-xs font-medium text-gray-400 mb-1">{language === "ko" ? "자료 다운로드" : "Download"}</p>
+              <h3 className="text-[15px] font-bold text-gray-900 mb-1">{language === "ko" ? "영상기록 장비 카탈로그" : "Video Equipment Catalog"}</h3>
+              <p className="text-sm text-gray-500">{language === "ko" ? "드론, 카메라, 영상 장비 전체 라인업 카탈로그" : "Full lineup catalog of drones, cameras, and video equipment"}</p>
             </div>
             <Link
               href="#download-catalog"
               className="flex-shrink-0 px-4 py-2 text-sm font-medium text-blue-600 border border-blue-200 rounded-lg hover:bg-blue-50 transition-colors"
             >
-              다운로드
+              {language === "ko" ? "다운로드" : "Download"}
             </Link>
           </div>
         </div>
@@ -51,20 +51,23 @@ export default function ContactCTA() {
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/4" />
 
           <div className="relative">
-            <p className="text-blue-200 text-sm font-semibold uppercase tracking-wider mb-4">지금 시작하세요</p>
+            <p className="text-blue-200 text-sm font-semibold uppercase tracking-wider mb-4">{language === "ko" ? "지금 시작하세요" : "Get Started Now"}</p>
             <h2 className="text-3xl font-black mb-4">
-              전문가와 무료로 상담하세요
+              {language === "ko" ? "전문가와 무료로 상담하세요" : "Consult Our Experts for Free"}
             </h2>
             <p className="text-blue-100 text-base mb-8 max-w-xl mx-auto">
-              현장 규모와 요구사항에 맞는 최적의 솔루션을 제안해드립니다.<br />
-              도입 비용, 기간, 효과 등을 전문가가 직접 안내합니다.
+              {language === "ko" ? (
+                <>현장 규모와 요구사항에 맞는 최적의 솔루션을 제안해드립니다.<br />도입 비용, 기간, 효과 등을 전문가가 직접 안내합니다.</>
+              ) : (
+                <>We&apos;ll propose the optimal solution for your site&apos;s scale and needs.<br />Our experts guide you on cost, timeline, and impact directly.</>
+              )}
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
                 href="#inquiry"
                 className="px-8 py-3.5 text-sm font-bold text-blue-700 bg-white hover:bg-blue-50 rounded-xl transition-colors shadow-lg"
               >
-                무료 상담 신청
+                {language === "ko" ? "무료 상담 신청" : "Request Free Consultation"}
               </Link>
               <Link
                 href="tel:1666-1967"
@@ -74,7 +77,7 @@ export default function ContactCTA() {
               </Link>
             </div>
             <p className="text-blue-200 text-xs mt-5">
-              평일 09:00 ~ 18:00 · 담당자 배정까지 평균 1시간 이내
+              {language === "ko" ? "평일 09:00 ~ 18:00 · 담당자 배정까지 평균 1시간 이내" : "Weekdays 09:00–18:00 · Avg. 1 hour to assign a representative"}
             </p>
           </div>
         </div>
