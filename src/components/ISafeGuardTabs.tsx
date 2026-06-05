@@ -5,12 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import ImagePlaceholder from "@/components/ImagePlaceholder";
 
-type TabId = "solution" | "model" | "device";
+type TabId = "solution" | "model" | "device" | "deployment";
 
 const tabs: { id: TabId; label: string; sub: string }[] = [
   { id: "solution", label: "솔루션", sub: "웹 관제 플랫폼" },
   { id: "model", label: "AI 모델", sub: "3단계 패키지" },
   { id: "device", label: "디바이스", sub: "엣지 하드웨어" },
+  { id: "deployment", label: "현장 실증", sub: "도입 사례" },
 ];
 
 // ───────────── 솔루션 탭 ─────────────
@@ -503,6 +504,175 @@ function DeviceTab() {
   );
 }
 
+// ───────────── 현장 실증 탭 ─────────────
+
+interface DeploymentMedia {
+  src: string;   // gif 경로 (추후 채움)
+  caption: string;
+}
+
+interface DeploymentCase {
+  image: string;
+  name: string;
+  category?: string;            // 현장 유형 (예: 공공기관, 대형 건설사)
+  summary?: string;             // 현장 개요 설명 (추후 채움)
+  models?: string[];            // 적용 AI 모델 (추후 채움)
+  media?: DeploymentMedia[];    // 실증 GIF + 설명 (추후 채움)
+}
+
+const deploymentCases: DeploymentCase[] = [
+  { image: "/images/accounts/SK ecoplant.png", name: "SK에코플랜트" },
+  { image: "/images/accounts/DLE&C.png", name: "DL E&C" },
+  { image: "/images/accounts/Nexilis.png", name: "SK Nexilis" },
+  { image: "/images/accounts/Korea Expressway Corporation.png", name: "한국도로공사" },
+  { image: "/images/accounts/HDC I&CONS Mixed-Use Development.png", name: "HDC I&CONS 복합개발" },
+  { image: "/images/accounts/Jinhae Harbor.png", name: "진해항" },
+  { image: "/images/accounts/National Assembly Boulevard, Seoul.png", name: "국회대로 (서울)" },
+  { image: "/images/accounts/Highway Express.png", name: "고속도로 현장" },
+  { image: "/images/accounts/Approtium.png", name: "APPROTIUM" },
+  { image: "/images/accounts/PIC Grobal.png", name: "PIC Global" },
+];
+
+function DeploymentTab() {
+  const [selected, setSelected] = useState<DeploymentCase | null>(null);
+
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+        <div className="text-center mb-14">
+          <p className="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">현장 실증</p>
+          <h2 className="text-3xl font-black text-gray-900 mb-4">
+            실제 현장에서 검증된 iSafeGuard
+          </h2>
+          <p className="text-gray-500 max-w-xl mx-auto">
+            공공기관부터 대형 건설사 현장까지, 현장별로 적용한 AI 모델과 실증 영상으로 어떻게 운영되고 있는지 보여드립니다.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {deploymentCases.map((c) => (
+            <button
+              key={c.name}
+              onClick={() => setSelected(c)}
+              className="text-left rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all overflow-hidden group flex flex-col"
+            >
+              <div className="relative aspect-[4/3] bg-gray-50 overflow-hidden">
+                <Image
+                  src={c.image}
+                  alt={c.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+              </div>
+              <div className="p-5 flex flex-col flex-1">
+                <h3 className="text-[15px] font-bold text-gray-900 mb-3">{c.name}</h3>
+                <div className="mt-auto flex items-center justify-between">
+                  <span className="text-xs text-gray-400">현장 실증 보기</span>
+                  <svg className="w-4 h-4 text-blue-500 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* 현장 실증 상세 팝업 */}
+      {selected && (
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-[10000] p-6"
+          onClick={() => setSelected(null)}
+        >
+          <div
+            className="bg-white w-full max-w-[760px] max-h-[88vh] rounded-2xl shadow-2xl relative overflow-hidden flex flex-col"
+            style={{ animation: "fadeSlide 0.25s ease" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="p-7 pb-5 border-b border-gray-100 flex items-start gap-4">
+              <div className="relative w-20 h-16 rounded-xl overflow-hidden bg-gray-50 flex-shrink-0">
+                <Image src={selected.image} alt={selected.name} fill className="object-cover" sizes="80px" />
+              </div>
+              <div className="flex-1 pr-8">
+                {selected.category && (
+                  <span className="inline-block px-2.5 py-0.5 text-[11px] font-bold bg-blue-50 text-blue-600 rounded-full mb-2">
+                    {selected.category}
+                  </span>
+                )}
+                <h3 className="text-xl font-bold text-gray-900">{selected.name}</h3>
+                <p className="text-sm text-gray-400 mt-1">iSafeGuard 현장 실증 사례</p>
+              </div>
+              <button
+                className="absolute top-5 right-5 w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors text-xl leading-none"
+                onClick={() => setSelected(null)}
+              >
+                &times;
+              </button>
+            </div>
+
+            {/* Body (scrollable) */}
+            <div className="p-7 overflow-y-auto">
+              {/* 현장 개요 */}
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">현장 개요</p>
+              <p className="text-[14px] text-gray-600 leading-relaxed mb-7">
+                {selected.summary ?? "현장 개요 설명이 들어갈 영역입니다. (준비 중)"}
+              </p>
+
+              {/* 적용 AI 모델 */}
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2">적용 AI 모델</p>
+              <div className="flex flex-wrap gap-2 mb-7">
+                {selected.models && selected.models.length > 0 ? (
+                  selected.models.map((m) => (
+                    <span key={m} className="px-3 py-1 text-xs font-medium bg-blue-50 text-blue-700 rounded-lg">
+                      {m}
+                    </span>
+                  ))
+                ) : (
+                  <span className="px-3 py-1 text-xs text-gray-400 bg-gray-50 border border-gray-100 rounded-lg">
+                    적용 모델 목록 준비 중
+                  </span>
+                )}
+              </div>
+
+              {/* 실증 영상 */}
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">실증 영상</p>
+              {selected.media && selected.media.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {selected.media.map((m) => (
+                    <figure key={m.src} className="rounded-xl overflow-hidden border border-gray-100">
+                      <div className="relative aspect-video bg-gray-900">
+                        <img src={m.src} alt={m.caption} className="w-full h-full object-cover" />
+                      </div>
+                      <figcaption className="px-3 py-2 text-xs text-gray-500">{m.caption}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {[0, 1].map((i) => (
+                    <div
+                      key={i}
+                      className="aspect-video rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-2 text-gray-300"
+                    >
+                      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-xs">실증 GIF 준비 중</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
 // ───────────── Main Export ─────────────
 
 export default function ISafeGuardTabs() {
@@ -540,6 +710,7 @@ export default function ISafeGuardTabs() {
       {activeTab === "solution" && <SolutionTab />}
       {activeTab === "model" && <ModelTab />}
       {activeTab === "device" && <DeviceTab />}
+      {activeTab === "deployment" && <DeploymentTab />}
     </>
   );
 }
