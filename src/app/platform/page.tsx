@@ -302,12 +302,20 @@ export default function PlatformPage() {
         <section className="bg-blue-700 text-white py-8">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
             <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-blue-600">
-              {[
-                { value: "4개", label: "순환 연동 모듈" },
-                { value: "24/7", label: "무중단 자동 운영" },
-                { value: "실시간", label: "모듈 간 데이터 동기화" },
-                { value: "단계별", label: "필요한 모듈만 선택 도입" },
-              ].map((s) => (
+              {(language === "ko"
+                ? [
+                    { value: "4개", label: "순환 연동 모듈" },
+                    { value: "24/7", label: "무중단 자동 운영" },
+                    { value: "실시간", label: "모듈 간 데이터 동기화" },
+                    { value: "단계별", label: "필요한 모듈만 선택 도입" },
+                  ]
+                : [
+                    { value: "4", label: "Cyclically Linked Modules" },
+                    { value: "24/7", label: "Uninterrupted Auto Operation" },
+                    { value: "Real-time", label: "Inter-Module Data Sync" },
+                    { value: "Modular", label: "Adopt Only What You Need" },
+                  ]
+              ).map((s) => (
                 <div key={s.label} className="text-center px-6 first:pl-0 last:pr-0">
                   <p className="text-3xl font-black text-white mb-1">{s.value}</p>
                   <p className="text-sm text-blue-100">{s.label}</p>
