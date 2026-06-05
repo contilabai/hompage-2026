@@ -194,7 +194,7 @@ export default function ISafeGuardPage() {
 
         {/* 3-Tab Section */}
         <div id="tabs">
-          <ISafeGuardTabs />
+          <ISafeGuardTabs language={language} />
         </div>
 
         {/* How it works */}
