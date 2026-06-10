@@ -78,70 +78,13 @@ const getProducts = (language: "ko" | "en") => [
   },
 ];
 
-const getAboutSections = (language: "ko" | "en") => [
-  {
-    group: language === "ko" ? "회사" : "Company",
-    items: [
-      {
-        label: language === "ko" ? "ConTILab" : "ConTILab",
-        href: "/about",
-        desc: language === "ko" ? "회사 소개 · 파트너십" : "Company Overview · Partnerships",
-        iconBg: "bg-gray-100",
-        iconColor: "text-gray-600",
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-          </svg>
-        ),
-      },
-    ],
-  },
-  {
-    group: language === "ko" ? "연구" : "Research",
-    items: [
-      {
-        label: language === "ko" ? "연구" : "Research",
-        href: "/about/research",
-        desc: language === "ko" ? "R&D · 기술 혁신 · 특허" : "R&D · Technology Innovation · Patents",
-        iconBg: "bg-blue-50",
-        iconColor: "text-blue-600",
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
-        ),
-      },
-    ],
-  },
-  {
-    group: language === "ko" ? "채용" : "Careers",
-    items: [
-      {
-        label: language === "ko" ? "비전 및 채용" : "Vision & Careers",
-        href: "/about/careers",
-        desc: language === "ko" ? "우리의 가치 · 채용 공고" : "Our Values · Job Openings",
-        iconBg: "bg-purple-50",
-        iconColor: "text-rose-500",
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-        ),
-      },
-    ],
-  },
-];
-
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [productOpen, setProductOpen] = useState(false);
-  const [aboutOpen, setAboutOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileProductOpen, setMobileProductOpen] = useState(false);
-  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [language, setLanguage] = useState<"ko" | "en">("ko");
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const aboutRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -169,9 +112,6 @@ export default function Header() {
     const onOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setProductOpen(false);
-      }
-      if (aboutRef.current && !aboutRef.current.contains(e.target as Node)) {
-        setAboutOpen(false);
       }
     };
     document.addEventListener("mousedown", onOutside);
@@ -201,60 +141,19 @@ export default function Header() {
 
           {/* Desktop nav — centered, click-only dropdown */}
           <nav className="hidden lg:flex flex-1 justify-center items-center gap-2">
-            {/* 회사소개 dropdown */}
-            <div ref={aboutRef} className="relative">
-              <button
-                onClick={() => setAboutOpen(!aboutOpen)}
-                className={`flex items-center gap-1.5 px-5 py-3 text-[30px] font-semibold rounded-lg transition-colors ${
-                  aboutOpen ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
-                }`}
-              >
-                {language === "ko" ? "회사소개" : "About"}
-                <ChevronDown
-                  size={20}
-                  className={`transition-transform duration-200 ${aboutOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-
-              {aboutOpen && (
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[400px] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
-                  <div className="p-3 space-y-1">
-                    {getAboutSections(language).map((section, si) => (
-                      <div key={section.group}>
-                        {si > 0 && <div className="my-2 border-t border-gray-100" />}
-                        <p className="px-4 pt-2 pb-1 text-[11px] font-bold text-gray-400 uppercase tracking-widest">
-                          {section.group}
-                        </p>
-                        {section.items.map((item) => (
-                          <Link
-                            key={item.href + item.label}
-                            href={item.href}
-                            onClick={() => setAboutOpen(false)}
-                            className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors group"
-                          >
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${item.iconBg} ${item.iconColor}`}>
-                              {item.icon}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <p className="text-[17px] font-semibold text-gray-900 group-hover:text-blue-600 transition-colors mb-0.5">
-                                {item.label}
-                              </p>
-                              <p className="text-[13px] text-gray-400 leading-snug">{item.desc}</p>
-                            </div>
-                          </Link>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+            {/* 회사소개 — 단일 링크 */}
+            <Link
+              href="/about"
+              className="flex items-center gap-1.5 px-5 py-3 text-[18px] font-semibold rounded-lg transition-colors text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+            >
+              {language === "ko" ? "회사소개" : "About"}
+            </Link>
 
             {/* 제품 dropdown */}
             <div ref={dropdownRef} className="relative">
               <button
                 onClick={() => setProductOpen(!productOpen)}
-                className={`flex items-center gap-1.5 px-5 py-3 text-[30px] font-semibold rounded-lg transition-colors ${
+                className={`flex items-center gap-1.5 px-5 py-3 text-[18px] font-semibold rounded-lg transition-colors ${
                   productOpen ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                 }`}
               >
@@ -298,14 +197,14 @@ export default function Header() {
 
             <Link
               href="/news"
-              className="px-5 py-3 text-[30px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+              className="px-5 py-3 text-[18px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
               {language === "ko" ? "소식" : "News"}
             </Link>
 
             <Link
               href="/contact"
-              className="px-5 py-3 text-[30px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+              className="px-5 py-3 text-[18px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
               {language === "ko" ? "문의하기" : "Contact"}
             </Link>
@@ -357,41 +256,14 @@ export default function Header() {
       {mobileOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100">
           <nav className="px-4 py-2">
-            {/* 회사소개 mobile accordion */}
-            <button
-              onClick={() => setMobileAboutOpen(!mobileAboutOpen)}
-              className="w-full flex items-center justify-between py-3 text-sm font-semibold text-gray-700 border-b border-gray-50"
+            {/* 회사소개 — 단일 링크 */}
+            <Link
+              href="/about"
+              onClick={() => setMobileOpen(false)}
+              className="w-full flex items-center py-3 text-sm font-semibold text-gray-700 border-b border-gray-50"
             >
               {language === "ko" ? "회사소개" : "About"}
-              <ChevronDown
-                size={16}
-                className={`text-gray-400 transition-transform ${mobileAboutOpen ? "rotate-180" : ""}`}
-              />
-            </button>
-            {mobileAboutOpen && (
-              <div className="py-1 pl-3">
-                {getAboutSections(language).map((section) => (
-                  <div key={section.group}>
-                    <p className="pt-2 pb-1 text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1">
-                      {section.group}
-                    </p>
-                    {section.items.map((item) => (
-                      <Link
-                        key={item.href + item.label}
-                        href={item.href}
-                        className="flex items-center gap-3 py-2.5 text-sm text-gray-600 hover:text-blue-600"
-                        onClick={() => { setMobileOpen(false); setMobileAboutOpen(false); }}
-                      >
-                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0 ${item.iconBg} ${item.iconColor}`}>
-                          {item.icon}
-                        </div>
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            )}
+            </Link>
 
             <button
               onClick={() => setMobileProductOpen(!mobileProductOpen)}

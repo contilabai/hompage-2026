@@ -226,28 +226,28 @@ function NewsCard({ item, categoryLabels, language }: { item: NewsItem; category
       <div className="p-6 flex flex-col flex-1">
         {/* Meta */}
         <div className="flex items-center gap-2 mb-3">
-          <span className={`px-2 py-0.5 text-[11px] font-semibold rounded-md ${categoryColors[item.category]}`}>
+          <span className={`px-2 py-0.5 text-[16px] font-semibold rounded-md ${categoryColors[item.category]}`}>
             {categoryLabels[item.category]}
           </span>
-          <span className="text-xs text-gray-400">{item.date}</span>
+          <span className="text-[18px] text-gray-400">{item.date}</span>
           {item.source && (
             <>
               <span className="text-gray-200">·</span>
-              <span className="text-xs text-gray-400">{item.source}</span>
+              <span className="text-[18px] text-gray-400">{item.source}</span>
             </>
           )}
         </div>
 
         {/* Title */}
-        <h3 className="text-base font-bold text-gray-900 mb-2 leading-snug">{item.title}</h3>
+        <h3 className="text-[24px] font-bold text-gray-900 mb-2 leading-snug">{item.title}</h3>
 
         {/* Excerpt */}
-        <p className="text-sm text-gray-500 leading-relaxed flex-1 mb-4">{item.excerpt}</p>
+        <p className="text-[21px] text-gray-500 leading-relaxed flex-1 mb-4">{item.excerpt}</p>
 
         {/* Tags */}
         <div className="flex flex-wrap gap-1.5 mb-4">
           {item.tags.map((tag) => (
-            <span key={tag} className="px-2 py-0.5 text-[11px] text-gray-400 bg-gray-50 border border-gray-100 rounded-md">
+            <span key={tag} className="px-2 py-0.5 text-[16px] text-gray-400 bg-gray-50 border border-gray-100 rounded-md">
               #{tag}
             </span>
           ))}
@@ -259,7 +259,7 @@ function NewsCard({ item, categoryLabels, language }: { item: NewsItem; category
             href={item.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 mt-auto"
+            className="inline-flex items-center gap-1.5 text-[18px] font-medium text-blue-600 hover:text-blue-700 mt-auto"
           >
             {language === "ko" ? "원문 보기" : "View Original"}
             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,18 +319,20 @@ export default function NewsPage() {
       <main>
         {/* Hero */}
         <section className="pt-[88px] bg-gradient-to-br from-[#050d18] via-[#0d1b2a] to-[#1b2a3b] text-white">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 lg:py-20">
-            <p className="text-xs font-semibold text-blue-300 uppercase tracking-widest mb-4">
-              {language === "ko" ? "소식" : "News"}
-            </p>
-            <h1 className="text-[36px] lg:text-[48px] font-black leading-tight mb-4">
-              {language === "ko" ? "News & Blog" : "News & Blog"}
-            </h1>
-            <p className="text-blue-200 text-base max-w-lg leading-relaxed">
-              {language === "ko"
-                ? "ConTILab의 최신 소식, 전시 참가, 기술 성과, 그리고 팀이 직접 쓰는 블로그를 모두 한 곳에서 확인하세요."
-                : "Latest news, exhibitions, technical achievements, and direct insights from the ConTILab team—all in one place."}
-            </p>
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-20 lg:py-28">
+            <div className="h-[160px]">
+              <p className="text-2xl font-semibold text-blue-300 uppercase tracking-widest mb-4">
+                {language === "ko" ? "소식" : "News"}
+              </p>
+              <h1 className="text-[40px] lg:text-[56px] font-black leading-tight mb-5">
+                {language === "ko" ? "News & Blog" : "News & Blog"}
+              </h1>
+              <p className="text-blue-200 text-base max-w-lg leading-relaxed">
+                {language === "ko"
+                  ? "ConTILab의 최신 소식, 전시 참가, 기술 성과, 그리고 팀이 직접 쓰는 블로그를 모두 한 곳에서 확인하세요."
+                  : "Latest news, exhibitions, technical achievements, and direct insights from the ConTILab team—all in one place."}
+              </p>
+            </div>
           </div>
         </section>
 
@@ -380,7 +382,7 @@ export default function NewsPage() {
         {/* YouTube channel CTA */}
         <section className="py-16 bg-white border-t border-gray-100">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 text-center">
-            <p className="text-sm text-gray-500 mb-4">
+            <p className="text-[21px] text-gray-500 mb-4">
               {language === "ko"
                 ? "ConTILab의 모든 영상 콘텐츠는 YouTube 채널에서 확인하세요"
                 : "Watch all ConTILab video content on our YouTube channel"}
@@ -389,7 +391,7 @@ export default function NewsPage() {
               href="https://www.youtube.com/@contilab"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-xl transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white text-[21px] font-semibold rounded-xl transition-colors"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z" />

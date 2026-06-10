@@ -13,9 +13,9 @@ const getProductLinks = (language: "ko" | "en") => [
 
 const getCompanyLinks = (language: "ko" | "en") => [
   { label: language === "ko" ? "회사소개" : "About", href: "/about" },
-  { label: "R&D History", href: "/about#rnd" },
+  { label: "R&D History", href: "/about?tab=research" },
   { label: language === "ko" ? "파트너 및 고객사" : "Partners & Clients", href: "/about#partners" },
-  { label: language === "ko" ? "특허 및 인증" : "Patents & Certifications", href: "/about#patents" },
+  { label: language === "ko" ? "특허 및 인증" : "Patents & Certifications", href: "/about?tab=research" },
   { label: language === "ko" ? "채용" : "Careers", href: "#jobs" },
 ];
 

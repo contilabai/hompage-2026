@@ -338,7 +338,7 @@ export default function PlatformPage() {
                   className="object-contain"
                 />
               </div>
-              <p className="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">
+              <p className="text-2xl font-semibold text-blue-600 uppercase tracking-wider mb-3">
                 {language === "ko" ? "4대 핵심 연동 모듈" : "4 Core Integrated Modules"}
               </p>
               <h2 className="text-3xl font-black text-gray-900 mb-4">
@@ -384,7 +384,7 @@ export default function PlatformPage() {
         <section className="py-20 bg-gray-50">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
-              <p className="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">
+              <p className="text-2xl font-semibold text-blue-600 uppercase tracking-wider mb-3">
                 {language === "ko" ? "플랫폼 Core 기능" : "Platform Core Features"}
               </p>
               <h2 className="text-3xl font-black text-gray-900 mb-4">
@@ -414,7 +414,7 @@ export default function PlatformPage() {
         <section className="py-20 bg-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
-              <p className="text-sm font-semibold text-blue-600 uppercase tracking-wider mb-3">
+              <p className="text-2xl font-semibold text-blue-600 uppercase tracking-wider mb-3">
                 {language === "ko" ? "도입 절차" : "Implementation Process"}
               </p>
               <h2 className="text-3xl font-black text-gray-900 mb-4">

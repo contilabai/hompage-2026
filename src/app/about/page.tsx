@@ -1,37 +1,94 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CompanyTab from "@/components/about/CompanyTab";
+import HistoryTab from "@/components/about/HistoryTab";
+import ResearchTab from "@/components/about/ResearchTab";
+import PartnersTab from "@/components/about/PartnersTab";
+
+type AboutTab = "company" | "history" | "research" | "partners";
+
+const getTabs = (language: "ko" | "en"): { id: AboutTab; label: string }[] => [
+  { id: "company", label: language === "ko" ? "비전" : "Vision" },
+  { id: "history", label: language === "ko" ? "연혁" : "History" },
+  { id: "research", label: language === "ko" ? "특허/인증/논문" : "Patents/Certs/Papers" },
+  { id: "partners", label: language === "ko" ? "파트너스" : "Partners" },
+];
+
+const getHero = (tab: AboutTab, language: "ko" | "en") => {
+  switch (tab) {
+    case "history":
+      return {
+        label: "History",
+        title: language === "ko" ? "걸어온 길" : "Our Journey",
+        desc: language === "ko"
+          ? "중앙대학교 건설기술혁신연구실의 20년 연구 노하우를 기반으로, 콘티랩은 AI와 현장 데이터를 연결하여 산업안전 혁신의 새로운 기준을 제시합니다."
+          : "Building on 20 years of research expertise from Chung-Ang University's Construction Innovation Lab, ConTI Lab connects AI with on-site data to set a new standard for industrial safety innovation.",
+      };
+    case "research":
+      return {
+        label: "Research",
+        title: language === "ko" ? "특허/인증/논문" : "Patents / Certifications / Papers",
+        desc: language === "ko"
+          ? "안전관리, 위험성평가, 메타버스 기반 안전교육, Vision AI, 블록체인 기반 안전수준 평가 등 산업안전 분야의 핵심 기술에 대한 특허, 인증 및 연구성과를 지속적으로 확보하고 있습니다."
+          : "We continuously secure patents, certifications, and research achievements in core industrial-safety technologies—including safety management, risk assessment, metaverse-based safety training, Vision AI, and blockchain-based safety-level evaluation.",
+      };
+    case "partners":
+      return {
+        label: "Partners",
+        title: language === "ko" ? "파트너스" : "Partners",
+        desc: language === "ko"
+          ? "공공기관, 민간 기업, 기술 협력사와 함께 현장 검증을 거치며 iSafePlatform을 발전시켜 왔습니다."
+          : "We've advanced iSafePlatform through field validation alongside public agencies, private enterprises, and technology partners.",
+      };
+    default:
+      return {
+        label: "Vision",
+        title: "ConTI Lab Co., Ltd.",
+        desc: language === "ko"
+          ? "산업현장 사고율 제로를 목표로\nAI 전환(AX)을 통한 안전관리와 안전문화를 혁신을 이루겠습니다."
+          : "Aiming for zero accident rates at industrial sites, we will innovate safety management and safety culture through AI transformation (AX).",
+      };
+  }
+};
 
 export default function AboutPage() {
   const [language, setLanguage] = useState<"ko" | "en">("ko");
+  const [activeTab, setActiveTab] = useState<AboutTab>("company");
 
   useEffect(() => {
     const savedLang = localStorage.getItem("language") as "ko" | "en" | null;
-    if (savedLang) {
-      setLanguage(savedLang);
-    }
+    if (savedLang) setLanguage(savedLang);
 
     const handleLanguageChange = (e: Event) => {
       const customEvent = e as CustomEvent;
       setLanguage(customEvent.detail);
     };
-
     window.addEventListener("languageChange", handleLanguageChange);
+
+    // 기존 경로/딥링크 지원: ?tab=research|careers
+    const params = new URLSearchParams(window.location.search);
+    const t = params.get("tab");
+    if (t === "history" || t === "research" || t === "partners" || t === "company") setActiveTab(t);
+
     return () => window.removeEventListener("languageChange", handleLanguageChange);
   }, []);
 
+  // 탭 전환 시 reveal 애니메이션 재적용
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
       { threshold: 0.1 }
     );
-    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    const els = document.querySelectorAll(".reveal");
+    els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [activeTab]);
+
+  const tabs = getTabs(language);
+  const hero = getHero(activeTab, language);
 
   return (
     <>
@@ -40,370 +97,40 @@ export default function AboutPage() {
         {/* Hero */}
         <section className="pt-[88px] bg-gradient-to-br from-[#050d18] via-[#0d1b2a] to-[#1b2a3b] text-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-20 lg:py-28">
-            <p className="text-xs font-semibold text-amber-400 uppercase tracking-widest mb-4">
-              {language === "ko" ? "About" : "About"}
-            </p>
-            <h1 className="text-[40px] lg:text-[56px] font-black leading-tight mb-5">ConTI Lab Co., Ltd.</h1>
-            <p className="text-blue-200 text-base max-w-xl leading-relaxed">
-              {language === "ko"
-                ? "Connecting Innovation, Protecting Lives — 2022년 중앙대학교에서 시작한 iSafe 플랫폼 전문 스타트업입니다."
-                : "Connecting Innovation, Protecting Lives — A specialized startup for the iSafe platform launched from Chung-Ang University in 2022."}
-            </p>
+            <div className="h-[160px]">
+              <p className="text-2xl font-semibold text-amber-400 uppercase tracking-widest mb-4">{hero.label}</p>
+              <h1 className="text-[40px] lg:text-[56px] font-black leading-tight mb-5">{hero.title}</h1>
+              <p className="text-blue-200 text-base max-w-3xl leading-relaxed whitespace-pre-line">{hero.desc}</p>
+            </div>
           </div>
         </section>
 
-        {/* Vision */}
-        <section className="py-20 bg-white" id="contilab">
+        {/* Tab bar */}
+        <div className="sticky top-[64px] z-40 bg-white border-b border-gray-200 shadow-sm">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-              <div className="reveal">
-                <p className="text-xs font-semibold text-amber-500 uppercase tracking-widest mb-3">
-                  {language === "ko" ? "Our Vision" : "Our Vision"}
-                </p>
-                <div className="w-12 h-0.5 bg-amber-400 mb-8" />
-                <p className="text-xs text-gray-400 mb-4">
-                  {language === "ko" ? "ConTI Lab Founder, Chan-sik Park" : "ConTI Lab Founder, Chan-sik Park"}
-                </p>
-                <div className="relative max-w-xs aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100 shadow-lg">
-                  <Image
-                    src="/images/founder-park-chansik.png"
-                    alt={language === "ko" ? "박찬식 교수 (ConTI Lab 창업자)" : "Prof. Chan-sik Park (ConTI Lab Founder)"}
-                    fill
-                    className="object-cover object-top"
-                    sizes="320px"
-                  />
-                </div>
-              </div>
-              <div className="reveal d1">
-                <h2 className="text-[28px] lg:text-[34px] font-black text-gray-900 leading-tight mb-6">
-                  {language === "ko" ? (
-                    <>
-                      Connecting Innovation, Protecting Lives.<br />
-                      <span className="text-amber-500">ConTI Lab</span>이 함께 만드는<br />안전의 가치
-                    </>
-                  ) : (
-                    <>
-                      Connecting Innovation, Protecting Lives.<br />
-                      The value of safety<br />created by <span className="text-amber-500">ConTI Lab</span>
-                    </>
-                  )}
-                </h2>
-                <p className="text-[15px] text-gray-600 leading-relaxed mb-6">
-                  {language === "ko"
-                    ? "2022년 중앙대학교 건설기술혁신연구실에서 설립된 ConTI Lab은 산업 현장의 사고를 예방하기 위한 iSafe 플랫폼을 적극적으로 개발하고 있습니다."
-                    : "Founded in 2022 by the Construction Innovation Research Lab at Chung-Ang University, ConTI Lab is actively developing the iSafe platform to prevent accidents in industrial sites."}
-                </p>
-                <ul className="space-y-4 mb-8">
-                  <li className="flex items-start gap-3 text-sm text-gray-700">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0 mt-2" />
-                    <span>
-                      <span className="font-semibold">iSafe-Guard</span> — {language === "ko"
-                        ? "AI 기반 컴퓨터 비전으로 실시간 위험 감지를 자동화하여 근로자 안전을 강화합니다."
-                        : "Automates real-time hazard detection using AI-powered computer vision to enhance worker safety."}
-                    </span>
-                  </li>
-                  <li className="flex items-start gap-3 text-sm text-gray-700">
-                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0 mt-2" />
-                    <span>
-                      <span className="font-semibold">iSafe-Meta</span> — {language === "ko"
-                        ? "토큰 기반 인센티브 시스템으로 구동되는 안전 평가 및 전문가 협업을 위한 실감형 메타버스입니다."
-                        : "An immersive metaverse for safety assessment and expert collaboration powered by token-based incentive systems."}
-                    </span>
-                  </li>
-                </ul>
-                <p className="text-sm text-gray-500 italic">
-                  &ldquo;Towards Zero-Accidents at Jobsites&rdquo; — {language === "ko"
-                    ? "기술 중심, 근로자 주도의 산업 안전 미래를 만들어 갑니다."
-                    : "Creating a technology-driven, worker-led future for industrial safety."}
-                </p>
-              </div>
+            <div className="flex gap-0 overflow-x-auto">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-6 py-4 text-sm font-semibold border-b-2 transition-colors whitespace-nowrap ${
+                    activeTab === tab.id
+                      ? "border-amber-500 text-amber-600"
+                      : "border-transparent text-gray-500 hover:text-gray-800 hover:border-gray-300"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
           </div>
-        </section>
+        </div>
 
-        {/* Partners Banner */}
-        <section id="partners" className="relative py-24 overflow-hidden">
-          <div className="absolute inset-0">
-            <Image src="/images/bg-construction-site.png" alt={language === "ko" ? "건설현장 배경" : "Construction site background"} fill className="object-cover object-center" sizes="100vw" />
-            <div className="absolute inset-0 bg-[#0d1b2a]/80" />
-          </div>
-          <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 text-center">
-            <p className="text-xs font-semibold text-amber-400 uppercase tracking-widest mb-4">Mission</p>
-            <h2 className="text-[36px] lg:text-[48px] font-black text-white mb-5">Safe Sites, Smarter AI</h2>
-            <p className="text-blue-200 text-base max-w-lg mx-auto leading-relaxed">
-              {language === "ko"
-                ? "현장에 특화된 AI로 실시간 위험을 감지합니다.\n파트너와 함께 진화하며 무사고 현장을 만들어 갑니다."
-                : "Detect risks in real-time with site-specific AI.\nEvolve with partners to create accident-free jobsites."}
-            </p>
-          </div>
-        </section>
-
-        {/* Partners Grid */}
-        <section className="py-20 bg-white">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 space-y-14">
-            {[
-              {
-                label: language === "ko" ? "공공기관" : "Public Agency",
-                delay: "",
-                items: [
-                  { name: "ex 한국도로공사", color: "text-red-600" },
-                  { name: "서울특별시\n도시기반시설본부", color: "" },
-                  { name: "국토안전관리원", color: "text-green-700" },
-                  { name: "SH 서울주택도시공사", color: "" },
-                  { name: "경기주택도시공사", color: "" },
-                ],
-              },
-              {
-                label: language === "ko" ? "민간건설사" : "Private Company",
-                delay: "d1",
-                items: [
-                  { name: "금호건설", color: "" }, { name: "SK ecoplant", color: "text-orange-600" },
-                  { name: "SK Nexilis", color: "text-orange-600" }, { name: "DL E&C", color: "" },
-                  { name: "APPROTIUM", color: "" }, { name: "ISC", color: "" },
-                ],
-              },
-              {
-                label: language === "ko" ? "기술협력사" : "Collaboration Tech Company",
-                delay: "d2",
-                items: [
-                  { name: "Deeper-I", color: "" }, { name: "SimPlatform", color: "" },
-                  { name: "HANLIM", color: "" }, { name: "RiskZero", color: "text-red-600" },
-                  { name: "씨아이솔루션", color: "" }, { name: "AIChemist", color: "" }, { name: "musma", color: "" },
-                ],
-              },
-            ].map((group, gi) => (
-              <div key={gi} className={`reveal ${group.delay}`}>
-                <h3 className="text-xs font-semibold text-amber-500 uppercase tracking-widest mb-2">{group.label}</h3>
-                <div className="w-8 h-0.5 bg-amber-400 mb-6" />
-                <div className="flex flex-wrap gap-3">
-                  {group.items.map((p) => (
-                    <div key={p.name} className="px-5 py-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-semibold text-center whitespace-pre-line leading-snug">
-                      <span className={p.color || "text-gray-700"}>{p.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* History Timeline */}
-        <section className="py-20 bg-gray-50" id="history">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-            <div className="mb-16 reveal">
-              <p className="text-xs font-semibold text-amber-500 uppercase tracking-widest mb-3">
-                {language === "ko" ? "History" : "History"}
-              </p>
-              <h2 className="text-3xl font-black text-gray-900 mb-3">
-                {language === "ko" ? "Our Journey" : "Our Journey"}
-              </h2>
-              <div className="w-12 h-0.5 bg-amber-400 mb-5" />
-              <p className="text-sm text-gray-500 max-w-2xl leading-relaxed">
-                {language === "ko"
-                  ? "중앙대학교 건설기술혁신연구실의 20년 연구가 쌓인 토대 위에, ConTI Lab은 iSafePlatform으로 스마트 건설 안전의 새로운 기준을 만들어 갑니다."
-                  : "Built on 20 years of research from Chung-Ang University's Construction Innovation Lab, ConTI Lab is setting new standards in smart construction safety with the iSafe Platform."}
-              </p>
-            </div>
-
-            {/* Phase 1 */}
-            <div className="mb-16">
-              <div className="flex items-center gap-4 mb-8 reveal">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center shadow-sm"><span className="text-xs font-black text-white">1</span></div>
-                <div>
-                  <p className="text-[10px] font-bold text-blue-500 uppercase tracking-widest">Phase 1 · 2003 – 2019</p>
-                  <p className="text-lg font-black text-gray-900 leading-tight">
-                    {language === "ko" ? "연구 기반 구축" : "Research Foundation"}
-                  </p>
-                </div>
-                <div className="flex-1 h-px bg-blue-100 hidden sm:block" />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:ml-14">
-                {[
-                  {
-                    period: "2003 – 2005",
-                    title: language === "ko" ? "결합형 안전관리시스템 구축" : "Integrated Safety Management System",
-                    desc: language === "ko" ? "건설현장관리를 위한 결합형 안전관리시스템 구축 연구 수행" : "Developed integrated safety management system for construction site operations",
-                  },
-                  {
-                    period: "2004 – 2009",
-                    title: language === "ko" ? "건설프로젝트 분류체계 연구" : "Construction Project Classification Study",
-                    desc: language === "ko" ? "건설프로젝트 분류체계 및 사전제어모델 구축에 관한 연구" : "Research on construction project classification and proactive control model development",
-                  },
-                  {
-                    period: "2009 – 2013",
-                    title: language === "ko" ? "BIM 기반 현장관리시스템 개발" : "BIM-based Site Management System",
-                    desc: language === "ko" ? "BIM PDA 기반 지식과 건설현장관리시스템 개발" : "Developed BIM PDA-based knowledge and construction site management system",
-                  },
-                  {
-                    period: "2016 – 2019",
-                    title: language === "ko" ? "Linked Data 건설안전 플랫폼" : "Linked Data Safety Platform",
-                    desc: language === "ko" ? "Linked Data 기반 건설안전 소셜 네트워크 플랫폼 개발" : "Developed Linked Data-based construction safety social network platform",
-                  },
-                ].map((item, ii) => (
-                  <div key={ii} className="reveal bg-white rounded-xl border border-blue-50 p-5 hover:border-blue-200 transition-colors">
-                    <span className="inline-block px-2 py-0.5 bg-blue-50 text-blue-500 rounded text-[10px] font-bold mb-2">{item.period}</span>
-                    <p className="text-sm font-bold text-gray-800 mb-1.5">{item.title}</p>
-                    <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Phase 2 */}
-            <div className="mb-16">
-              <div className="flex items-center gap-4 mb-8 reveal">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center shadow-sm"><span className="text-xs font-black text-white">2</span></div>
-                <div>
-                  <p className="text-[10px] font-bold text-orange-500 uppercase tracking-widest">Phase 2 · 2020 – 2022</p>
-                  <p className="text-lg font-black text-gray-900 leading-tight">
-                    {language === "ko" ? "AI 기술 전환 & 창업 준비" : "AI Transition & Startup Preparation"}
-                  </p>
-                </div>
-                <div className="flex-1 h-px bg-orange-100 hidden sm:block" />
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:ml-14">
-                {[
-                  {
-                    period: "2020 – 2022",
-                    title: language === "ko" ? "Vision AI 건설안전 연구 집중" : "Vision AI Safety Research",
-                    desc: language === "ko"
-                      ? "Vision AI 기반 건설안전 시스템 개발 연구 집중 수행 — 건설 현장 위험 상태 판단 데이터 수집 착수"
-                      : "Intensive research on Vision AI-based safety systems — began data collection for hazard assessment",
-                  },
-                  {
-                    period: "2020 – 2022",
-                    title: language === "ko" ? "블록체인 안전 플랫폼 개발" : "Blockchain Safety Platform",
-                    desc: language === "ko"
-                      ? "블록체인 기반 건설안전 소셜 플랫폼 개발 및 직업창안 인전 데이터 수집"
-                      : "Developed blockchain-based safety social platform and collected skill-based incentive data",
-                  },
-                  {
-                    period: "2021 – 2022",
-                    title: language === "ko" ? "메타버스 훈련 플랫폼 개발" : "Metaverse Training Platform",
-                    desc: language === "ko"
-                      ? "메타버스 기반 건설안전 훈련 환경 개발 — iSafeMeta의 원형 연구 착수"
-                      : "Developed metaverse-based safety training environment — prototype research for iSafeMeta",
-                  },
-                ].map((item, ii) => (
-                  <div key={ii} className="reveal bg-white rounded-xl border border-orange-50 p-5 hover:border-orange-200 transition-colors">
-                    <span className="inline-block px-2 py-0.5 bg-orange-50 text-orange-500 rounded text-[10px] font-bold mb-2">{item.period}</span>
-                    <p className="text-sm font-bold text-gray-800 mb-1.5">{item.title}</p>
-                    <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Phase 3 */}
-            <div>
-              <div className="flex items-center gap-4 mb-8 reveal">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center shadow-sm"><span className="text-xs font-black text-white">3</span></div>
-                <div>
-                  <p className="text-[10px] font-bold text-amber-500 uppercase tracking-widest">
-                    Phase 3 · 2022 – {language === "ko" ? "현재" : "Present"}
-                  </p>
-                  <p className="text-lg font-black text-gray-900 leading-tight">
-                    {language === "ko" ? "창업 & 성장" : "Startup & Growth"}
-                  </p>
-                </div>
-                <div className="flex-1 h-px bg-amber-200 hidden sm:block" />
-              </div>
-              <div className="relative sm:ml-14">
-                <div className="absolute left-[19px] top-0 bottom-0 w-0.5 bg-amber-200 hidden sm:block" />
-                <div className="space-y-8">
-                  {[
-                    {
-                      year: "2022",
-                      title: language === "ko" ? "ConTI Lab Co., Ltd. 설립" : "ConTI Lab Co., Ltd. Founded",
-                      tags: language === "ko" ? ["창업"] : ["Founding"],
-                      delay: "",
-                      bullets: language === "ko"
-                        ? ["중앙대학교 건설기술혁신연구실에서 스핀오프 창업", "iSafe 플랫폼 개발을 위한 시드 투자 유치", "건설 현장 위험 상태 판단 데이터 수집 본격화"]
-                        : ["Spun off from Chung-Ang University's Construction Innovation Lab", "Secured seed funding for iSafe platform development", "Began comprehensive hazard assessment data collection from sites"],
-                    },
-                    {
-                      year: "2023",
-                      title: language === "ko" ? "iSafeGuard 출시 & KTL 인증 취득" : "iSafeGuard Launch & KTL Certification",
-                      tags: language === "ko" ? ["기술인증", "제품출시"] : ["Tech Certification", "Product Launch"],
-                      delay: "d1",
-                      bullets: language === "ko"
-                        ? ["컴퓨터 비전 AI 기반 120개+ 위험 시나리오 감지 엔진 구축", "Unity 기반 합성 데이터 학습 파이프라인 구축", "KTL 성능 인증 취득 — 20 FPS 이상, F1-score 0.90+", "디지털 건설안전모델 개발 과제 착수"]
-                        : ["Built 120+ hazard scenario detection engine using computer vision AI", "Established Unity-based synthetic data training pipeline", "Obtained KTL certification — 20+ FPS, F1-score 0.90+", "Initiated digital construction safety model development"],
-                    },
-                    {
-                      year: "2024",
-                      title: language === "ko" ? "iSafeMeta & iSafeLLM 출시" : "iSafeMeta & iSafeLLM Launch",
-                      tags: language === "ko" ? ["플랫폼 확장", "AI 모델"] : ["Platform Expansion", "AI Model"],
-                      delay: "d2",
-                      bullets: language === "ko"
-                        ? ["Gaussian Splatting 기반 iSafeMeta Reality Capture 플랫폼 출시", "20개국 언어 지원 iSafeLLM 온톨로지 언어 모델 개발", "영상 AI 기반 산업현장 작업자 실시간 모니터링 과제 착수", "산업안전 중대재해 저감 온디바이스 AI 솔루션 R&D 개시"]
-                        : ["Launched iSafeMeta Reality Capture platform using Gaussian Splatting", "Developed iSafeLLM ontology language model supporting 20+ languages", "Began on-site worker monitoring with video AI", "Started R&D on on-device AI for major safety incident reduction"],
-                    },
-                    {
-                      year: "2025",
-                      title: language === "ko" ? "ONYCOM 검증 완료 & 글로벌 확장" : "ONYCOM Verification & Global Expansion",
-                      tags: language === "ko" ? ["인증완료", "특허 29건"] : ["Certification Complete", "29 Patents"],
-                      delay: "d3",
-                      bullets: language === "ko"
-                        ? ["ONYCOM AI 모델 검증 완료 — mAP 0.751, F1-score 0.824", "자체 보유 9건 + 산학협력단 20건, 총 29건 특허 등록", "공동주택 고층화 기술개발사업(OSC) 참여", "국내외 현장 배포 확장 및 글로벌 시장 진출"]
-                        : ["Completed ONYCOM AI model verification — mAP 0.751, F1-score 0.824", "Registered 29 patents (9 proprietary + 20 collaborative)", "Participating in multi-unit housing development project", "Expanded domestic and global site deployment"],
-                    },
-                  ].map((item) => (
-                    <div key={item.year} className={`reveal ${item.delay} flex gap-6 sm:gap-8 items-start`}>
-                      <div className="flex-shrink-0 relative z-10">
-                        <div className="w-10 h-10 rounded-full bg-amber-400 flex items-center justify-center shadow-md">
-                          <span className="text-[10px] font-black text-white leading-none">{item.year.slice(2)}</span>
-                        </div>
-                      </div>
-                      <div className="bg-white rounded-2xl border border-gray-100 p-6 flex-1 shadow-sm hover:shadow-md transition-shadow">
-                        <div className="flex flex-wrap items-center gap-2 mb-3">
-                          <p className="text-xs font-bold text-amber-500">{item.year}</p>
-                          {item.tags.map((tag) => (
-                            <span key={tag} className="px-2 py-0.5 bg-amber-50 text-amber-600 rounded-full text-[10px] font-semibold border border-amber-100">{tag}</span>
-                          ))}
-                        </div>
-                        <p className="text-base font-bold text-gray-900 mb-3">{item.title}</p>
-                        <ul className="space-y-1.5">
-                          {item.bullets.map((b) => (
-                            <li key={b} className="flex items-start gap-2.5 text-sm text-gray-500">
-                              <span className="w-1 h-1 rounded-full bg-amber-300 flex-shrink-0 mt-[7px]" />{b}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="py-20 bg-gradient-to-r from-[#0d1b2a] to-[#1b2a3b] text-white">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6 text-center">
-            <p className="text-xs font-semibold text-amber-400 uppercase tracking-widest mb-4">Contact</p>
-            <h2 className="text-3xl font-black mb-5">
-              {language === "ko" ? "파트너십 및 기술 협력 문의" : "Partnership & Technical Collaboration"}
-            </h2>
-            <p className="text-blue-200 mb-8 max-w-xl mx-auto leading-relaxed">
-              {language === "ko"
-                ? "ConTILab은 공공기관 및 국내외 탑티어 건설사들과 협력하며 기술 검증을 완료했습니다.\n도입 상담, 공동 연구, 파트너십 제안을 환영합니다."
-                : "ConTI Lab has completed technology validation in collaboration with public agencies and top-tier construction companies nationwide.\nWe welcome inquiries about implementation, joint research, and partnership proposals."}
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <a href="mailto:contilab@contilab.co.kr" className="px-8 py-3.5 text-sm font-bold text-blue-900 bg-white hover:bg-blue-50 rounded-xl transition-colors shadow-lg">contilab@contilab.co.kr</a>
-              <Link href="/platform" className="px-8 py-3.5 text-sm font-bold text-white border-2 border-white/40 hover:border-white rounded-xl transition-colors">
-                {language === "ko" ? "iSafePlatform 보기" : "View iSafePlatform"}
-              </Link>
-            </div>
-            <p className="text-blue-300/60 text-xs mt-6">
-              {language === "ko"
-                ? "서울특별시 동작구 흑석로 84 중앙대학교 208관 201호"
-                : "Rm 201, Building 208, Chung-Ang University, 84 Heukseok-ro, Dongjak-gu, Seoul"}
-            </p>
-          </div>
-        </section>
+        {/* Tab content */}
+        {activeTab === "company" && <CompanyTab language={language} />}
+        {activeTab === "history" && <HistoryTab language={language} />}
+        {activeTab === "research" && <ResearchTab language={language} />}
+        {activeTab === "partners" && <PartnersTab language={language} />}
       </main>
       <Footer language={language} />
     </>
