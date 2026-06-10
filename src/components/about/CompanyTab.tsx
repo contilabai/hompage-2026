@@ -9,7 +9,7 @@ export default function CompanyTab({ language }: { language: "ko" | "en" }) {
       <section className="py-20 bg-white" id="contilab">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
           <div className="max-w-3xl reveal">
-            <p className="text-xs font-semibold text-amber-500 uppercase tracking-widest mb-3">
+            <p className="text-[18px] font-semibold text-amber-500 uppercase tracking-widest mb-3">
               {language === "ko" ? "Our Vision" : "Our Vision"}
             </p>
             <div className="w-12 h-0.5 bg-amber-400 mb-8" />

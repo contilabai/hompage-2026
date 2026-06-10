@@ -150,7 +150,7 @@ export default function PlatformPage() {
         {/* ── Hero ──────────────────────────────────────────── */}
         <section className="pt-[88px] bg-gradient-to-br from-[#050d18] via-[#0d1b2a] to-[#1b2a3b] text-white overflow-hidden">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 lg:py-24 relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:h-[560px]">
 
               {/* Left: text */}
               <div>

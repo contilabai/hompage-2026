@@ -29,7 +29,7 @@ const getHero = (tab: AboutTab, language: "ko" | "en") => {
       };
     case "research":
       return {
-        label: "Research",
+        label: language === "ko" ? "특허/인증/논문" : "Patents/Certs/Papers",
         title: language === "ko" ? "특허/인증/논문" : "Patents / Certifications / Papers",
         desc: language === "ko"
           ? "안전관리, 위험성평가, 메타버스 기반 안전교육, Vision AI, 블록체인 기반 안전수준 평가 등 산업안전 분야의 핵심 기술에 대한 특허, 인증 및 연구성과를 지속적으로 확보하고 있습니다."
@@ -98,9 +98,8 @@ export default function AboutPage() {
         <section className="pt-[88px] bg-gradient-to-br from-[#050d18] via-[#0d1b2a] to-[#1b2a3b] text-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-20 lg:py-28">
             <div className="h-[160px]">
-              <p className="text-2xl font-semibold text-amber-400 uppercase tracking-widest mb-4">{hero.label}</p>
-              <h1 className="text-[40px] lg:text-[56px] font-black leading-tight mb-5">{hero.title}</h1>
-              <p className="text-blue-200 text-base max-w-3xl leading-relaxed whitespace-pre-line">{hero.desc}</p>
+              <p className="text-[18px] font-semibold text-amber-400 uppercase tracking-widest mb-4">{hero.label}</p>
+              <p className="text-white text-[22px] lg:text-[26px] max-w-3xl leading-relaxed whitespace-pre-line">{hero.desc}</p>
             </div>
           </div>
         </section>

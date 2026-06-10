@@ -1,51 +1,41 @@
 const logos = [
-  "서울특별시",
-  "서울주택도시공사",
-  "해양수산부",
-  "국토교통부",
-  "LH한국토지주택공사",
-  "GS건설",
-  "삼성물산",
-  "현대건설",
-  "대우건설",
-  "롯데건설",
-  "SK에코플랜트",
-  "포스코이앤씨",
-  "한화건설",
-  "HDC현대산업개발",
-  "한국전력공사",
-  "GS파워",
-  "SK텔레콤",
-  "삼성전자",
-  "서울교통공사",
   "한국도로공사",
-  "코레일",
-  "부산항만공사",
+  "서울특별시 도시기반시설본부",
+  "국토안전관리원",
+  "SH 서울주택도시공사",
+  "경기주택도시공사",
+  "코오롱글로벌(주)",
+  "SK Nexilis",
+  "DL E&C",
+  "APPROTIUM",
+  "ISC",
+  "Deeper-I",
+  "SimPlatform",
+  "HANLIM",
+  "RiskZero",
+  "씨아이솔루션",
+  "AIChemist",
+  "musma"
 ];
 
 const logosEn = [
-  "Seoul Metropolitan Gov.",
-  "Seoul Housing & Communities",
-  "Ministry of Oceans & Fisheries",
-  "Ministry of Land & Transport",
-  "LH Korea Land & Housing",
-  "GS E&C",
-  "Samsung C&T",
-  "Hyundai E&C",
-  "Daewoo E&C",
-  "Lotte E&C",
-  "SK ecoplant",
-  "POSCO E&C",
-  "Hanwha E&C",
-  "HDC HYUNDAI",
-  "KEPCO",
-  "GS Power",
-  "SK Telecom",
-  "Samsung Electronics",
-  "Seoul Metro",
   "Korea Expressway Corp.",
-  "KORAIL",
-  "Busan Port Authority",
+  "Seoul Metropolitan Infrastructure Headquarters",
+  "Korea Authority of Land & Infrastructure Safety",
+  "Seoul Housing & Communities",
+  "Gyeonggi Housing & Urban Development Corp.",
+  "Kolon Global Corp.",
+  "SK Nexilis",
+  "DL E&C",
+  "APPROTIUM",
+  "ISC",
+  "Deeper-I",
+  "SimPlatform",
+  "HANLIM",
+  "RiskZero",
+  "CI Solution",
+  "AIChemist",
+  "musma"
 ];
 
 export default function ClientLogos({ language = "ko" }: { language?: "ko" | "en" }) {
@@ -74,8 +64,8 @@ export default function ClientLogos({ language = "ko" }: { language?: "ko" | "en
         </h2>
         <p className="mt-3 text-gray-500 text-base">
           {language === "ko"
-            ? "공공기관 및 국내외 탑티어 건설사들과 협력하며 기술 검증을 완료했습니다"
-            : "Technology validated through partnerships with public agencies and top-tier construction firms"}
+            ? "공공기관 및 건설·제조·기술 분야의 핵심 기업, 파트너사들과 협력하여 기술 검증을 완료했습니다"
+            : "We have completed technology verification in collaboration with public institutions, leading companies in the construction, manufacturing, and technology sectors, as well as our partner firms"}
         </p>
       </div>
 

@@ -185,7 +185,7 @@ export default function ISafeChainPage() {
         {/* Hero */}
         <section className="pt-[88px] bg-gradient-to-br from-[#3d1200] via-[#7c2d12] to-[#ea580c] text-white overflow-hidden">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 lg:py-24 relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:h-[560px]">
               <div>
                 <div className="flex items-center gap-2 mb-5">
                   <span className="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-full">iSafeChain</span>

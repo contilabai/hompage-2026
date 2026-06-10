@@ -144,7 +144,7 @@ export default function Header() {
             {/* 회사소개 — 단일 링크 */}
             <Link
               href="/about"
-              className="flex items-center gap-1.5 px-5 py-3 text-[18px] font-semibold rounded-lg transition-colors text-gray-700 hover:text-blue-600 hover:bg-gray-50"
+              className="flex items-center gap-1.5 px-5 py-3 text-[20px] font-semibold rounded-lg transition-colors text-gray-700 hover:text-blue-600 hover:bg-gray-50"
             >
               {language === "ko" ? "회사소개" : "About"}
             </Link>
@@ -153,7 +153,7 @@ export default function Header() {
             <div ref={dropdownRef} className="relative">
               <button
                 onClick={() => setProductOpen(!productOpen)}
-                className={`flex items-center gap-1.5 px-5 py-3 text-[18px] font-semibold rounded-lg transition-colors ${
+                className={`flex items-center gap-1.5 px-5 py-3 text-[20px] font-semibold rounded-lg transition-colors ${
                   productOpen ? "text-blue-600 bg-blue-50" : "text-gray-700 hover:text-blue-600 hover:bg-gray-50"
                 }`}
               >
@@ -197,14 +197,14 @@ export default function Header() {
 
             <Link
               href="/news"
-              className="px-5 py-3 text-[18px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+              className="px-5 py-3 text-[20px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
               {language === "ko" ? "소식" : "News"}
             </Link>
 
             <Link
               href="/contact"
-              className="px-5 py-3 text-[18px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+              className="px-5 py-3 text-[20px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
             >
               {language === "ko" ? "문의하기" : "Contact"}
             </Link>

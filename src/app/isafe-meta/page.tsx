@@ -228,7 +228,7 @@ export default function ISafeMetaPage() {
         {/* Hero */}
         <section className="pt-[88px] bg-gradient-to-br from-[#3d0e0e] via-[#7f1d1d] to-[#dc2626] text-white overflow-hidden">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-16 lg:py-24 relative">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:h-[560px]">
               <div>
                 <div className="flex items-center gap-2 mb-5">
                   <span className="px-3 py-1 bg-red-600 text-white text-xs font-bold rounded-full">iSafeMeta</span>
@@ -318,6 +318,37 @@ export default function ISafeMetaPage() {
           </div>
         </section>
 
+        {/* Stats */}
+        <section className="bg-red-600 text-white py-8">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-red-500">
+              {[
+                {
+                  value: "20+",
+                  label: language === "ko" ? "AI Agent 지원 언어" : "AI Agent Languages",
+                },
+                {
+                  value: language === "ko" ? "2가지" : "2 Ways",
+                  label: language === "ko" ? "가상환경 구축 방식" : "Build Virtual Environment",
+                },
+                {
+                  value: language === "ko" ? "디지털" : "Digital",
+                  label: language === "ko" ? "수강 시스템 운영" : "Learning System Operation",
+                },
+                {
+                  value: language === "ko" ? "자동" : "Auto",
+                  label: language === "ko" ? "이수 기록 블록체인 저장" : "Blockchain Record Storage",
+                },
+              ].map((s) => (
+                <div key={s.label} className="text-center px-6 first:pl-0 last:pr-0">
+                  <p className="text-2xl font-black text-white mb-1">{s.value}</p>
+                  <p className="text-sm text-red-100">{s.label}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Tab bar */}
         <div className="sticky top-[64px] z-40 bg-white border-b border-gray-200 shadow-sm">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
@@ -350,37 +381,6 @@ export default function ISafeMetaPage() {
           <ISafeMetaScenario language={language} />
         ) : (
         <>
-        {/* Stats */}
-        <section className="bg-red-600 text-white py-8">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-red-500">
-              {[
-                {
-                  value: "20+",
-                  label: language === "ko" ? "AI Agent 지원 언어" : "AI Agent Languages",
-                },
-                {
-                  value: language === "ko" ? "2가지" : "2 Ways",
-                  label: language === "ko" ? "가상환경 구축 방식" : "Build Virtual Environment",
-                },
-                {
-                  value: language === "ko" ? "디지털" : "Digital",
-                  label: language === "ko" ? "수강 시스템 운영" : "Learning System Operation",
-                },
-                {
-                  value: language === "ko" ? "자동" : "Auto",
-                  label: language === "ko" ? "이수 기록 블록체인 저장" : "Blockchain Record Storage",
-                },
-              ].map((s) => (
-                <div key={s.label} className="text-center px-6 first:pl-0 last:pr-0">
-                  <p className="text-2xl font-black text-white mb-1">{s.value}</p>
-                  <p className="text-sm text-red-100">{s.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Feature sections */}
         {getMetaFeatures(language).map((feature) => (
           <section key={feature.id} id={feature.id} className={`py-20 ${feature.bgClass}`}>

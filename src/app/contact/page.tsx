@@ -102,9 +102,8 @@ export default function ContactPage() {
         <section className="pt-[88px] bg-gradient-to-br from-[#050d18] via-[#0d1b2a] to-[#1b2a3b] text-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-20 lg:py-28">
             <div className="h-[160px]">
-              <p className="text-2xl font-semibold text-amber-400 uppercase tracking-widest mb-4">{hero.label}</p>
-              <h1 className="text-[40px] lg:text-[56px] font-black leading-tight mb-5">{hero.title}</h1>
-              <p className="text-blue-200 text-base max-w-xl leading-relaxed whitespace-pre-line">{hero.desc}</p>
+              <p className="text-[18px] font-semibold text-amber-400 uppercase tracking-widest mb-4">{hero.label}</p>
+              <p className="text-white text-[22px] lg:text-[26px] max-w-xl leading-relaxed whitespace-pre-line">{hero.desc}</p>
             </div>
           </div>
         </section>

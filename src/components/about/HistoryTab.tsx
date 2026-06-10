@@ -4,6 +4,10 @@ export default function HistoryTab({ language }: { language: "ko" | "en" }) {
   return (
     <section className="py-20 bg-gray-50" id="history">
       <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+        <div className="mb-14 reveal">
+          <p className="text-[18px] font-semibold text-amber-500 uppercase tracking-widest mb-3">History</p>
+          <div className="w-12 h-0.5 bg-amber-400" />
+        </div>
         {/* Phase 1 */}
         <div className="mb-16">
           <div className="flex items-center gap-4 mb-8 reveal">

@@ -321,13 +321,10 @@ export default function NewsPage() {
         <section className="pt-[88px] bg-gradient-to-br from-[#050d18] via-[#0d1b2a] to-[#1b2a3b] text-white">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-20 lg:py-28">
             <div className="h-[160px]">
-              <p className="text-2xl font-semibold text-blue-300 uppercase tracking-widest mb-4">
-                {language === "ko" ? "소식" : "News"}
+              <p className="text-[18px] font-semibold text-amber-400 uppercase tracking-widest mb-4">
+                News
               </p>
-              <h1 className="text-[40px] lg:text-[56px] font-black leading-tight mb-5">
-                {language === "ko" ? "News & Blog" : "News & Blog"}
-              </h1>
-              <p className="text-blue-200 text-base max-w-lg leading-relaxed">
+              <p className="text-white text-[22px] lg:text-[26px] max-w-lg leading-relaxed">
                 {language === "ko"
                   ? "ConTILab의 최신 소식, 전시 참가, 기술 성과, 그리고 팀이 직접 쓰는 블로그를 모두 한 곳에서 확인하세요."
                   : "Latest news, exhibitions, technical achievements, and direct insights from the ConTILab team—all in one place."}
