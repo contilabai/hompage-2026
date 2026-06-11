@@ -8,6 +8,9 @@ import ImagePlaceholder from "@/components/ImagePlaceholder";
 
 const featureGifs: Record<string, string> = {
   "3d-convert": "/gif/2dto3d.gif",
+  "viewer": "/images/planner/planner5.png",
+  "scheduler": "/images/planner/planner6.png",
+  "risk-assessment": "/images/planner/planner9.png",
 };
 
 const getPlannerFeatures = (language: "ko" | "en") => [
@@ -237,8 +240,8 @@ export default function ISafePlannerPage() {
                   </div>
                   <div className="relative aspect-video bg-gray-900 rounded-xl overflow-hidden mb-3">
                     <img
-                      src="/gif/iSafePlanner.gif"
-                      alt={language === "ko" ? "IFC 3D 모델 변환" : "IFC 3D Model Transform"}
+                      src="/images/planner/planner7.png"
+                      alt={language === "ko" ? "iSafe 3D 뷰어" : "iSafe 3D Viewer"}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -322,15 +325,8 @@ export default function ISafePlannerPage() {
                     ))}
                   </ul>
                 </div>
-                {feature.id === "risk-assessment" ? (
-                  <div className="rounded-2xl aspect-video border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-3 text-gray-400">
-                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.4} d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p className="text-sm font-semibold">{language === "ko" ? "서비스 준비 중" : "Service coming soon"}</p>
-                  </div>
-                ) : featureGifs[feature.id] ? (
-                  <div className="rounded-2xl overflow-hidden shadow-lg aspect-video">
+                {featureGifs[feature.id] ? (
+                  <div className={`rounded-2xl overflow-hidden shadow-lg ${feature.id === "scheduler" ? "aspect-[3/1]" : "aspect-video"}`}>
                     <img
                       src={featureGifs[feature.id]}
                       alt={feature.placeholder.title}
