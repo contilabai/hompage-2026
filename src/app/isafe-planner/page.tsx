@@ -301,49 +301,61 @@ export default function ISafePlannerPage() {
         </section>
 
         {/* Feature sections */}
-        {getPlannerFeatures(language).map((feature) => (
-          <section key={feature.id} id={feature.id} className={`py-20 ${feature.bgClass}`}>
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${feature.reverse ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""}`}>
-                <div className="flex flex-col justify-center">
-                  <span className={`inline-block px-3 py-1 text-xs font-semibold ${feature.tagColor} rounded-full mb-4 w-fit`}>
-                    {feature.tag}
-                  </span>
-                  <h2 className="text-[30px] font-black text-gray-900 whitespace-pre-line leading-tight mb-3">
-                    {feature.headline}
-                  </h2>
-                  <p className="text-sm font-semibold text-green-600 mb-3">{feature.subhead}</p>
-                  <p className="text-[15px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
-                  <ul className="space-y-3 mb-8">
-                    {feature.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-3 text-sm text-gray-700">
-                        <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                {featureGifs[feature.id] ? (
-                  <div className={`rounded-2xl overflow-hidden shadow-lg ${feature.id === "scheduler" ? "aspect-[3/1]" : "aspect-video"}`}>
-                    <img
-                      src={featureGifs[feature.id]}
-                      alt={feature.placeholder.title}
-                      className="w-full h-full object-cover rounded-2xl"
-                    />
-                  </div>
+        {getPlannerFeatures(language).map((feature) => {
+          const isWide = feature.id === "scheduler" || feature.id === "risk-assessment";
+          const textBlock = (
+            <div className="flex flex-col justify-center">
+              <span className={`inline-block px-3 py-1 text-xs font-semibold ${feature.tagColor} rounded-full mb-4 w-fit`}>
+                {feature.tag}
+              </span>
+              <h2 className="text-[30px] font-black text-gray-900 whitespace-pre-line leading-tight mb-3">
+                {feature.headline}
+              </h2>
+              <p className="text-sm font-semibold text-green-600 mb-3">{feature.subhead}</p>
+              <p className="text-[15px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
+              <ul className="space-y-3">
+                {feature.bullets.map((b) => (
+                  <li key={b} className="flex items-start gap-3 text-sm text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    {b}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+          const imageBlock = featureGifs[feature.id] ? (
+            <div className="rounded-2xl overflow-hidden shadow-lg aspect-video">
+              <img src={featureGifs[feature.id]} alt={feature.placeholder.title} className="w-full h-full object-cover rounded-2xl" />
+            </div>
+          ) : (
+            <ImagePlaceholder title={feature.placeholder.title} description={feature.placeholder.description} aspectRatio="4/3" />
+          );
+          return (
+            <section key={feature.id} id={feature.id} className={`py-20 ${feature.bgClass}`}>
+              <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+                {isWide ? (
+                  <>
+                    <div className="mb-10">{textBlock}</div>
+                    <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                      <img
+                        src={featureGifs[feature.id]}
+                        alt={feature.placeholder.title}
+                        className="w-full h-auto"
+                      />
+                    </div>
+                  </>
                 ) : (
-                  <ImagePlaceholder
-                    title={feature.placeholder.title}
-                    description={feature.placeholder.description}
-                    aspectRatio="4/3"
-                  />
+                  <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${feature.reverse ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""}`}>
+                    {textBlock}
+                    {imageBlock}
+                  </div>
                 )}
               </div>
-            </div>
-          </section>
-        ))}
+            </section>
+          );
+        })}
 
         {/* How it works */}
         <section className="py-20 bg-gray-50">
