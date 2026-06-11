@@ -68,8 +68,8 @@ const getModules = (language: "ko" | "en") => [
     badge: language === "ko" ? "관제" : "Monitor",
     badgeColor: "bg-blue-100 text-blue-700",
     desc: language === "ko"
-      ? "교육받은 근로자가 현장에 투입되면 AI가 32채널을 실시간 관제합니다. 기본 AI 모델 5종은 조건 없이 무료 제공됩니다."
-      : "Real-time AI monitoring of 32 channels on-site. 5 basic AI models provided free.",
+      ? "교육받은 근로자가 현장에 투입되면 AI가 100채널 이상을 실시간 관제합니다. 기본 AI 모델 5종은 조건 없이 무료 제공됩니다."
+      : "Real-time AI monitoring of 100+ channels on-site. 5 basic AI models provided free.",
     href: "/isafe-guard",
     color: "border-blue-200 hover:border-blue-400",
     gradientFrom: "#0c2340",
@@ -337,7 +337,7 @@ export default function PlatformPage() {
                   className="object-contain"
                 />
               </div>
-              <p className="text-2xl font-semibold text-blue-600 uppercase tracking-wider mb-3">
+              <p className="text-2xl font-semibold text-blue-600 tracking-wider mb-3">
                 {language === "ko" ? "iSafePlatform 아키텍처" : "iSafePlatform Architecture"}
               </p>
               <h2 className="text-3xl font-black text-gray-900 mb-4">

@@ -19,14 +19,14 @@ const getChainFeatures = (language: "ko" | "en") => [
     tag: language === "ko" ? "위변조 불가 안전 기록" : "Tamper-Proof Safety Records",
     tagColor: "bg-orange-100 text-orange-700",
     headline: language === "ko"
-      ? "사고 이후\n\"몰랐다\"는 말이\n통하지 않습니다"
-      : "After an accident,\n\"I didn't know\" won't fly\nanymore",
+      ? "안전관리의 노력을\n위변조 없는 기록으로\n남깁니다"
+      : "Preserve safety efforts\nas records that\ncan't be tampered with",
     subhead: language === "ko"
       ? "모든 안전 활동이 자동으로 블록체인에 기록됩니다"
-      : "Every safety activity automatically recorded on blockchain",
+      : "Every safety activity is automatically recorded on the blockchain.",
     desc: language === "ko"
-      ? "중대재해처벌법 위반 시 사업주와 경영진도 형사처벌을 받습니다. '우리는 관리했다'는 주장만으로는 부족합니다. iSafeIncentive은 iSafeGuard의 감지 기록, iSafeMeta의 교육 이수, 위험구역 출입 이력을 위변조 불가 블록체인에 자동으로 저장합니다."
-      : "Major accident penalties apply to executives too. Just saying \"we managed it\" isn't enough. iSafeIncentive auto-saves iSafeGuard detections, iSafeMeta completions, and hazard zone access to tamper-proof blockchain.",
+      ? "현장의 안전관리 노력은 기록으로 남을 때 비로소 증명됩니다. iSafeIncentive는 iSafeGuard의 감지 기록, iSafeMeta의 교육 이수, 위험구역 출입 이력을 위변조 불가 블록체인에 자동으로 저장해, 필요할 때 신뢰할 수 있는 증빙으로 활용할 수 있게 합니다."
+      : "Safety-management efforts are only proven once they're recorded. iSafeIncentive automatically stores iSafeGuard detections, iSafeMeta training completions, and hazard-zone access logs on a tamper-proof blockchain—so they stand as trustworthy evidence whenever you need them.",
     bullets: language === "ko"
       ? [
           "모든 안전 이벤트 자동 온체인 기록",

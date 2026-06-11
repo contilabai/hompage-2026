@@ -135,14 +135,14 @@ const getMetaFeatures = (language: "ko" | "en") => [
     tag: language === "ko" ? "교육 이수 자동 기록" : "Auto Training Records",
     tagColor: "bg-purple-100 text-purple-700",
     headline: language === "ko"
-      ? "\"교육을 했다\"\n증거가\n지금 있습니까?"
-      : "\"We trained everyone\"\n—do you have proof\nright now?",
+      ? "교육한 내용이\n자동으로 기록되고\n증빙으로 남습니다"
+      : "What you taught\nis recorded automatically\nand kept as evidence",
     subhead: language === "ko"
       ? "모든 수강 이력이 iSafeIncentive에 자동으로 저장됩니다"
       : "Every completion automatically saved to iSafeIncentive",
     desc: language === "ko"
-      ? "중대재해 발생 시 '우리는 교육을 충분히 했다'를 증명해야 합니다. 디지털 수강 시스템의 모든 이수 기록이 자동으로 iSafeIncentive에 전달되어 위변조 불가능한 법적 증빙으로 남습니다."
-      : "When accidents happen, you must prove you trained everyone. Our digital system auto-sends all completion records to iSafeIncentive—creating tamper-proof legal evidence that stays with you.",
+      ? "교육의 효과는 기록될 때 비로소 증명됩니다. 디지털 수강 시스템의 모든 이수 기록이 자동으로 iSafeIncentive에 전달되어 위변조 불가능한 증빙으로 남아, 필요할 때 신뢰할 수 있는 근거로 활용됩니다."
+      : "Training only counts once it's recorded. Every completion from the digital learning system is automatically sent to iSafeIncentive and kept as tamper-proof evidence—reliable proof whenever you need it.",
     bullets: language === "ko"
       ? [
           "수강 완료 즉시 iSafeIncentive 블록체인에 자동 저장",

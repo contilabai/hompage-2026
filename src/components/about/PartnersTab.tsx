@@ -44,7 +44,7 @@ const getGroups = (language: "ko" | "en"): { label: string; delay: string; items
       { name: language === "ko" ? "씨아이솔루션" : "CI Solution", logo: "partners-ci-solution.jpg" },
       { name: "musma", logo: "partners-musma.jpg" },
       { name: "K-DeepLearning", logo: "partners-k-deeplearning.jpg" },
-      { name: "AIChemist", color: "" },
+      { name: "AIChemist", logo: "AIChemist.png" },
     ],
   },
 ];

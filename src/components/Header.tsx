@@ -52,7 +52,7 @@ const getProducts = (language: "ko" | "en") => [
     label: "iSafeGuard",
     href: "/isafe-guard",
     badge: "Monitor",
-    desc: language === "ko" ? "32채널 AI 관제 · VLM 자동 보고서" : "32-Channel AI Monitoring · VLM Auto-Reports",
+    desc: language === "ko" ? "100채널+ AI 관제 · VLM 자동 보고서" : "100+ Channel AI Monitoring · VLM Auto-Reports",
     badgeColor: "bg-blue-50 text-blue-700",
     iconBg: "bg-blue-50",
     iconColor: "text-blue-600",
