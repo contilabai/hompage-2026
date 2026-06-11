@@ -405,15 +405,6 @@ export default function ISafeMetaPage() {
                       </li>
                     ))}
                   </ul>
-                  <a
-                    href="mailto:contilab@contilab.co.kr"
-                    className={`inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white ${feature.ctaBg} rounded-lg transition-colors w-fit`}
-                  >
-                    {language === "ko" ? "도입 문의하기" : "Request Deployment"}
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
                 </div>
                 {featureGifs[feature.id] ? (
                   feature.id === "certification" ? (

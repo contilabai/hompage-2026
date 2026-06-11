@@ -6,108 +6,138 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImagePlaceholder from "@/components/ImagePlaceholder";
 
+const featureGifs: Record<string, string> = {
+  "3d-convert": "/gif/2dto3d.gif",
+};
+
 const getPlannerFeatures = (language: "ko" | "en") => [
   {
     id: "3d-convert",
     reverse: false,
-    tag: language === "ko" ? "도면 자동 3D 전환" : "Automatic 2D to 3D Conversion",
+    tag: language === "ko" ? "iSafe 3D 트레이서" : "iSafe 3D Tracer",
     tagColor: "bg-green-100 text-green-700",
     headline: language === "ko"
-      ? "2D 도면을 들고\n현장을 상상하는 시대는\n끝났습니다"
-      : "Stop imagining sites\nwith 2D drawings.\nVisualize with 3D.",
+      ? "BIM 툴이 없어도\n도면만 있으면\n3D로 시작합니다"
+      : "No BIM tool needed—\nstart in 3D\nwith just a drawing",
     subhead: language === "ko"
-      ? "도면을 올리면, AI가 3D 공정 지도를 만들어 드립니다"
-      : "Upload plans, AI creates 3D site maps automatically.",
+      ? "AutoCAD DXF 도면을 직접 3D BIM 모델로 변환합니다"
+      : "Trace AutoCAD DXF drawings directly into a 3D BIM model.",
     desc: language === "ko"
-      ? "dxf 도면이나 WBS 문서를 업로드하면 업계 표준 IFC 3D 모델이 자동으로 생성됩니다. BIM 전문가 없이도 3D 현장 분석이 가능합니다. 공정 스케줄에 맞춰 구조물이 실시간으로 변하는 모습을 시각화합니다."
-      : "Upload DXF drawings or WBS documents to auto-generate industry-standard IFC 3D models. Analyze construction sites in 3D without BIM experts. Visualize real-time structural changes aligned with project schedules.",
+      ? "AutoCAD DXF 도면을 올려 직접 3D BIM 모델을 작성합니다. BIM 전문 도구 없이 도면 한 장으로 시작해, 업계 표준 IFC 포맷으로 출력합니다."
+      : "Build a 3D BIM model directly from an AutoCAD DXF drawing. Start with a single drawing—no BIM tools required—and export in the industry-standard IFC format.",
     bullets: language === "ko"
-      ? ["dxf 도면·WBS 문서 업로드만으로 3D 변환", "업계 표준 IFC 포맷 자동 출력", "공정 단계별 구조물 메쉬 실시간 분할 시각화", "iSafeGuard·iSafeMeta와 동일 3D 환경 공유"]
-      : ["3D conversion with just DXF or WBS uploads", "Auto-export in industry-standard IFC format", "Real-time mesh visualization by project phase", "Unified 3D environment shared with iSafeGuard and iSafeMeta"],
+      ? ["AutoCAD DXF → IFC 직접 변환", "BIM 툴 없이 도면만으로 시작", "직접 트레이스로 3D 모델 작성", "업계 표준 IFC 포맷 출력"]
+      : ["Direct AutoCAD DXF → IFC conversion", "Start with just a drawing—no BIM tool", "Build 3D models by direct tracing", "Export in industry-standard IFC format"],
     placeholder: {
-      title: language === "ko" ? "2D 도면 → 3D IFC 모델 자동 변환 화면" : "Automatic 2D to 3D IFC Conversion Screen",
+      title: language === "ko" ? "DXF 도면 → 3D BIM 트레이스 화면" : "DXF Drawing → 3D BIM Tracing",
       description: language === "ko"
-        ? "dxf 도면 업로드 후 3D 모델로 자동 변환된 결과를 보여주는 iSafePlanner 인터페이스"
-        : "iSafePlanner interface showing auto-converted 3D model results after DXF upload",
+        ? "AutoCAD DXF 도면을 직접 3D BIM 모델로 변환하는 iSafePlanner 화면"
+        : "iSafePlanner screen tracing an AutoCAD DXF drawing into a 3D BIM model",
     },
     ctaBg: "bg-green-700 hover:bg-green-800",
     bgClass: "bg-white",
   },
   {
-    id: "risk-assessment",
+    id: "viewer",
     reverse: true,
-    tag: language === "ko" ? "동적 위험도 평가" : "Dynamic Risk Assessment",
-    tagColor: "bg-yellow-100 text-yellow-700",
+    tag: language === "ko" ? "iSafe 3D 뷰어" : "iSafe 3D Viewer",
+    tagColor: "bg-blue-100 text-blue-700",
     headline: language === "ko"
-      ? "\"이번 주 비 예보\"\n현장 위험도가\n얼마나 올라가는지 압니까?"
-      : "\"Rain forecast this week\"\nDo you know how much\nsite risk increases?",
+      ? "여러 IFC를 한 화면에\n합쳐서 보고\n안전을 매핑합니다"
+      : "Merge multiple IFCs\ninto one view\nand map safety on them",
     subhead: language === "ko"
-      ? "기상 데이터부터 공정 스케줄까지, 위험도를 숫자로 보여줍니다"
-      : "From weather data to construction schedules, visualize risk as numbers.",
+      ? "트레이서 변환 IFC와 외부 BIM을 다중으로 합쳐 봅니다"
+      : "Open and merge tracer-converted IFCs with external BIM.",
     desc: language === "ko"
-      ? "자체 내장된 위험 요소 데이터베이스와 기상청 API를 실시간으로 연동합니다. '외부비계 공정 + 강풍 예보 = 위험도 HIGH'처럼 구체적이고 즉각적인 위험 지수를 제공합니다. 관리자의 직감이 아닌 데이터로 판단합니다."
-      : "Real-time integration with built-in hazard database and weather APIs. Provides specific, immediate risk indices like 'scaffolding + strong wind forecast = HIGH risk'. Data-driven decisions, not intuition.",
+      ? "트레이서로 변환한 IFC는 물론 Revit·ArchiCAD 등 외부 BIM IFC를 열고 다중으로 합쳐 봅니다. 3D 화면 위에서 작업과 안전관리 항목을 위치별로 매핑하고 위험성 평가를 진행합니다."
+      : "Open tracer-converted IFCs and external BIM IFCs from Revit, ArchiCAD, and more—merging several into one view. Map work and safety items by location on the 3D model and run risk assessment.",
     bullets: language === "ko"
-      ? ["기상청 날씨 예측 API 실시간 연동", "공정별·날짜별 위험 지수 자동 산출", "위험 임계치 초과 시 사전 경보", "위험 요소 데이터베이스 지속 업데이트"]
-      : ["Real-time weather forecast API integration", "Auto-calculate risk indices by phase and date", "Pre-alerts when risk thresholds exceeded", "Continuous hazard database updates"],
+      ? ["IFC 열기 및 다중 모델 합치기", "Revit·ArchiCAD 등 외부 BIM 호환", "3D 위치별 작업·안전 항목 매핑", "위치 기반 위험성 평가 연동"]
+      : ["Open and merge multiple IFC models", "Compatible with external BIM (Revit, ArchiCAD…)", "Map work & safety items by 3D location", "Location-based risk assessment"],
     placeholder: {
-      title: language === "ko" ? "공정별 동적 위험도 평가 대시보드" : "Dynamic Risk Assessment Dashboard by Phase",
+      title: language === "ko" ? "IFC 다중 합치기 및 작업·안전 매핑 화면" : "IFC Merge & Work/Safety Mapping Screen",
       description: language === "ko"
-        ? "기상 데이터와 공정 스케줄을 결합한 위험 지수 시각화 화면"
-        : "Risk index visualization combining weather data and project schedules",
+        ? "여러 IFC 모델을 합쳐 위치별 작업·안전 항목을 매핑하는 3D 뷰어"
+        : "3D viewer merging multiple IFCs and mapping work/safety items by location",
     },
-    ctaBg: "bg-yellow-600 hover:bg-yellow-700",
+    ctaBg: "bg-blue-600 hover:bg-blue-700",
     bgClass: "bg-gray-50",
   },
   {
-    id: "camera-placement",
+    id: "scheduler",
     reverse: false,
-    tag: language === "ko" ? "AI 카메라 배치 추천" : "AI Camera Placement Recommendation",
-    tagColor: "bg-teal-100 text-teal-700",
+    tag: language === "ko" ? "주간 작업/일정 작성기" : "Weekly Schedule Builder",
+    tagColor: "bg-indigo-100 text-indigo-700",
     headline: language === "ko"
-      ? "어디에 카메라를\n놓아야 사각지대가\n없는지 아십니까?"
-      : "Do you know where to place\ncameras to eliminate\nblind spots?",
+      ? "층수·구조만 입력하면\n공정과 안전관리 항목이\n자동으로 채워집니다"
+      : "Enter floors & structure—\nschedule and safety items\nfill in automatically",
     subhead: language === "ko"
-      ? "AI가 현재 공정의 사각지대를 분석하고 최적 위치를 알려줍니다"
-      : "AI analyzes blind spots in current phase and recommends optimal camera positions.",
+      ? "층수·공사비·구조형식 입력만으로 공정 WBS를 자동 생성합니다"
+      : "Auto-generate a work schedule (WBS) from floors, cost, and structure type.",
     desc: language === "ko"
-      ? "3D 공간 분석으로 현재 공정에서 카메라가 닿지 않는 사각지대를 자동으로 도출합니다. 이동형 카메라의 최적 배치 위치를 수치와 함께 제안합니다. iSafeGuard 설치 전 시뮬레이션으로 비용을 최소화합니다."
-      : "3D spatial analysis automatically identifies camera blind spots. Numerically recommends optimal placement for mobile cameras. Simulate before iSafeGuard deployment to minimize costs.",
+      ? "층수·공사비·구조형식만 입력하면 공정 WBS와 안전관리 항목이 자동으로 생성됩니다. 3D 뷰어와 연동해 공정별 매핑과 평가까지 자연스럽게 이어집니다."
+      : "Just enter floors, cost, and structure type, and the work schedule (WBS) and safety items are generated automatically—flowing into mapping and assessment alongside the 3D viewer.",
     bullets: language === "ko"
-      ? ["3D 공간 사각지대 자동 분석", "최적 카메라 위치 및 각도 수치 제안", "공정 변화에 따른 카메라 재배치 알림", "iSafeGuard와 연동하여 설정 자동 전달"]
-      : ["Automatic 3D blind spot analysis", "Numerical recommendations for optimal position and angle", "Alerts for camera repositioning as phases change", "Auto-transfer settings to iSafeGuard integration"],
+      ? ["층수·공사비·구조형식 입력만으로 WBS 자동 생성", "공정별 안전관리 항목 자동 구성", "3D 뷰어와 연동한 공정 매핑", "주간 단위 작업·일정 관리"]
+      : ["Auto-generate WBS from floors, cost, structure type", "Auto-compose safety items per phase", "Phase mapping integrated with the 3D viewer", "Weekly work and schedule management"],
     placeholder: {
-      title: language === "ko" ? "3D 공간 사각지대 분석 및 카메라 배치 추천 화면" : "3D Blind Spot Analysis & Camera Placement Screen",
+      title: language === "ko" ? "공정 WBS·안전관리 항목 자동 생성 화면" : "Auto WBS & Safety-Item Generation Screen",
       description: language === "ko"
-        ? "3D 현장 모델 위에 최적 카메라 위치가 표시된 iSafePlanner 시뮬레이션 화면"
-        : "iSafePlanner simulation showing optimal camera positions overlaid on 3D site model",
+        ? "층수·구조 입력으로 공정 WBS와 안전관리 항목이 자동 생성되는 화면"
+        : "Screen auto-generating a WBS and safety items from floor and structure inputs",
     },
-    ctaBg: "bg-teal-600 hover:bg-teal-700",
+    ctaBg: "bg-indigo-600 hover:bg-indigo-700",
     bgClass: "bg-white",
+  },
+  {
+    id: "risk-assessment",
+    reverse: true,
+    tag: language === "ko" ? "iSafe 위험성 평가" : "iSafe Risk Assessment",
+    tagColor: "bg-yellow-100 text-yellow-700",
+    headline: language === "ko"
+      ? "매핑된 데이터를\n룰 기반으로 분석해\n위험도를 산정합니다"
+      : "Rule-based analysis\nof mapped data\nto score the risk",
+    subhead: language === "ko"
+      ? "객체·공종·시점을 분석해 위험성평가서·안전교육 자료를 자동 생성합니다"
+      : "Analyze objects, trades, and timing to auto-generate risk reports and training materials.",
+    desc: language === "ko"
+      ? "뷰어에서 매핑된 객체·공종·시점을 룰 기반으로 분석해 위험도를 산정합니다. 위험성평가서와 현장 맞춤 안전교육 자료를 자동으로 생성합니다."
+      : "Analyze the objects, trades, and timing mapped in the viewer using a rule base to score risk, then auto-generate risk-assessment reports and site-tailored safety-training materials.",
+    bullets: language === "ko"
+      ? ["룰 기반 위험도 자동 산정", "객체·공종·시점 종합 분석", "위험성평가서 자동 생성", "현장 맞춤 안전교육 자료 생성"]
+      : ["Rule-based automatic risk scoring", "Combined analysis of objects, trades, timing", "Auto-generated risk-assessment reports", "Site-tailored safety-training materials"],
+    placeholder: {
+      title: language === "ko" ? "룰 기반 위험성 평가 화면" : "Rule-based Risk Assessment Screen",
+      description: language === "ko"
+        ? "매핑 데이터를 룰 기반으로 분석해 위험성평가서를 생성하는 화면"
+        : "Screen generating a risk-assessment report by rule-based analysis of mapped data",
+    },
+    ctaBg: "bg-yellow-600 hover:bg-yellow-700",
+    bgClass: "bg-gray-50",
   },
 ];
 
 const getSteps = (language: "ko" | "en") => [
   {
     step: "01",
-    title: language === "ko" ? "도면·WBS 업로드" : "Upload Plans & WBS",
+    title: language === "ko" ? "도면 트레이스 또는 일정 입력" : "Trace Drawing or Enter Schedule",
     desc: language === "ko"
-      ? "2D dxf 도면 파일이나 WBS 문서를 업로드합니다. 다양한 포맷을 지원합니다."
-      : "Upload 2D DXF drawings or WBS documents. We support multiple formats.",
+      ? "AutoCAD DXF 도면을 3D BIM으로 직접 트레이스하거나, 층수·구조형식만 입력해 공정 WBS를 자동 생성합니다."
+      : "Trace an AutoCAD DXF drawing into 3D BIM, or auto-generate a WBS by entering floors and structure type.",
   },
   {
     step: "02",
-    title: language === "ko" ? "3D 모델 자동 생성 및 위험도 분석" : "Auto-Generate 3D & Analyze Risk",
+    title: language === "ko" ? "3D 뷰어에서 작업·안전 매핑" : "Map Work & Safety in the 3D Viewer",
     desc: language === "ko"
-      ? "AI가 3D 모델을 자동 생성하고, 공정 스케줄과 기상 데이터를 결합하여 위험도 지수를 산출합니다."
-      : "AI auto-generates 3D models and calculates risk indices by combining schedules with weather data.",
+      ? "변환한 IFC와 외부 BIM을 합쳐 보고, 3D 화면 위에서 공정·작업과 안전관리 항목을 위치별로 매핑합니다."
+      : "Merge converted IFCs with external BIM, then map phases, work, and safety items by location on the 3D model.",
   },
   {
     step: "03",
-    title: language === "ko" ? "현장 투입 전 브리핑 완료" : "Complete Pre-Deployment Briefing",
+    title: language === "ko" ? "위험성 평가서·교육자료 자동 생성" : "Auto-Generate Reports & Training Materials",
     desc: language === "ko"
-      ? "위험도 보고서와 최적 카메라 위치를 확인합니다. 이 데이터는 iSafeMeta 훈련과 iSafeGuard 설치에 자동으로 활용됩니다."
-      : "Review risk reports and optimal camera positions. Data auto-integrates with iSafeMeta training and iSafeGuard deployment.",
+      ? "매핑된 객체·공종·시점을 룰 기반으로 분석해 위험도를 산정하고, 위험성평가서와 안전교육 자료를 자동 생성합니다."
+      : "Rule-based analysis of mapped objects, trades, and timing scores the risk and auto-generates risk reports and safety-training materials.",
   },
 ];
 
@@ -225,8 +255,8 @@ export default function ISafePlannerPage() {
                       <span className="text-yellow-400 text-sm flex-shrink-0">⚡</span>
                       <span className="text-[12px] text-gray-300 leading-snug">
                         {language === "ko"
-                          ? "공정·기상 데이터를 반영해 구간별 위험도를 산출하고 최적 카메라 배치를 추천합니다."
-                          : "Calculates phase-by-phase risk from schedule & weather data and recommends optimal camera placement."}
+                          ? "여러 IFC를 합쳐 보고 작업·안전 항목을 위치별로 매핑해 위험성 평가를 진행합니다."
+                          : "Merge multiple IFCs, map work & safety items by location, and run risk assessment."}
                       </span>
                     </div>
                   </div>
@@ -242,20 +272,20 @@ export default function ISafePlannerPage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-green-600">
               {[
                 {
+                  value: "DXF→IFC",
+                  label: language === "ko" ? "도면 직접 3D 변환" : "Direct Drawing-to-3D",
+                },
+                {
+                  value: language === "ko" ? "다중 합치기" : "Multi-merge",
+                  label: language === "ko" ? "외부 BIM IFC 통합" : "External BIM IFC Integration",
+                },
+                {
                   value: language === "ko" ? "자동" : "Automatic",
-                  label: language === "ko" ? "2D → 3D 도면 변환" : "2D → 3D Drawing Conversion",
+                  label: language === "ko" ? "공정 WBS·안전항목 생성" : "WBS & Safety-Item Generation",
                 },
                 {
-                  value: language === "ko" ? "실시간" : "Real-time",
-                  label: language === "ko" ? "기상 연동 위험 지수" : "Weather-Linked Risk Index",
-                },
-                {
-                  value: language === "ko" ? "AI 추천" : "AI-Recommended",
-                  label: language === "ko" ? "최적 카메라 배치" : "Optimal Camera Placement",
-                },
-                {
-                  value: language === "ko" ? "3종" : "3 Types",
-                  label: language === "ko" ? "모듈 자동 연동" : "Module Auto-Integration",
+                  value: language === "ko" ? "룰기반" : "Rule-based",
+                  label: language === "ko" ? "위험성 평가·교육자료" : "Risk Assessment & Training",
                 },
               ].map((s) => (
                 <div key={s.label} className="text-center px-6 first:pl-0 last:pr-0">
@@ -291,21 +321,29 @@ export default function ISafePlannerPage() {
                       </li>
                     ))}
                   </ul>
-                  <a
-                    href="mailto:contilab@contilab.co.kr"
-                    className={`inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white ${feature.ctaBg} rounded-lg transition-colors w-fit`}
-                  >
-                    도입 문의하기
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
                 </div>
-                <ImagePlaceholder
-                  title={feature.placeholder.title}
-                  description={feature.placeholder.description}
-                  aspectRatio="4/3"
-                />
+                {feature.id === "risk-assessment" ? (
+                  <div className="rounded-2xl aspect-video border-2 border-dashed border-gray-200 bg-gray-50 flex flex-col items-center justify-center gap-3 text-gray-400">
+                    <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.4} d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-sm font-semibold">{language === "ko" ? "서비스 준비 중" : "Service coming soon"}</p>
+                  </div>
+                ) : featureGifs[feature.id] ? (
+                  <div className="rounded-2xl overflow-hidden shadow-lg aspect-video">
+                    <img
+                      src={featureGifs[feature.id]}
+                      alt={feature.placeholder.title}
+                      className="w-full h-full object-cover rounded-2xl"
+                    />
+                  </div>
+                ) : (
+                  <ImagePlaceholder
+                    title={feature.placeholder.title}
+                    description={feature.placeholder.description}
+                    aspectRatio="4/3"
+                  />
+                )}
               </div>
             </div>
           </section>

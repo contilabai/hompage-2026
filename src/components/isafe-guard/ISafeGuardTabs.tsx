@@ -187,14 +187,6 @@ function SolutionTab({ language }: { language: Lang }) {
                     </li>
                   ))}
                 </ul>
-                <a href="mailto:contilab@contilab.co.kr"
-                  className={`inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold text-white ${feature.ctaBg} rounded-lg transition-colors w-fit`}
-                >
-                  {language === "ko" ? "도입 문의하기" : "Request Deployment"}
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
               </div>
               {"gifs" in feature && feature.gifs ? (
                 <GifCycler items={feature.gifs} alt={feature.placeholder.title} />
@@ -895,7 +887,7 @@ function DeploymentTab({ language }: { language: Lang }) {
           onClick={() => setSelected(null)}
         >
           <div
-            className="bg-white w-full max-w-[760px] max-h-[88vh] rounded-2xl shadow-2xl relative overflow-hidden flex flex-col"
+            className="bg-white w-full max-w-[1040px] max-h-[90vh] rounded-2xl shadow-2xl relative overflow-hidden flex flex-col"
             style={{ animation: "fadeSlide 0.25s ease" }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -960,7 +952,7 @@ function DeploymentTab({ language }: { language: Lang }) {
                   {selected.media.map((m) => (
                     <figure key={m.src} className="rounded-xl overflow-hidden border border-gray-100">
                       <div className="relative aspect-video bg-gray-900">
-                        <img src={encodeURI(m.src)} alt={m.caption} className="w-full h-full object-cover" />
+                        <img src={encodeURI(m.src)} alt={m.caption} className="w-full h-full object-contain" />
                       </div>
                       <figcaption className="px-3 py-2 text-xs text-gray-500">{m.caption}</figcaption>
                     </figure>
