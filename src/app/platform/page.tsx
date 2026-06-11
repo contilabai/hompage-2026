@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ImagePlaceholder from "@/components/ImagePlaceholder";
 
 const getInfraFeatures = (language: "ko" | "en") => [
   {
@@ -177,8 +176,8 @@ export default function PlatformPage() {
                 </h1>
                 <p className="text-blue-100 text-base leading-relaxed mb-6 max-w-lg">
                   {language === "ko"
-                    ? "각각 따로 쓰면 도구입니다. iSafePlatform으로 연결하면 현장이 스스로 안전해집니다."
-                    : "Alone, they're tools. Connected through iSafePlatform, the site becomes inherently safe."}
+                    ? "위험성평가 · 안전교육 · 실시간 관제 · 기록 분석이 하나의 흐름으로 이어질 때, 현장은 스스로 안전해집니다."
+                    : "When risk assessment, safety training, real-time monitoring, and record analysis flow as one, the site becomes safe on its own."}
                 </p>
                 <ul className="space-y-3 mb-8 max-w-lg">
                   {(language === "ko"
@@ -325,8 +324,8 @@ export default function PlatformPage() {
           </div>
         </section>
 
-        {/* ── 4 Core Modules (moved up) ─────────────────────── */}
-        <section id="modules" className="py-20 bg-white">
+        {/* ── iSafePlatform Architecture (modules + core merged) ─ */}
+        <section id="modules" className="py-20 bg-gray-50">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
             <div className="text-center mb-14">
               <div className="flex justify-center mb-5">
@@ -339,73 +338,93 @@ export default function PlatformPage() {
                 />
               </div>
               <p className="text-2xl font-semibold text-blue-600 uppercase tracking-wider mb-3">
-                {language === "ko" ? "4대 핵심 연동 모듈" : "4 Core Integrated Modules"}
+                {language === "ko" ? "iSafePlatform 아키텍처" : "iSafePlatform Architecture"}
               </p>
               <h2 className="text-3xl font-black text-gray-900 mb-4">
-                {language === "ko" ? "순서대로 작동하고, 데이터가 순환합니다" : "Execute in sequence, data flows continuously"}
+                {language === "ko" ? "Core 위에서 4개 모듈이 순환합니다" : "Four modules cycle on top of the Core"}
               </h2>
               <p className="text-gray-500 max-w-xl mx-auto">
                 {language === "ko"
-                  ? "현장의 요구에 맞춰 필요한 모듈부터 도입하고, 성장에 맞춰 추가로 해금하세요."
-                  : "Deploy modules based on your needs, unlock additional ones as you grow."}
+                  ? "Core가 4개 모듈을 떠받치고, 현장 데이터는 모듈을 따라 순환해 다시 Core로 모입니다. 필요한 모듈부터 도입하세요."
+                  : "The Core supports four modules while site data cycles through them and converges back into the Core. Start with the modules you need."}
               </p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {getModules(language).map((m) => (
-                <Link
-                  key={m.name}
-                  href={m.href}
-                  className={`group rounded-2xl border-2 ${m.color} overflow-hidden hover:shadow-lg transition-all bg-white flex flex-col`}
-                >
-                  <div
-                    className="h-28 flex items-center justify-center px-5"
-                    style={{ background: `linear-gradient(135deg, ${m.gradientFrom} 0%, ${m.gradientTo} 100%)` }}
-                  >
-                    <span className="text-white text-4xl font-black">{m.badge}</span>
-                  </div>
-                  <div className="p-5 flex flex-col flex-1">
-                    <span className={`inline-block px-2 py-0.5 text-xs font-bold ${m.badgeColor} rounded-md mb-2 w-fit`}>{m.badge}</span>
-                    <h3 className="text-[17px] font-bold text-gray-900 mb-2">{m.name}</h3>
-                    <p className="text-sm text-gray-500 leading-relaxed mb-4 flex-1">{m.desc}</p>
-                    <div className="flex items-center gap-1 text-sm font-medium text-blue-600">
-                      {language === "ko" ? "상세보기" : "View Details"}
-                      <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+            {/* Layered architecture diagram */}
+            <div className="max-w-[940px] mx-auto">
+              {/* Apex — outcome */}
+              <div className="rounded-2xl bg-gradient-to-r from-[#0d1b2a] to-[#1d6fa4] text-white text-center py-5 px-6">
+                <p className="text-[11px] font-bold text-blue-200 tracking-[0.2em] mb-1">OUTCOME</p>
+                <p className="text-lg font-black">
+                  {language === "ko" ? "사고 예방 · 안전문화 혁신" : "Accident Prevention · Safety Culture Innovation"}
+                </p>
+              </div>
 
-        {/* ── Core Infrastructure ───────────────────────────── */}
-        <section className="py-20 bg-gray-50">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-            <div className="text-center mb-14">
-              <p className="text-2xl font-semibold text-blue-600 uppercase tracking-wider mb-3">
-                {language === "ko" ? "플랫폼 Core 기능" : "Platform Core Features"}
-              </p>
-              <h2 className="text-3xl font-black text-gray-900 mb-4">
-                {language === "ko" ? "4개 모듈을 하나로 묶는 3대 인프라" : "3 Core Infrastructures Unifying 4 Modules"}
-              </h2>
-              <p className="text-gray-500 max-w-xl mx-auto">
-                {language === "ko"
-                  ? "모든 솔루션 고객에게 기본 탑재되는 통제 본부입니다."
-                  : "Command center included in all solution packages."}
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {getInfraFeatures(language).map((f) => (
-                <div key={f.title} className={`p-6 rounded-2xl border ${f.color} bg-white`}>
-                  <div className={`w-12 h-12 ${f.iconBg} rounded-xl flex items-center justify-center mb-4 text-2xl`}>
-                    {f.icon}
-                  </div>
-                  <h3 className="text-[17px] font-bold text-gray-900 mb-2">{f.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
+              {/* connector */}
+              <div className="flex flex-col items-center py-2 text-gray-400">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
+              </div>
+
+              {/* Module layer */}
+              <div className="rounded-2xl border-2 border-dashed border-gray-200 bg-white p-4">
+                <p className="text-center text-[11px] font-bold text-gray-400 tracking-[0.2em] mb-3">
+                  {language === "ko" ? "4대 연동 모듈" : "4 INTEGRATED MODULES"}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {getModules(language).map((m) => (
+                    <Link
+                      key={m.name}
+                      href={m.href}
+                      className={`group rounded-xl border-2 ${m.color} overflow-hidden hover:shadow-lg transition-all bg-white flex flex-col`}
+                    >
+                      <div
+                        className="h-16 flex items-center justify-center"
+                        style={{ background: `linear-gradient(135deg, ${m.gradientFrom} 0%, ${m.gradientTo} 100%)` }}
+                      >
+                        <span className="text-white text-lg font-black">{m.step}</span>
+                      </div>
+                      <div className="p-4 flex flex-col flex-1">
+                        <h3 className="text-[15px] font-bold text-gray-900 mb-1.5">{m.name}</h3>
+                        <p className="text-xs text-gray-500 leading-relaxed mb-3 flex-1">{m.desc}</p>
+                        <div className="flex items-center gap-1 text-xs font-medium text-blue-600">
+                          {language === "ko" ? "상세보기" : "View Details"}
+                          <svg className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* connector with cycle note */}
+              <div className="flex items-center justify-center gap-2 py-2 text-gray-400">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
+                <span className="text-xs font-medium text-gray-400">
+                  {language === "ko" ? "실시간 데이터 수집 · 분석 결과 자동 환류" : "Real-time data collection · automatic feedback"}
+                </span>
+                <svg className="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
+              </div>
+
+              {/* Core foundation */}
+              <div className="rounded-2xl bg-gray-900 text-white p-6">
+                <div className="flex flex-wrap items-center justify-center gap-2 mb-5">
+                  <Image src="/images/logo-icon.png" alt="ConTILab" width={28} height={28} className="object-contain" />
+                  <p className="text-lg font-black">iSafePlatform Core</p>
+                  <span className="px-2.5 py-0.5 text-[11px] font-bold bg-blue-500/20 text-blue-300 rounded-full">
+                    {language === "ko" ? "모든 솔루션 기본 탑재" : "Included in all solutions"}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {getInfraFeatures(language).map((f) => (
+                    <div key={f.title} className="rounded-xl bg-white/5 border border-white/10 p-4">
+                      <div className="text-2xl mb-2">{f.icon}</div>
+                      <p className="text-sm font-bold text-white mb-1.5">{f.title}</p>
+                      <p className="text-xs text-gray-400 leading-relaxed">{f.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -497,14 +516,15 @@ export default function PlatformPage() {
                 </div>
               </div>
               <div className="hidden lg:block">
-                <ImagePlaceholder
-                  title={language === "ko" ? "iSafePlatform 도입 현장 전경 사진" : "iSafePlatform Deployment Site"}
-                  description={language === "ko"
-                    ? "iSafePlatform을 도입한 건설현장의 실제 운영 사진"
-                    : "Actual operational photo of a construction site with iSafePlatform"}
-                  aspectRatio="4/3"
-                  className="border-white/20 bg-white/5"
-                />
+                <div className="rounded-2xl overflow-hidden border border-white/20 bg-white/5 aspect-video">
+                  <img
+                    src="/gif/%EB%8D%B0%EB%AA%A8%EC%98%81%EC%83%81.gif"
+                    alt={language === "ko"
+                      ? "iSafePlatform을 도입한 건설현장의 실제 운영 영상"
+                      : "Live operation of a construction site running iSafePlatform"}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>

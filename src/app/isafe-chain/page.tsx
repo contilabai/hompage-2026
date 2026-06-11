@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import ImagePlaceholder from "@/components/ImagePlaceholder";
 
 const featureGifs: Record<string, string> = {
+  "immutable-record": "/images/blockchain.jpg",
   "smart-contract": "/gif/reward.gif",
   "feedback-loop": "/gif/6 iSafeMeta Token Economy Technology.gif",
 };
@@ -196,27 +197,27 @@ export default function ISafeChainPage() {
                 <h1 className="text-[38px] lg:text-[48px] font-black text-white leading-tight mb-5">
                   {language === "ko" ? (
                     <>
-                      사고 이후<br />
-                      <span className="text-orange-300">기록이 없으면</span><br />
-                      당신을 지킬 수 없습니다
+                      모든 안전활동이<br />
+                      <span className="text-orange-300">지워지지 않는 기록으로</span><br />
+                      남습니다
                     </>
                   ) : (
                     <>
-                      After an accident,<br />
-                      <span className="text-orange-300">no record means</span><br />
-                      we can't protect you
+                      Every safety activity<br />
+                      <span className="text-orange-300">stays as a record</span><br />
+                      that can't be erased
                     </>
                   )}
                 </h1>
                 <p className="text-orange-100 text-base leading-relaxed mb-4 max-w-md">
                   {language === "ko"
-                    ? "중대재해처벌법 위반 시 사업주도 형사처벌을 받습니다. \"관리를 했다\"는 주장은 증거 없이 인정되지 않습니다."
-                    : "Major accident penalties apply to executives too. \"We managed it\" won't hold up without evidence."}
+                    ? "안전관리의 노력은 증명될 때 비로소 가치가 됩니다. 누가 무엇을 했는지 남지 않으면 평가할 수도, 개선할 수도 없습니다."
+                    : "Safety efforts only count when they can be proven. If no one records who did what, you can neither evaluate nor improve."}
                 </p>
                 <p className="text-white font-semibold text-base mb-8 max-w-md">
                   {language === "ko"
-                    ? "iSafeChain은 모든 안전 활동을 위변조 불가 기록으로 자동으로 쌓습니다."
-                    : "iSafeChain auto-builds tamper-proof records of every safety activity."}
+                    ? "iSafeChain은 감지·교육·출입 등 모든 안전활동을 위변조 불가 기록으로 쌓아, 안전수준을 객관적으로 평가하고 개선하는 토대를 만듭니다."
+                    : "iSafeChain stacks every safety activity—detection, training, access—into tamper-proof records, a foundation to objectively evaluate and improve safety levels."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -341,11 +342,11 @@ export default function ISafeChainPage() {
                   </a>
                 </div>
                 {featureGifs[feature.id] ? (
-                  <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
+                  <div className="rounded-2xl overflow-hidden shadow-lg aspect-video">
                     <img
                       src={featureGifs[feature.id]}
                       alt={feature.placeholder.title}
-                      className="absolute inset-0 w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-2xl"
                     />
                   </div>
                 ) : (
@@ -391,57 +392,6 @@ export default function ISafeChainPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-20 bg-gradient-to-r from-[#7c2d12] to-[#ea580c] text-white">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-black mb-4">
-                  {language === "ko" ? (
-                    <>
-                      사고가 나기 전에 기록을<br />
-                      준비해야 합니다
-                    </>
-                  ) : (
-                    <>
-                      Build your record<br />
-                      before trouble hits
-                    </>
-                  )}
-                </h2>
-                <p className="text-orange-100 mb-8 leading-relaxed">
-                  {language === "ko"
-                    ? "사고가 발생한 후에 기록을 모으려 하면 늦습니다. iSafeChain은 매일의 안전 활동을 자동으로 쌓아두어, 필요할 때 언제든지 꺼낼 수 있는 법적 증빙을 만들어 줍니다."
-                    : "Waiting until after an accident to gather records is too late. iSafeChain auto-builds a daily record, ready to pull whenever you need legal proof."}
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <a
-                    href="mailto:contilab@contilab.co.kr"
-                    className="px-8 py-3.5 text-sm font-bold text-orange-800 bg-white hover:bg-orange-50 rounded-xl transition-colors shadow-lg"
-                  >
-                    {language === "ko" ? "도입 문의하기" : "Request Deployment"}
-                  </a>
-                  <Link
-                    href="/platform"
-                    className="px-8 py-3.5 text-sm font-bold text-white border-2 border-white/40 hover:border-white rounded-xl transition-colors"
-                  >
-                    {language === "ko" ? "Platform Core 알아보기" : "Learn About Platform Core"}
-                  </Link>
-                </div>
-              </div>
-              <div className="hidden lg:block">
-                <ImagePlaceholder
-                  title={language === "ko" ? "iSafeChain 법적 증빙 문서 샘플" : "iSafeChain Legal Proof Document Sample"}
-                  description={language === "ko"
-                    ? "iSafeChain이 생성하는 법원 제출용 안전 활동 기록 증빙 문서"
-                    : "Court-ready safety activity record proof generated by iSafeChain"}
-                  aspectRatio="4/3"
-                  className="border-white/20 bg-white/5"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer language={language} />
     </>

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ImagePlaceholder from "@/components/ImagePlaceholder";
-import ISafeMetaScenario from "@/components/ISafeMetaScenario";
+import ISafeMetaScenario from "@/components/isafe-meta/ISafeMetaScenario";
 
 const featureGifs: Record<string, string> = {
   "virtual-env": "/gif/reality-capture-pipeline.gif",
@@ -253,13 +253,13 @@ export default function ISafeMetaPage() {
                 </h1>
                 <p className="text-red-100 text-base leading-relaxed mb-4 max-w-md">
                   {language === "ko"
-                    ? "실제 현장의 3D 가상환경, 디지털 수강 시스템, 현장 특화 다국어 AI Agent 아바타. 세 가지가 하나로 작동합니다."
-                    : "Real-site 3D virtual environment, digital learning system, and site-specific multilingual AI agent avatar—all working as one."}
+                    ? "위험을 한 번도 겪어보지 못한 사람은 위험을 알아보지 못합니다. iSafeMeta는 실제 현장과 똑같은 가상환경에서 위험을 직접 체험하게 합니다."
+                    : "Those who have never experienced danger can't recognize it. iSafeMeta lets workers experience hazards firsthand in a virtual replica of the real site."}
                 </p>
                 <p className="text-white font-semibold text-base mb-8 max-w-md">
                   {language === "ko"
-                    ? "iSafePlanner와 연동하거나 360도 카메라로 현장을 찍으면 즉시 가상 교육 환경이 만들어집니다."
-                    : "Link iSafePlanner or capture the site with 360° cameras—instant virtual training environment."}
+                    ? "현장 특화 다국어 AI 아바타가 안내하고 이수 기록을 남겨, 체험으로 익힌 안전을 현장의 습관으로 잇습니다."
+                    : "A site-specific multilingual AI avatar guides each session and logs completion—turning hands-on learning into on-site habits."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -478,59 +478,6 @@ export default function ISafeMetaPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-20 bg-gradient-to-r from-[#7f1d1d] to-[#dc2626] text-white">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-black mb-4">
-                  {language === "ko" ? (
-                    <>
-                      우리 현장을 아는 AI가<br />
-                      20개 언어로 근로자를<br />
-                      직접 교육합니다
-                    </>
-                  ) : (
-                    <>
-                      AI that knows your site<br />
-                      teaches workers<br />
-                      in 20+ languages
-                    </>
-                  )}
-                </h2>
-                <p className="text-red-100 mb-8 leading-relaxed">
-                  {language === "ko"
-                    ? "현장 가상환경 + 디지털 수강 시스템 + 현장 특화 AI Agent 아바타. iSafeMeta는 세 가지를 하나의 플랫폼으로 제공합니다."
-                    : "Site virtual environment + digital learning system + site-specific AI agent avatar. iSafeMeta brings all three together in one platform."}
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <a
-                    href="mailto:contilab@contilab.co.kr"
-                    className="px-8 py-3.5 text-sm font-bold text-red-800 bg-white hover:bg-red-50 rounded-xl transition-colors shadow-lg"
-                  >
-                    {language === "ko" ? "도입 문의하기" : "Request Deployment"}
-                  </a>
-                  <Link
-                    href="/isafe-chain"
-                    className="px-8 py-3.5 text-sm font-bold text-white border-2 border-white/40 hover:border-white rounded-xl transition-colors"
-                  >
-                    {language === "ko" ? "iSafeChain 이수 기록 연동" : "View iSafeChain Integration"}
-                  </Link>
-                </div>
-              </div>
-              <div className="hidden lg:block">
-                <ImagePlaceholder
-                  title={language === "ko" ? "iSafeMeta 훈련 현장 사진" : "iSafeMeta Training in Action"}
-                  description={language === "ko"
-                    ? "근로자가 iSafeMeta 가상 안전 훈련을 진행하는 실제 현장 사진"
-                    : "Workers conducting iSafeMeta virtual safety training at a real site"}
-                  aspectRatio="4/3"
-                  className="border-white/20 bg-white/5"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
         </>
         )}
       </main>

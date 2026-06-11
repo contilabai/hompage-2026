@@ -156,27 +156,27 @@ export default function ISafePlannerPage() {
                 <h1 className="text-[38px] lg:text-[48px] font-black text-white leading-tight mb-5">
                   {language === "ko" ? (
                     <>
-                      현장 투입 전,<br />
-                      <span className="text-green-300">이미 모든 위험을</span><br />
-                      알고 있습니다
+                      근로자가 들어가기 전에<br />
+                      <span className="text-green-300">위험을 먼저</span><br />
+                      확인합니다
                     </>
                   ) : (
                     <>
-                      Before deployment,<br />
-                      <span className="text-green-300">we already know</span><br />
-                      all the risks
+                      Before workers enter,<br />
+                      <span className="text-green-300">we map the risks</span><br />
+                      first
                     </>
                   )}
                 </h1>
                 <p className="text-green-100 text-base leading-relaxed mb-4 max-w-md">
                   {language === "ko"
-                    ? "중대재해의 70%는 \"예상 못 했다\"가 아닙니다. \"확인하지 않았다\"입니다."
-                    : "70% of major incidents aren't \"unexpected\"—they're \"unchecked.\""}
+                    ? "안전은 현장에 들어가기 전부터 시작됩니다. 도면과 공정에 실제 작업 특성을 반영해 어디가 위험한지 먼저 파악합니다."
+                    : "Safety starts before anyone steps on site. We reflect real task characteristics onto drawings and schedules to see where the risks are—first."}
                 </p>
                 <p className="text-white font-semibold text-base mb-8 max-w-md">
                   {language === "ko"
-                    ? "iSafePlanner는 도면 하나로 공정별 위험 지도를 자동으로 만들어 냅니다."
-                    : "iSafePlanner auto-creates risk maps by phase from a single drawing."}
+                    ? "iSafePlanner는 도면 하나로 공정별 위험 지도를 자동으로 그려, 현장 맞춤 위험성평가의 출발점이 됩니다."
+                    : "From a single drawing, iSafePlanner auto-maps risk by phase—the starting point of site-tailored risk assessment."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -344,57 +344,6 @@ export default function ISafePlannerPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-20 bg-gradient-to-r from-[#14532d] to-[#16a34a] text-white">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-black mb-4">
-                  {language === "ko" ? (
-                    <>
-                      다음 공정, 위험을<br />
-                      미리 알고 시작하십시오
-                    </>
-                  ) : (
-                    <>
-                      Know risks beforehand<br />
-                      for your next phase
-                    </>
-                  )}
-                </h2>
-                <p className="text-green-100 mb-8 leading-relaxed">
-                  {language === "ko"
-                    ? "중대재해는 갑자기 일어나지 않습니다. 예측되지 않은 위험, 확인되지 않은 공정이 쌓여서 일어납니다.\n\niSafePlanner로 현장 투입 전 모든 위험 요소를 파악하세요."
-                    : "Major incidents don't happen suddenly—they accumulate from unexpected risks and unchecked phases.\n\nIdentify all hazards before deployment with iSafePlanner."}
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <a
-                    href="mailto:contilab@contilab.co.kr"
-                    className="px-8 py-3.5 text-sm font-bold text-green-800 bg-white hover:bg-green-50 rounded-xl transition-colors shadow-lg"
-                  >
-                    {language === "ko" ? "도입 문의하기" : "Request Deployment"}
-                  </a>
-                  <Link
-                    href="/isafe-meta"
-                    className="px-8 py-3.5 text-sm font-bold text-white border-2 border-white/40 hover:border-white rounded-xl transition-colors"
-                  >
-                    {language === "ko" ? "iSafeMeta 훈련 연동 보기" : "View iSafeMeta Training"}
-                  </Link>
-                </div>
-              </div>
-              <div className="hidden lg:block">
-                <ImagePlaceholder
-                  title={language === "ko" ? "iSafePlanner 활용 현장 사진" : "iSafePlanner in Action"}
-                  description={language === "ko"
-                    ? "iSafePlanner로 3D 위험 분석을 수행하는 안전 관리자의 실제 사용 장면"
-                    : "Safety manager performing 3D risk analysis with iSafePlanner"}
-                  aspectRatio="4/3"
-                  className="border-white/20 bg-white/5"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer language={language} />
     </>

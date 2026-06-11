@@ -4,7 +4,22 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ISafeGuardTabs from "@/components/ISafeGuardTabs";
+import ISafeGuardTabs from "@/components/isafe-guard/ISafeGuardTabs";
+
+const heroGifs = [
+  { src: "/gif/장비 속도 측정.gif", ms: 29000 },
+  { src: "/gif/거리 측정.gif", ms: 28000 },
+  { src: "/gif/침범.gif", ms: 25000 },
+];
+
+function HeroGifCycler({ alt }: { alt: string }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const t = setTimeout(() => setIdx((i) => (i + 1) % heroGifs.length), heroGifs[idx].ms);
+    return () => clearTimeout(t);
+  }, [idx]);
+  return <img src={encodeURI(heroGifs[idx].src)} alt={alt} className="w-full h-full object-cover" />;
+}
 
 const getSteps = (language: "ko" | "en") => [
   {
@@ -74,25 +89,25 @@ export default function ISafeGuardPage() {
                 <h1 className="text-[38px] lg:text-[48px] font-black text-white leading-tight mb-5">
                   {language === "ko" ? (
                     <>
-                      당신이 자리를 비웠을 때도<br />
-                      <span className="text-blue-300">AI는 현장에 있습니다</span>
+                      관리자가 자리를 비운 순간에도<br />
+                      <span className="text-blue-300">AI는 현장을 지켜봅니다</span>
                     </>
                   ) : (
                     <>
-                      When you step away,<br />
-                      <span className="text-blue-300">AI stays on the job</span>
+                      Even when the manager steps away,<br />
+                      <span className="text-blue-300">AI keeps watching the site</span>
                     </>
                   )}
                 </h1>
                 <p className="text-blue-100 text-base leading-relaxed mb-4 max-w-md">
                   {language === "ko"
-                    ? "안전 관리자가 100대 카메라를 24시간 동안 놓치지 않고 볼 수는 없습니다. 집중력이 흐트러지는 순간 사고는 일어납니다."
-                    : "No safety manager can watch 100+ cameras 24/7 without missing something. Accidents happen in moments of lost focus."}
+                    ? "한 명의 관리자가 수십 대의 카메라를 잠시도 놓치지 않고 보기는 어렵습니다."
+                    : "It's hard for one manager to watch dozens of cameras without ever missing a moment."}
                 </p>
                 <p className="text-white font-semibold text-base mb-3 max-w-md">
                   {language === "ko"
-                    ? "iSafeGuard AI는 지치지 않고, 졸지 않으며, 매 프레임을 분석합니다."
-                    : "iSafeGuard AI never tires, never dozes, analyzes every frame."}
+                    ? "iSafeGuard의 Vision AI는 매 프레임을 분석해 위험상황을 실시간으로 감지하고 즉시 알립니다."
+                    : "iSafeGuard's Vision AI analyzes every frame, detecting hazards in real time and alerting instantly."}
                 </p>
                 <p className="text-green-300 font-bold text-sm mb-8 max-w-md">
                   {language === "ko"
@@ -131,11 +146,7 @@ export default function ISafeGuardPage() {
                     </span>
                   </div>
                   <div className="relative aspect-video bg-gray-800 rounded-xl overflow-hidden mb-3">
-                    <img
-                      src="/gif/detection.gif"
-                      alt={language === "ko" ? "AI 위험 감지" : "AI Hazard Detection"}
-                      className="w-full h-full object-cover"
-                    />
+                    <HeroGifCycler alt={language === "ko" ? "AI 위험 감지" : "AI Hazard Detection"} />
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-start gap-2.5 bg-gray-800/60 rounded-lg px-3 py-2.5">
@@ -230,52 +241,6 @@ export default function ISafeGuardPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="py-20 bg-gradient-to-r from-[#0c2340] to-[#1d6fa4] text-white">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-black mb-4">
-                  {language === "ko" ? (
-                    <>
-                      지금 현장에서 일어나는 일,<br />
-                      당신은 알고 계십니까?
-                    </>
-                  ) : (
-                    <>
-                      What's happening on site<br />
-                      right now—do you know?
-                    </>
-                  )}
-                </h2>
-                <p className="text-blue-100 mb-4 leading-relaxed">
-                  {language === "ko"
-                    ? "매일 현장에서 수십 건의 아차사고가 기록 없이 지나가고 있습니다.\niSafeGuard가 그 모든 순간을 관제하고, 반복을 막습니다."
-                    : "Dozens of near-misses slip by every day with no record.\niSafeGuard monitors every moment and stops repeat incidents."}
-                </p>
-                <p className="text-green-300 text-sm font-semibold mb-8">
-                  {language === "ko"
-                    ? "기본 AI 모델 5종과 iSafePlatform Core는 무료입니다. 지금 바로 시작하세요."
-                    : "5 essential AI models and iSafePlatform Core are free. Start today."}
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <Link
-                    href="/contact"
-                    className="px-8 py-3.5 text-sm font-bold text-green-900 bg-green-400 hover:bg-green-300 rounded-xl transition-colors shadow-lg"
-                  >
-                    {language === "ko" ? "무료 방문 설치 신청" : "Request Free Installation"}
-                  </Link>
-                  <Link
-                    href="/platform"
-                    className="px-8 py-3.5 text-sm font-bold text-white border-2 border-white/40 hover:border-white rounded-xl transition-colors"
-                  >
-                    {language === "ko" ? "Platform Core 알아보기" : "Learn About Platform Core"}
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer language={language} />
     </>
