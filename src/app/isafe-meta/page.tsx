@@ -27,25 +27,25 @@ const getMetaFeatures = (language: "ko" | "en") => [
       ? "A 현장 훈련이 B 현장에서는 의미가 없습니다"
       : "Training at Site A has no meaning at Site B—until now",
     desc: language === "ko"
-      ? "iSafePlanner의 3D BIM 모델을 그대로 가져오거나, 360도 카메라로 실제 현장을 촬영해 디지털 트윈을 구축합니다. 오늘 오전에 들어갈 외부비계 구역, 이번 주에 시작되는 용접 공정. 그 공간에서 미리 훈련합니다."
-      : "Import iSafePlanner's 3D BIM models or capture live sites with 360° cameras to build digital twins. Train in the exact scaffolding area you'll enter this morning, or the welding process starting this week.",
+      ? "iSafePlan의 3D BIM 모델을 그대로 가져오거나, 360도 카메라로 실제 현장을 촬영해 디지털 트윈을 구축합니다. 오늘 오전에 들어갈 외부비계 구역, 이번 주에 시작되는 용접 공정. 그 공간에서 미리 훈련합니다."
+      : "Import iSafePlan's 3D BIM models or capture live sites with 360° cameras to build digital twins. Train in the exact scaffolding area you'll enter this morning, or the welding process starting this week.",
     bullets: language === "ko"
       ? [
-          "iSafePlanner 3D BIM 모델 즉시 연동",
+          "iSafePlan 3D BIM 모델 즉시 연동",
           "360도 카메라 촬영 → 디지털 트윈 자동 구축",
           "실제 현장 구조·공정과 동일한 가상 훈련 환경",
           "iSafeGuard 위험구역 설정도 훈련에 자동 반영",
         ]
       : [
-          "Instant iSafePlanner 3D BIM integration",
+          "Instant iSafePlan 3D BIM integration",
           "360° camera capture → Auto digital twin creation",
           "Virtual training environment matching actual site conditions",
           "iSafeGuard hazard zones auto-reflected in training",
         ],
     placeholder: {
       title: language === "ko"
-        ? "iSafePlanner 연동 / 360카메라 디지털 트윈 가상환경"
-        : "iSafePlanner Integration / 360° Digital Twin Virtual Environment",
+        ? "iSafePlan 연동 / 360카메라 디지털 트윈 가상환경"
+        : "iSafePlan Integration / 360° Digital Twin Virtual Environment",
       description: language === "ko"
         ? "BIM 3D 모델 또는 360도 카메라로 구축한 실제 현장 가상 훈련 공간"
         : "BIM 3D model or 360° camera-built real-site virtual training space",
@@ -138,28 +138,28 @@ const getMetaFeatures = (language: "ko" | "en") => [
       ? "\"교육을 했다\"\n증거가\n지금 있습니까?"
       : "\"We trained everyone\"\n—do you have proof\nright now?",
     subhead: language === "ko"
-      ? "모든 수강 이력이 iSafeChain에 자동으로 저장됩니다"
-      : "Every completion automatically saved to iSafeChain",
+      ? "모든 수강 이력이 iSafeIncentive에 자동으로 저장됩니다"
+      : "Every completion automatically saved to iSafeIncentive",
     desc: language === "ko"
-      ? "중대재해 발생 시 '우리는 교육을 충분히 했다'를 증명해야 합니다. 디지털 수강 시스템의 모든 이수 기록이 자동으로 iSafeChain에 전달되어 위변조 불가능한 법적 증빙으로 남습니다."
-      : "When accidents happen, you must prove you trained everyone. Our digital system auto-sends all completion records to iSafeChain—creating tamper-proof legal evidence that stays with you.",
+      ? "중대재해 발생 시 '우리는 교육을 충분히 했다'를 증명해야 합니다. 디지털 수강 시스템의 모든 이수 기록이 자동으로 iSafeIncentive에 전달되어 위변조 불가능한 법적 증빙으로 남습니다."
+      : "When accidents happen, you must prove you trained everyone. Our digital system auto-sends all completion records to iSafeIncentive—creating tamper-proof legal evidence that stays with you.",
     bullets: language === "ko"
       ? [
-          "수강 완료 즉시 iSafeChain 블록체인에 자동 저장",
+          "수강 완료 즉시 iSafeIncentive 블록체인에 자동 저장",
           "테스트 통과 기준 설정 및 자동 이수 확인",
           "개인별 교육 이력 관리 대시보드",
           "부족 항목 감지 시 특화 교육 자동 재배정",
         ]
       : [
-          "Auto-save to iSafeChain blockchain immediately upon completion",
+          "Auto-save to iSafeIncentive blockchain immediately upon completion",
           "Set pass criteria and auto-confirm completion",
           "Per-worker training history dashboard",
           "Auto-detect gaps and reassign specialized training",
         ],
     placeholder: {
       title: language === "ko"
-        ? "교육 이수 현황 및 iSafeChain 연동 대시보드"
-        : "Training Completion & iSafeChain Integration Dashboard",
+        ? "교육 이수 현황 및 iSafeIncentive 연동 대시보드"
+        : "Training Completion & iSafeIncentive Integration Dashboard",
       description: language === "ko"
         ? "근로자별 수강 이력, 테스트 결과, 블록체인 저장 상태 확인 화면"
         : "Per-worker training history, test results, blockchain storage status",
@@ -174,8 +174,8 @@ const getSteps = (language: "ko" | "en") => [
     step: "01",
     title: language === "ko" ? "현장 가상환경 구축" : "Build Site Virtual Environment",
     desc: language === "ko"
-      ? "iSafePlanner 3D BIM 모델을 연동하거나, 360도 카메라로 실제 현장을 촬영해 디지털 트윈 가상환경을 구성합니다."
-      : "Link iSafePlanner's 3D BIM or capture the real site with 360° cameras to create the digital twin training environment.",
+      ? "iSafePlan 3D BIM 모델을 연동하거나, 360도 카메라로 실제 현장을 촬영해 디지털 트윈 가상환경을 구성합니다."
+      : "Link iSafePlan's 3D BIM or capture the real site with 360° cameras to create the digital twin training environment.",
   },
   {
     step: "02",
@@ -188,8 +188,8 @@ const getSteps = (language: "ko" | "en") => [
     step: "03",
     title: language === "ko" ? "이수 기록 자동 저장" : "Auto-Save Completion Records",
     desc: language === "ko"
-      ? "수강 완료 즉시 이수 기록이 iSafeChain에 자동 저장됩니다. 미이수자는 시스템이 자동으로 감지해 재배정합니다."
-      : "Completion records auto-save to iSafeChain immediately. System auto-detects non-completion and reassigns training.",
+      ? "수강 완료 즉시 이수 기록이 iSafeIncentive에 자동 저장됩니다. 미이수자는 시스템이 자동으로 감지해 재배정합니다."
+      : "Completion records auto-save to iSafeIncentive immediately. System auto-detects non-completion and reassigns training.",
   },
 ];
 
@@ -450,8 +450,8 @@ export default function ISafeMetaPage() {
               </h2>
               <p className="text-gray-500">
                 {language === "ko"
-                  ? "iSafePlanner 연동 또는 360도 카메라 촬영으로 즉시 시작할 수 있습니다."
-                  : "Start immediately with iSafePlanner integration or 360° camera capture."}
+                  ? "iSafePlan 연동 또는 360도 카메라 촬영으로 즉시 시작할 수 있습니다."
+                  : "Start immediately with iSafePlan integration or 360° camera capture."}
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">

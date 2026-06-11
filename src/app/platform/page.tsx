@@ -38,7 +38,7 @@ const getInfraFeatures = (language: "ko" | "en") => [
 
 const getModules = (language: "ko" | "en") => [
   {
-    name: "iSafePlanner",
+    name: "iSafePlan",
     badge: language === "ko" ? "계획" : "Plan",
     badgeColor: "bg-green-100 text-green-700",
     desc: language === "ko"
@@ -55,7 +55,7 @@ const getModules = (language: "ko" | "en") => [
     badge: language === "ko" ? "교육" : "Train",
     badgeColor: "bg-red-100 text-red-700",
     desc: language === "ko"
-      ? "iSafePlanner의 현장 3D 환경에서 AI Agent 아바타와 함께 오늘 투입될 공정을 미리 훈련합니다."
+      ? "iSafePlan의 현장 3D 환경에서 AI Agent 아바타와 함께 오늘 투입될 공정을 미리 훈련합니다."
       : "Train workers in 3D site environment with AI avatar before deployment.",
     href: "/isafe-meta",
     color: "border-red-200 hover:border-red-400",
@@ -77,7 +77,7 @@ const getModules = (language: "ko" | "en") => [
     step: language === "ko" ? "③ 관제" : "③ Monitor",
   },
   {
-    name: "iSafeChain",
+    name: "iSafeIncentive",
     badge: language === "ko" ? "측정" : "Measure",
     badgeColor: "bg-orange-100 text-orange-700",
     desc: language === "ko"
@@ -182,16 +182,16 @@ export default function PlatformPage() {
                 <ul className="space-y-3 mb-8 max-w-lg">
                   {(language === "ko"
                     ? [
-                        { color: "bg-green-400", text: "iSafePlanner가 오늘의 위험 공정을 예측하고" },
+                        { color: "bg-green-400", text: "iSafePlan가 오늘의 위험 공정을 예측하고" },
                         { color: "bg-red-400", text: "iSafeMeta가 근로자를 투입 전 가상환경에서 교육하고" },
                         { color: "bg-blue-400", text: "iSafeGuard가 현장 전체를 AI로 실시간 관제하고" },
-                        { color: "bg-orange-400", text: "iSafeChain이 모든 데이터를 측정·기록·보상합니다" },
+                        { color: "bg-orange-400", text: "iSafeIncentive이 모든 데이터를 측정·기록·보상합니다" },
                       ]
                     : [
-                        { color: "bg-green-400", text: "iSafePlanner predicts today's risks" },
+                        { color: "bg-green-400", text: "iSafePlan predicts today's risks" },
                         { color: "bg-red-400", text: "iSafeMeta trains workers in virtual environments" },
                         { color: "bg-blue-400", text: "iSafeGuard monitors the entire site in real-time" },
-                        { color: "bg-orange-400", text: "iSafeChain measures, records, and rewards" },
+                        { color: "bg-orange-400", text: "iSafeIncentive measures, records, and rewards" },
                       ]
                   ).map((item) => (
                     <li key={item.text} className="flex items-start gap-3 text-sm text-blue-100">
@@ -263,7 +263,7 @@ export default function PlatformPage() {
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20">
                     <div className="bg-[#0a1f0f] border border-green-500/50 rounded-xl px-5 py-3 text-center shadow-lg shadow-green-900/40 min-w-[120px]">
                       <span className="text-[11px] font-bold text-green-400 uppercase tracking-widest block mb-0.5">Plan</span>
-                      <span className="text-[15px] font-black text-white">iSafePlanner</span>
+                      <span className="text-[15px] font-black text-white">iSafePlan</span>
                     </div>
                   </div>
 
@@ -287,7 +287,7 @@ export default function PlatformPage() {
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20">
                     <div className="bg-[#1f0f07] border border-orange-500/50 rounded-xl px-5 py-3 text-center shadow-lg shadow-orange-900/40 min-w-[120px]">
                       <span className="text-[11px] font-bold text-orange-400 uppercase tracking-widest block mb-0.5">Measure</span>
-                      <span className="text-[15px] font-black text-white">iSafeChain</span>
+                      <span className="text-[15px] font-black text-white">iSafeIncentive</span>
                     </div>
                   </div>
                 </div>

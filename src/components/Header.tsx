@@ -21,7 +21,7 @@ const getProducts = (language: "ko" | "en") => [
     ),
   },
   {
-    label: "iSafePlanner",
+    label: "iSafePlan",
     href: "/isafe-planner",
     badge: "Plan",
     desc: language === "ko" ? "BIM 기반 공정 분석 · 위험도 예측" : "BIM-based Schedule Analysis · Risk Prediction",
@@ -63,7 +63,7 @@ const getProducts = (language: "ko" | "en") => [
     ),
   },
   {
-    label: "iSafeChain",
+    label: "iSafeIncentive",
     href: "/isafe-chain",
     badge: "Measure",
     desc: language === "ko" ? "블록체인 기록 · 스마트 컨트랙트 리워드" : "Blockchain Records · Smart Contract Rewards",

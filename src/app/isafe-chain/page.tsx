@@ -25,8 +25,8 @@ const getChainFeatures = (language: "ko" | "en") => [
       ? "모든 안전 활동이 자동으로 블록체인에 기록됩니다"
       : "Every safety activity automatically recorded on blockchain",
     desc: language === "ko"
-      ? "중대재해처벌법 위반 시 사업주와 경영진도 형사처벌을 받습니다. '우리는 관리했다'는 주장만으로는 부족합니다. iSafeChain은 iSafeGuard의 감지 기록, iSafeMeta의 교육 이수, 위험구역 출입 이력을 위변조 불가 블록체인에 자동으로 저장합니다."
-      : "Major accident penalties apply to executives too. Just saying \"we managed it\" isn't enough. iSafeChain auto-saves iSafeGuard detections, iSafeMeta completions, and hazard zone access to tamper-proof blockchain.",
+      ? "중대재해처벌법 위반 시 사업주와 경영진도 형사처벌을 받습니다. '우리는 관리했다'는 주장만으로는 부족합니다. iSafeIncentive은 iSafeGuard의 감지 기록, iSafeMeta의 교육 이수, 위험구역 출입 이력을 위변조 불가 블록체인에 자동으로 저장합니다."
+      : "Major accident penalties apply to executives too. Just saying \"we managed it\" isn't enough. iSafeIncentive auto-saves iSafeGuard detections, iSafeMeta completions, and hazard zone access to tamper-proof blockchain.",
     bullets: language === "ko"
       ? [
           "모든 안전 이벤트 자동 온체인 기록",
@@ -98,20 +98,20 @@ const getChainFeatures = (language: "ko" | "en") => [
       ? "쓸수록 강해지는\niSafePlatform의\n비밀"
       : "The secret to\niSafePlatform's power:\nit gets stronger with use",
     subhead: language === "ko"
-      ? "iSafeChain이 수집한 데이터로 모든 모듈이 스스로 개선됩니다"
-      : "Every module self-improves using iSafeChain's data",
+      ? "iSafeIncentive이 수집한 데이터로 모든 모듈이 스스로 개선됩니다"
+      : "Every module self-improves using iSafeIncentive's data",
     desc: language === "ko"
-      ? "iSafeChain에 누적된 사고·위반·이수 데이터는 단순 기록으로 끝나지 않습니다. iSafePlanner의 위험도 가중치를 재조정하고, iSafeMeta가 특화 훈련을 자동 할당하며, iSafeGuard의 감지 임계치를 강화합니다. 플랫폼이 사용될수록 우리 현장에 맞게 진화합니다."
-      : "iSafeChain data—incidents, violations, completions—isn't just stored. It reweights iSafePlanner's risk scores, auto-assigns iSafeMeta specialized training, and sharpens iSafeGuard detection thresholds. The platform evolves to fit your site.",
+      ? "iSafeIncentive에 누적된 사고·위반·이수 데이터는 단순 기록으로 끝나지 않습니다. iSafePlan의 위험도 가중치를 재조정하고, iSafeMeta가 특화 훈련을 자동 할당하며, iSafeGuard의 감지 임계치를 강화합니다. 플랫폼이 사용될수록 우리 현장에 맞게 진화합니다."
+      : "iSafeIncentive data—incidents, violations, completions—isn't just stored. It reweights iSafePlan's risk scores, auto-assigns iSafeMeta specialized training, and sharpens iSafeGuard detection thresholds. The platform evolves to fit your site.",
     bullets: language === "ko"
       ? [
-          "누적 위반 데이터 → iSafePlanner 위험도 자동 재조정",
+          "누적 위반 데이터 → iSafePlan 위험도 자동 재조정",
           "반복 위반 패턴 → iSafeMeta 특화 훈련 자동 할당",
           "위반율 트렌드 → iSafeGuard 감지 임계치 자동 강화",
           "월별 플랫폼 개선 리포트 자동 발행",
         ]
       : [
-          "Violation data → iSafePlanner risk scores auto-recalibrate",
+          "Violation data → iSafePlan risk scores auto-recalibrate",
           "Repeat patterns → iSafeMeta specialized training auto-assigned",
           "Violation trends → iSafeGuard detection thresholds auto-strengthen",
           "Monthly platform improvement report auto-generated",
@@ -121,8 +121,8 @@ const getChainFeatures = (language: "ko" | "en") => [
         ? "3종 피드백 루프 자동 개선 현황 화면"
         : "3-Module Feedback Loop Auto-Improvement Dashboard",
       description: language === "ko"
-        ? "iSafeChain 데이터가 Planner·Meta·Guard에 어떻게 피드백되는지 보여주는 시각화 화면"
-        : "Visualization of how iSafeChain data feeds back to Planner, Meta, and Guard",
+        ? "iSafeIncentive 데이터가 Planner·Meta·Guard에 어떻게 피드백되는지 보여주는 시각화 화면"
+        : "Visualization of how iSafeIncentive data feeds back to Planner, Meta, and Guard",
     },
     ctaBg: "bg-red-600 hover:bg-red-700",
     bgClass: "bg-white",
@@ -189,7 +189,7 @@ export default function ISafeChainPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:h-[560px]">
               <div>
                 <div className="flex items-center gap-2 mb-5">
-                  <span className="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-full">iSafeChain</span>
+                  <span className="px-3 py-1 bg-orange-500 text-white text-xs font-bold rounded-full">iSafeIncentive</span>
                   <span className="px-3 py-1 bg-white/10 text-orange-200 text-xs rounded-full">
                     {language === "ko" ? "기록 모듈" : "Measure Module"}
                   </span>
@@ -216,8 +216,8 @@ export default function ISafeChainPage() {
                 </p>
                 <p className="text-white font-semibold text-base mb-8 max-w-md">
                   {language === "ko"
-                    ? "iSafeChain은 감지·교육·출입 등 모든 안전활동을 위변조 불가 기록으로 쌓아, 안전수준을 객관적으로 평가하고 개선하는 토대를 만듭니다."
-                    : "iSafeChain stacks every safety activity—detection, training, access—into tamper-proof records, a foundation to objectively evaluate and improve safety levels."}
+                    ? "iSafeIncentive은 감지·교육·출입 등 모든 안전활동을 위변조 불가 기록으로 쌓아, 안전수준을 객관적으로 평가하고 개선하는 토대를 만듭니다."
+                    : "iSafeIncentive stacks every safety activity—detection, training, access—into tamper-proof records, a foundation to objectively evaluate and improve safety levels."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -242,7 +242,7 @@ export default function ISafeChainPage() {
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
                     <span className="text-xs text-gray-400 ml-2 font-mono">
-                      iSafeChain · {language === "ko" ? "블록체인 안전 거버넌스" : "Blockchain Safety Governance"}
+                      iSafeIncentive · {language === "ko" ? "블록체인 안전 거버넌스" : "Blockchain Safety Governance"}
                     </span>
                   </div>
                   <div className="relative aspect-video bg-gray-900 rounded-xl overflow-hidden mb-3">
@@ -364,8 +364,8 @@ export default function ISafeChainPage() {
               </h2>
               <p className="text-gray-500">
                 {language === "ko"
-                  ? "한 번 설정하면 iSafeChain이 알아서 기록하고, 보상하고, 개선합니다."
-                  : "Once configured, iSafeChain auto-records, auto-rewards, auto-improves."}
+                  ? "한 번 설정하면 iSafeIncentive이 알아서 기록하고, 보상하고, 개선합니다."
+                  : "Once configured, iSafeIncentive auto-records, auto-rewards, auto-improves."}
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">

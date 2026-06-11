@@ -5,10 +5,10 @@ import Link from "next/link";
 
 const getProductLinks = (language: "ko" | "en") => [
   { label: "iSafePlatform Core", href: "/platform" },
-  { label: "iSafePlanner", href: "/isafe-planner" },
+  { label: "iSafePlan", href: "/isafe-planner" },
   { label: "iSafeMeta", href: "/isafe-meta" },
   { label: "iSafeGuard", href: "/isafe-guard" },
-  { label: "iSafeChain", href: "/isafe-chain" },
+  { label: "iSafeIncentive", href: "/isafe-chain" },
 ];
 
 const getCompanyLinks = (language: "ko" | "en") => [

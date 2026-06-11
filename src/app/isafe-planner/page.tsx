@@ -34,8 +34,8 @@ const getPlannerFeatures = (language: "ko" | "en") => [
     placeholder: {
       title: language === "ko" ? "DXF 도면 → 3D BIM 트레이스 화면" : "DXF Drawing → 3D BIM Tracing",
       description: language === "ko"
-        ? "AutoCAD DXF 도면을 직접 3D BIM 모델로 변환하는 iSafePlanner 화면"
-        : "iSafePlanner screen tracing an AutoCAD DXF drawing into a 3D BIM model",
+        ? "AutoCAD DXF 도면을 직접 3D BIM 모델로 변환하는 iSafePlan 화면"
+        : "iSafePlan screen tracing an AutoCAD DXF drawing into a 3D BIM model",
     },
     ctaBg: "bg-green-700 hover:bg-green-800",
     bgClass: "bg-white",
@@ -181,7 +181,7 @@ export default function ISafePlannerPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center lg:h-[560px]">
               <div>
                 <div className="flex items-center gap-2 mb-5">
-                  <span className="px-3 py-1 bg-green-600 text-white text-xs font-bold rounded-full">iSafePlanner</span>
+                  <span className="px-3 py-1 bg-green-600 text-white text-xs font-bold rounded-full">iSafePlan</span>
                   <span className="px-3 py-1 bg-white/10 text-green-200 text-xs rounded-full">
                     {language === "ko" ? "계획 모듈" : "Plan Module"}
                   </span>
@@ -208,8 +208,8 @@ export default function ISafePlannerPage() {
                 </p>
                 <p className="text-white font-semibold text-base mb-8 max-w-md">
                   {language === "ko"
-                    ? "iSafePlanner는 도면 하나로 공정별 위험 지도를 자동으로 그려, 현장 맞춤 위험성평가의 출발점이 됩니다."
-                    : "From a single drawing, iSafePlanner auto-maps risk by phase—the starting point of site-tailored risk assessment."}
+                    ? "iSafePlan는 도면 하나로 공정별 위험 지도를 자동으로 그려, 현장 맞춤 위험성평가의 출발점이 됩니다."
+                    : "From a single drawing, iSafePlan auto-maps risk by phase—the starting point of site-tailored risk assessment."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -235,7 +235,7 @@ export default function ISafePlannerPage() {
                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
                     <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
                     <span className="text-xs text-gray-400 ml-2 font-mono">
-                      iSafePlanner · {language === "ko" ? "BIM 3D 공정 시뮬레이터" : "BIM 3D Process Simulator"}
+                      iSafePlan · {language === "ko" ? "BIM 3D 공정 시뮬레이터" : "BIM 3D Process Simulator"}
                     </span>
                   </div>
                   <div className="relative aspect-video bg-gray-900 rounded-xl overflow-hidden mb-3">

@@ -85,7 +85,7 @@ export default function AboutPage() {
     const els = document.querySelectorAll(".reveal");
     els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [activeTab]);
+  }, [activeTab, language]);
 
   const tabs = getTabs(language);
   const hero = getHero(activeTab, language);

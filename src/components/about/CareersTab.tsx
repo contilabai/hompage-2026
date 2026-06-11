@@ -204,8 +204,8 @@ export default function CareersTab({ language }: { language: "ko" | "en" }) {
                 </div>
                 <p className="text-green-100 text-sm leading-relaxed mt-4 max-w-2xl">
                   {language === "ko"
-                    ? "BIM 기반 스케줄러인 iSafePlanner와 현장 관제 시스템인 iSafeGuard가 건설 현장에 유기적으로 결합되도록 프로젝트 전체를 리딩하고 결정권자들과 소통하는 업무를 담당합니다."
-                    : "Lead the entire project to seamlessly integrate iSafePlanner (BIM-based scheduler) with iSafeGuard (site management system) on construction sites, while communicating with decision-makers."}
+                    ? "BIM 기반 스케줄러인 iSafePlan와 현장 관제 시스템인 iSafeGuard가 건설 현장에 유기적으로 결합되도록 프로젝트 전체를 리딩하고 결정권자들과 소통하는 업무를 담당합니다."
+                    : "Lead the entire project to seamlessly integrate iSafePlan (BIM-based scheduler) with iSafeGuard (site management system) on construction sites, while communicating with decision-makers."}
                 </p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-0 divide-y md:divide-y-0 md:divide-x divide-gray-200">
