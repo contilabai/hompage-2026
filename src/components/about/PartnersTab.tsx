@@ -27,6 +27,7 @@ const getGroups = (language: "ko" | "en"): { label: string; delay: string; items
       { name: "SK Nexilis", logo: "sk nexilis.png" },
       { name: language === "ko" ? "SK에코플랜트" : "SK ecoplant", logo: "partners-sk-ecoplant.jpg" },
       { name: "APPROTIUM", logo: "partners-posco-approtium.jpg" },
+      { name: "HDC I&CONS", logo: "HDC I&Cons.png" },
       { name: "DL E&C", logo: "DL-E&C(좌우).jpg" },
       { name: "코오롱글로벌(주)", logo: "kolon global.png" },
       { name: "ISC", logo: "ISC.png" },
@@ -66,34 +67,39 @@ export default function PartnersTab({ language }: { language: "ko" | "en" }) {
             <div key={gi} className={`reveal ${group.delay}`}>
               <h3 className="text-[20px] font-bold text-gray-900 mb-2">{group.label}</h3>
               <div className="w-8 h-0.5 bg-amber-400 mb-6" />
-              <div className="flex flex-wrap gap-4">
-                {group.items.map((p) =>
-                  p.logo ? (
-                    <div
-                      key={p.name}
-                      className="w-[180px] h-[96px] bg-white border border-gray-100 rounded-xl p-4 flex items-center justify-center shadow-sm"
-                    >
-                      <div className="relative w-full h-full">
-                        <Image
-                          src={`/images/clients/${p.logo}`}
-                          alt={p.name}
-                          fill
-                          className="object-contain"
-                          sizes="160px"
-                        />
+              <div className="overflow-hidden">
+                <div
+                  className="marquee-track w-max py-3"
+                  style={{ animationDuration: `${Math.max(group.items.length * 6, 24)}s` }}
+                >
+                  {[...group.items, ...group.items].map((p, i) =>
+                    p.logo ? (
+                      <div
+                        key={`${p.name}-${i}`}
+                        className="flex-shrink-0 mr-4 w-[180px] h-[96px] bg-white border border-gray-100 rounded-xl p-4 flex items-center justify-center shadow-sm"
+                      >
+                        <div className="relative w-full h-full">
+                          <Image
+                            src={`/images/clients/${p.logo}`}
+                            alt={p.name}
+                            fill
+                            className="object-contain"
+                            sizes="160px"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ) : (
-                    <div
-                      key={p.name}
-                      className="w-[180px] h-[96px] bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center px-4 text-center"
-                    >
-                      <span className={`text-[19px] font-semibold whitespace-pre-line leading-snug ${p.color || "text-gray-700"}`}>
-                        {p.name}
-                      </span>
-                    </div>
-                  )
-                )}
+                    ) : (
+                      <div
+                        key={`${p.name}-${i}`}
+                        className="flex-shrink-0 mr-4 w-[180px] h-[96px] bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center px-4 text-center"
+                      >
+                        <span className={`text-[19px] font-semibold whitespace-pre-line leading-snug ${p.color || "text-gray-700"}`}>
+                          {p.name}
+                        </span>
+                      </div>
+                    )
+                  )}
+                </div>
               </div>
             </div>
           ))}

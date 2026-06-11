@@ -565,6 +565,7 @@ const getHardwareProducts = (language: Lang) => [
         ],
     iconBg: "bg-orange-700",
     image: "/images/Multi channel NPU server.png",
+    image2: "/images/Multi channel NPU PC.png",
   },
 ];
 
@@ -592,13 +593,36 @@ function DeviceTab({ language }: { language: Lang }) {
             <div key={product.nameEn} className="rounded-2xl border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all overflow-hidden group flex flex-col">
               {"image" in product && product.image ? (
                 <div className="relative aspect-[4/3] bg-gray-50 overflow-hidden">
-                  <Image
-                    src={product.image as string}
-                    alt={product.name}
-                    fill
-                    className="object-contain p-6 group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
+                  {"image2" in product && (product as { image2?: string }).image2 ? (
+                    <div className="absolute inset-0 flex">
+                      <div className="relative w-1/2 h-full">
+                        <Image
+                          src={product.image as string}
+                          alt={product.name}
+                          fill
+                          className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 768px) 50vw, 17vw"
+                        />
+                      </div>
+                      <div className="relative w-1/2 h-full">
+                        <Image
+                          src={(product as { image2: string }).image2}
+                          alt={product.name}
+                          fill
+                          className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 768px) 50vw, 17vw"
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <Image
+                      src={product.image as string}
+                      alt={product.name}
+                      fill
+                      className="object-contain p-6 group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  )}
                   <span className={`absolute top-4 right-4 px-2.5 py-1 text-xs font-bold ${product.badgeColor} rounded-full z-10 shadow-sm`}>
                     {product.badge}
                   </span>
@@ -749,8 +773,9 @@ const getDeploymentCases = (language: Lang): DeploymentCase[] => [
     ],
   },
   {
-    image: "/images/clients/HDC I&Cons.png",
+    image: "/images/accounts/HDC I&CONS Mixed-Use Development.png",
     name: language === "ko" ? "HDC I&CONS 복합개발" : "HDC I&CONS Mixed-Use",
+    logo: "/images/clients/HDC%20I%26Cons.png",
     category: language === "ko" ? "대형 건설사 · Auto PTZ" : "Major Contractor · Auto PTZ",
     summary: language === "ko"
       ? "HDC I&CONS 현장에서 카메라 Auto PTZ 제어를 통해 작업자를 자동으로 추적하고, 안전고리 등 화면에서 작게 보이는 소형 객체까지 탐지하는 데 성공했습니다."
@@ -763,10 +788,50 @@ const getDeploymentCases = (language: Lang): DeploymentCase[] => [
     ],
   },
   { image: "/images/accounts/Jinhae Harbor.png", name: language === "ko" ? "한림 (진해항)" : "HANLIM (Jinhae Harbor)", logo: "/images/clients/partners-hanraim.jpg" },
-  { image: "/images/accounts/National Assembly Boulevard, Seoul.png", name: language === "ko" ? "국회대로 (서울)" : "National Assembly Blvd, Seoul" },
-  { image: "/images/accounts/Highway Express.png", name: language === "ko" ? "고속도로 현장" : "Highway Site" },
-  { image: "/images/accounts/Approtium.png", name: "APPROTIUM", logo: "/images/clients/partners-posco-approtium.jpg" },
-  { image: "/images/accounts/PIC Grobal.png", name: "PIC Global", logo: "/images/clients/pic%20global.png" },
+  {
+    image: "/images/poc/ISC1.png",
+    name: "ISC",
+    logo: "/images/clients/ISC.png",
+    category: language === "ko" ? "반도체 · 도입 예정" : "Semiconductor · Upcoming",
+    summary: language === "ko"
+      ? "ISC와 함께 곧 시작할 사업으로, 반도체 공장의 미작업(유휴) 실험장비의 Door Open 여부를 자동으로 체크하는 AI 모델을 개발·납품할 예정입니다."
+      : "An upcoming project with ISC: developing and supplying an AI model that automatically checks whether idle (non-operating) experimental equipment doors are left open in semiconductor fabs.",
+    models: language === "ko" ? ["실험장비 Door Open 감지", "객체 탐지"] : ["Equipment door-open detection", "Object detection"],
+    media: [
+      { src: "/images/poc/ISC2.png", caption: language === "ko" ? "실험장비 Door Open 감지 1" : "Equipment door-open detection 1" },
+      { src: "/images/poc/ISC3.png", caption: language === "ko" ? "실험장비 Door Open 감지 2" : "Equipment door-open detection 2" },
+      { src: "/images/poc/ISC4.png", caption: language === "ko" ? "실험장비 Door Open 감지 3" : "Equipment door-open detection 3" },
+      { src: "/images/poc/ISC5.png", caption: language === "ko" ? "실험장비 Door Open 감지 4" : "Equipment door-open detection 4" },
+    ],
+  },
+  {
+    image: "/images/accounts/Approtium.png",
+    name: "APPROTIUM",
+    logo: "/images/clients/partners-posco-approtium.jpg",
+    category: language === "ko" ? "에너지 · 수소/CO2 충전소" : "Energy · H2/CO2 Charging Station",
+    summary: language === "ko"
+      ? "APPROTIUM 수소·CO2 충전소 현장에 카메라별로 특화된 AI 관제를 적용했습니다. 수소가스 압력 게이지를 실시간으로 측정해 이상을 감지하고(CAM1·CAM3), 충전 연결 상태와 관리자(노란 안전모) 부재를 확인·경보하며(CAM6·CAM10·CAM11), 전체 카메라에서 작업자 안전모 미착용과 설정 구역 무단 침입을 감지합니다."
+      : "At APPROTIUM's hydrogen/CO2 charging stations, we applied camera-specific AI monitoring. It measures hydrogen-gas pressure gauges in real time to detect anomalies (CAM1·CAM3), verifies charging connections and alerts when a supervisor (yellow helmet) is absent (CAM6·CAM10·CAM11), and across all cameras detects workers without helmets and unauthorized intrusion into set zones.",
+    models: language === "ko"
+      ? ["수소가스 압력 게이지 이상 감지", "충전 연결 확인", "관리자 부재 경보", "안전모 미착용 감지", "설정 구역 침입 감지"]
+      : ["H2-gas gauge anomaly detection", "Charging connection check", "Missing-supervisor alert", "No-helmet detection", "Zone intrusion detection"],
+    media: [
+      { src: "/gif/detection.gif", caption: language === "ko" ? "실시간 AI CCTV 위험 감지" : "Real-time AI CCTV detection" },
+    ],
+  },
+  {
+    image: "/images/accounts/PIC Grobal.png",
+    name: "PIC Global",
+    logo: "/images/clients/pic%20global.png",
+    category: language === "ko" ? "장비 속도 측정" : "Equipment Speed Measurement",
+    summary: language === "ko"
+      ? "PIC Global 현장에서 중장비의 이동 속도를 실시간으로 측정·관제했습니다."
+      : "At a PIC Global site, heavy-equipment movement speed was measured and monitored in real time.",
+    models: language === "ko" ? ["장비 속도 측정", "객체 탐지"] : ["Equipment speed measurement", "Object detection"],
+    media: [
+      { src: "/gif/장비 속도 측정.gif", caption: language === "ko" ? "장비 속도 측정" : "Equipment speed measurement" },
+    ],
+  },
 ];
 
 function DeploymentTab({ language }: { language: Lang }) {
