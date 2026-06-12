@@ -727,9 +727,9 @@ const getDeploymentCases = (language: Lang): DeploymentCase[] => [
     ],
   },
   {
-    image: "/images/accounts/DLE&C.png",
+    image: "/images/accounts/DL.png",
     name: "DL E&C",
-    logo: "/images/clients/DL-E%26C(%EC%A2%8C%EC%9A%B0).jpg",
+    logo: "/images/clients/DL-logo.jpg",
     category: language === "ko" ? "대형 건설사 · 현장 맞춤형 PoC" : "Major Contractor · Site-tailored PoC",
     summary: language === "ko"
       ? "DL E&C 검단 웰카운티·일산 메이포레 현장의 이동식·타워크레인 CCTV 19대 이상을 연동해, 현장 맞춤형 Vision AI와 카메라 PTZ 자동제어를 결합한 위험 상황 판별 PoC를 수행했습니다. 작업자·안전모 탐지, 중장비-작업자 수평 거리 측정, 위험구역 침범 탐지를 실증했고, 카메라가 움직여도 위험구역을 자동으로 추적·맵핑하는 동적 PTZ 맵핑 기술로 특허를 출원했습니다(10-2026-0058231). 〈2025 서울창업허브 오픈이노베이션〉"
@@ -779,9 +779,9 @@ const getDeploymentCases = (language: Lang): DeploymentCase[] => [
     ],
   },
   {
-    image: "/images/accounts/HDC I&CONS Mixed-Use Development.png",
+    image: "/images/accounts/HDC.png",
     name: language === "ko" ? "HDC I&CONS 복합개발" : "HDC I&CONS Mixed-Use",
-    logo: "/images/clients/HDC%20I%26Cons.png",
+    logo: "/images/clients/HDC-logo.png",
     category: language === "ko" ? "대형 건설사 · Auto PTZ" : "Major Contractor · Auto PTZ",
     summary: language === "ko"
       ? "HDC I&CONS 현장에서 카메라 Auto PTZ 제어를 통해 작업자를 자동으로 추적하고, 안전고리 등 화면에서 작게 보이는 소형 객체까지 탐지하는 데 성공했습니다."

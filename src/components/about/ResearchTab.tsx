@@ -131,7 +131,7 @@ const getResearchCards = (language: "ko" | "en") => [
     desc: language === "ko"
       ? "실제 현장을 가상 공간에 정밀 복제하여 위험을 사전에 시뮬레이션하고 분석합니다."
       : "Precisely replicates real sites in virtual space to simulate and analyze hazards in advance.",
-    gif: "/gif/R&D/디지털트윈.gif",
+    gif: "/gif/rnd/디지털트윈.gif",
   },
   {
     tag: "Robotics",
@@ -139,7 +139,7 @@ const getResearchCards = (language: "ko" | "en") => [
     desc: language === "ko"
       ? "4족 보행 로봇이 사람이 접근하기 어려운 구역을 자율 순찰하며 현장을 점검합니다."
       : "A quadruped robot autonomously patrols and inspects areas that are hard for people to reach.",
-    gif: "/gif/R&D/로봇독.gif",
+    gif: "/gif/rnd/로봇독.gif",
   },
   {
     tag: "Road Safety",
@@ -147,7 +147,7 @@ const getResearchCards = (language: "ko" | "en") => [
     desc: language === "ko"
       ? "주행 영상에서 도로 포트홀을 자동으로 탐지하여 보수 우선순위 산정을 지원합니다."
       : "Automatically detects road potholes from driving footage to support repair prioritization.",
-    gif: "/gif/R&D/포트홀.gif",
+    gif: "/gif/rnd/포트홀.gif",
   },
   {
     tag: "Inspection Robot",
@@ -155,7 +155,7 @@ const getResearchCards = (language: "ko" | "en") => [
     desc: language === "ko"
       ? "교각 표면에 밀착해 이동하며 교량 하부 구조물을 근접 점검하는 구동장치를 연구합니다."
       : "A drive unit that adheres to and travels along piers for close-up inspection of bridge substructures.",
-    gif: "/gif/R&D/교각 밀착 구동장치1.gif",
+    gif: "/gif/rnd/교각 밀착 구동장치1.gif",
   },
   {
     tag: "Robotics",
@@ -163,7 +163,7 @@ const getResearchCards = (language: "ko" | "en") => [
     desc: language === "ko"
       ? "현장 자재를 자율로 운반하는 로봇으로 반복 운반 작업의 부담과 협착·전도 사고 위험을 줄입니다."
       : "An autonomous robot that transports site materials, easing repetitive hauling and reducing crushing/tipping risks.",
-    gif: "/gif/R&D/자재운반 로봇.gif",
+    gif: "/gif/rnd/자재운반 로봇.gif",
   },
   {
     tag: "Drone",
@@ -171,7 +171,7 @@ const getResearchCards = (language: "ko" | "en") => [
     desc: language === "ko"
       ? "드론으로 교량·시설물을 점검·관리하여 사람이 접근하기 어려운 구역을 안전하게 진단합니다."
       : "Inspect and manage bridges and facilities by drone, safely diagnosing areas hard for people to reach.",
-    gif: "/gif/R&D/드론시설물관리.gif",
+    gif: "/gif/rnd/드론시설물관리.gif",
   },
 ];
 
@@ -311,7 +311,7 @@ export default function ResearchTab({ language }: { language: "ko" | "en" }) {
           <div className="mt-6 reveal bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
             <div className="bg-gray-900 overflow-hidden">
               <img
-                src={encodeURI("/gif/R&D/열화상.gif")}
+                src={encodeURI("/gif/rnd/열화상.gif")}
                 alt={language === "ko" ? "열화상 기반 이상 감지" : "Thermal Imaging Detection"}
                 className="w-full h-auto -mt-[50px]"
               />
