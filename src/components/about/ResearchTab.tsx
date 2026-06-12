@@ -126,52 +126,52 @@ const getCredentials = (language: "ko" | "en") => [
 
 const getResearchCards = (language: "ko" | "en") => [
   {
-    tag: "Digital Twin",
-    title: language === "ko" ? "디지털 트윈" : "Digital Twin",
+    delay: "d1", tag: "Computer Vision",
+    title: language === "ko" ? "위험 감지 알고리즘" : "Hazard Detection Algorithm",
     desc: language === "ko"
-      ? "실제 현장을 가상 공간에 정밀 복제하여 위험을 사전에 시뮬레이션하고 분석합니다."
-      : "Precisely replicates real sites in virtual space to simulate and analyze hazards in advance.",
-    gif: "/gif/rnd/디지털트윈.gif",
+      ? "객체 인식 + 다중 알고리즘 로직: Tracking, Height Estimation, Edge Detection, Background Subtraction, Object Relationships, Coordinate Identification."
+      : "Multi-algorithm object recognition: Tracking, Height Estimation, Edge Detection, Background Subtraction, Object Relationships, Coordinate Identification.",
+    bullets: language === "ko"
+      ? ["YOLO 기반 실시간 객체 탐지", "120개+ 건설현장 위험 시나리오", "멀티 카메라 동시 분석"]
+      : ["YOLO-based real-time object detection", "120+ construction hazard scenarios", "Multi-camera simultaneous analysis"],
+    iconBg: "bg-blue-50 text-blue-500",
+    icon: <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>,
   },
   {
-    tag: "Robotics",
-    title: language === "ko" ? "자율 순찰 로봇 (로봇독)" : "Autonomous Patrol Robot",
+    delay: "d2", tag: "Synthetic Data",
+    title: language === "ko" ? "가상데이터 기반 학습 파이프라인" : "Synthetic Data-Based Training Pipeline",
     desc: language === "ko"
-      ? "4족 보행 로봇이 사람이 접근하기 어려운 구역을 자율 순찰하며 현장을 점검합니다."
-      : "A quadruped robot autonomously patrols and inspects areas that are hard for people to reach.",
-    gif: "/gif/rnd/로봇독.gif",
+      ? "3D 메쉬 현장 모델 + 가상 시나리오 시뮬레이션으로 대규모 어노테이션 데이터셋을 생성하여 실제 데이터 수집 비용을 획기적으로 절감."
+      : "Generate large-scale annotated datasets using 3D mesh models and virtual scenario simulation, dramatically reducing real-world data collection costs.",
+    bullets: language === "ko"
+      ? ["게임 엔진 기반 현장 가상화", "자동 라벨링 데이터셋 생성", "희귀 위험 시나리오 시뮬레이션"]
+      : ["Game engine-based site virtualization", "Automatic labeled dataset generation", "Rare hazard scenario simulation"],
+    iconBg: "bg-purple-50 text-purple-500",
+    icon: <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>,
   },
   {
-    tag: "Road Safety",
-    title: language === "ko" ? "도로 포트홀 탐지" : "Pothole Detection",
+    delay: "d1", tag: "Reality Capture",
+    title: language === "ko" ? "Gaussian Splatting 파이프라인" : "Gaussian Splatting Pipeline",
     desc: language === "ko"
-      ? "주행 영상에서 도로 포트홀을 자동으로 탐지하여 보수 우선순위 산정을 지원합니다."
-      : "Automatically detects road potholes from driving footage to support repair prioritization.",
-    gif: "/gif/rnd/포트홀.gif",
+      ? "드론 기반 사진측량과 Gaussian Splatting으로 실제 현장에서 비용 효율적인 몰입형 3D 메쉬 환경을 생성."
+      : "Create cost-effective immersive 3D mesh environments using drone-based photogrammetry and Gaussian Splatting from real sites.",
+    bullets: language === "ko"
+      ? ["드론 사진측량 자동화", "Gaussian Splatting 3D 재구성", "iSafeMeta 훈련 환경 직접 연동"]
+      : ["Automated drone photogrammetry", "Gaussian Splatting 3D reconstruction", "Direct integration with iSafeMeta training"],
+    iconBg: "bg-green-50 text-green-500",
+    icon: <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>,
   },
   {
-    tag: "Inspection Robot",
-    title: language === "ko" ? "교각 점검 구동장치" : "Pier Inspection Drive Unit",
+    delay: "d2", tag: "Safety LLM",
+    title: "iSafeLLM",
     desc: language === "ko"
-      ? "교각 표면에 밀착해 이동하며 교량 하부 구조물을 근접 점검하는 구동장치를 연구합니다."
-      : "A drive unit that adheres to and travels along piers for close-up inspection of bridge substructures.",
-    gif: "/gif/rnd/교각 밀착 구동장치1.gif",
-  },
-  {
-    tag: "Robotics",
-    title: language === "ko" ? "자재운반 로봇" : "Material Transport Robot",
-    desc: language === "ko"
-      ? "현장 자재를 자율로 운반하는 로봇으로 반복 운반 작업의 부담과 협착·전도 사고 위험을 줄입니다."
-      : "An autonomous robot that transports site materials, easing repetitive hauling and reducing crushing/tipping risks.",
-    gif: "/gif/rnd/자재운반 로봇.gif",
-  },
-  {
-    tag: "Drone",
-    title: language === "ko" ? "드론 시설물 관리" : "Drone Facility Inspection",
-    desc: language === "ko"
-      ? "드론으로 교량·시설물을 점검·관리하여 사람이 접근하기 어려운 구역을 안전하게 진단합니다."
-      : "Inspect and manage bridges and facilities by drone, safely diagnosing areas hard for people to reach.",
-    gif: "/gif/rnd/드론시설물관리.gif",
+      ? "안전 규칙, 법령, 기준, 매뉴얼, 사고 보고서로 학습한 온톨로지 강화 언어 모델. 20개국 이상 언어 멀티링구얼 아바타 지원."
+      : "Ontology-enriched language model trained on safety rules, regulations, standards, manuals, and incident reports. Supports 20+ language multilingual avatars.",
+    bullets: language === "ko"
+      ? ["건설안전 특화 온톨로지 학습", "VLM 기반 일일 안전 보고서 자동 생성", "20개국 언어 멀티링구얼 아바타"]
+      : ["Construction safety-specialized ontology", "VLM-based automated daily safety reports", "20+ language multilingual avatars"],
+    iconBg: "bg-amber-50 text-amber-500",
+    icon: <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>,
   },
 ];
 
@@ -292,44 +292,23 @@ export default function ResearchTab({ language }: { language: "ko" | "en" }) {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {getResearchCards(language).map((card) => (
-              <div key={card.title} className="reveal bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
-                <div className="aspect-video bg-gray-900 overflow-hidden">
-                  <img src={encodeURI(card.gif)} alt={card.title} className="w-full h-full object-cover" />
+              <div key={card.tag} className={`reveal ${card.delay} bg-white rounded-2xl border border-gray-100 p-8 hover:shadow-md transition-shadow`}>
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${card.iconBg} mb-6`}>{card.icon}</div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-2 h-2 rounded-full bg-amber-400" />
+                  <span className="text-[18px] font-semibold text-amber-500 uppercase tracking-wider">{card.tag}</span>
                 </div>
-                <div className="p-7">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-2 h-2 rounded-full bg-amber-400" />
-                    <span className="text-[16px] font-semibold text-amber-500 uppercase tracking-wider">{card.tag}</span>
-                  </div>
-                  <p className="text-[24px] font-bold text-gray-900 mb-2">{card.title}</p>
-                  <p className="text-[19px] text-gray-500 leading-relaxed">{card.desc}</p>
-                </div>
+                <p className="text-[27px] font-bold text-gray-900 mb-3">{card.title}</p>
+                <p className="text-[21px] text-gray-500 leading-relaxed mb-5">{card.desc}</p>
+                <ul className="space-y-2">
+                  {card.bullets.map((b) => (
+                    <li key={b} className="flex items-center gap-2 text-[21px] text-gray-600">
+                      <span className="w-1 h-1 rounded-full bg-amber-300 flex-shrink-0" />{b}
+                    </li>
+                  ))}
+                </ul>
               </div>
             ))}
-          </div>
-          {/* 열화상 — 가로로 긴 영상이라 전체 폭 한 줄로 */}
-          <div className="mt-6 reveal bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
-            <div className="bg-gray-900 overflow-hidden">
-              <img
-                src={encodeURI("/gif/rnd/열화상.gif")}
-                alt={language === "ko" ? "열화상 기반 이상 감지" : "Thermal Imaging Detection"}
-                className="w-full h-auto -mt-[50px]"
-              />
-            </div>
-            <div className="p-7">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-2 h-2 rounded-full bg-amber-400" />
-                <span className="text-[16px] font-semibold text-amber-500 uppercase tracking-wider">Thermal AI</span>
-              </div>
-              <p className="text-[24px] font-bold text-gray-900 mb-2">
-                {language === "ko" ? "열화상 기반 이상 감지" : "Thermal Imaging Detection"}
-              </p>
-              <p className="text-[19px] text-gray-500 leading-relaxed">
-                {language === "ko"
-                  ? "열화상 영상으로 설비·전기 이상 발열과 화재 징후를 조기에 감지합니다."
-                  : "Detect abnormal heat in equipment and electrical systems—and early signs of fire—through thermal imaging."}
-              </p>
-            </div>
           </div>
         </div>
       </section>
