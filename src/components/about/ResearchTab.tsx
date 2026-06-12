@@ -157,6 +157,22 @@ const getResearchCards = (language: "ko" | "en") => [
       : "A drive unit that adheres to and travels along piers for close-up inspection of bridge substructures.",
     gif: "/gif/R&D/교각 밀착 구동장치1.gif",
   },
+  {
+    tag: "Robotics",
+    title: language === "ko" ? "자재운반 로봇" : "Material Transport Robot",
+    desc: language === "ko"
+      ? "현장 자재를 자율로 운반하는 로봇으로 반복 운반 작업의 부담과 협착·전도 사고 위험을 줄입니다."
+      : "An autonomous robot that transports site materials, easing repetitive hauling and reducing crushing/tipping risks.",
+    gif: "/gif/R&D/자재운반 로봇.gif",
+  },
+  {
+    tag: "Drone",
+    title: language === "ko" ? "드론 시설물 관리" : "Drone Facility Inspection",
+    desc: language === "ko"
+      ? "드론으로 교량·시설물을 점검·관리하여 사람이 접근하기 어려운 구역을 안전하게 진단합니다."
+      : "Inspect and manage bridges and facilities by drone, safely diagnosing areas hard for people to reach.",
+    gif: "/gif/R&D/드론시설물관리.gif",
+  },
 ];
 
 export default function ResearchTab({ language }: { language: "ko" | "en" }) {
@@ -165,78 +181,6 @@ export default function ResearchTab({ language }: { language: "ko" | "en" }) {
 
   return (
     <>
-      {/* Core Research Areas */}
-      <section className="py-20 bg-white" id="rnd">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-          <div className="mb-14 reveal">
-            <p className="text-[18px] font-semibold text-amber-500 uppercase tracking-widest mb-3">R&D</p>
-            <div className="w-12 h-0.5 bg-amber-400" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {getResearchCards(language).map((card) => (
-              <div key={card.title} className="reveal bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
-                <div className="aspect-video bg-gray-900 overflow-hidden">
-                  <img src={encodeURI(card.gif)} alt={card.title} className="w-full h-full object-cover" />
-                </div>
-                <div className="p-7">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-2 h-2 rounded-full bg-amber-400" />
-                    <span className="text-[16px] font-semibold text-amber-500 uppercase tracking-wider">{card.tag}</span>
-                  </div>
-                  <p className="text-[24px] font-bold text-gray-900 mb-2">{card.title}</p>
-                  <p className="text-[19px] text-gray-500 leading-relaxed">{card.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Certifications */}
-      <section className="py-20 bg-gray-50" id="credentials">
-        <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-          <div className="mb-14 reveal">
-            <p className="text-[18px] font-semibold text-amber-500 uppercase tracking-widest mb-3">Certifications</p>
-            <div className="w-12 h-0.5 bg-amber-400 mb-4" />
-            <p className="text-[21px] text-gray-500 max-w-2xl">
-              {language === "ko"
-                ? "국내 공인 시험 기관의 성능 검증을 통해 iSafe 플랫폼의 기술적 신뢰성을 입증합니다."
-                : "We validate the iSafe platform's technical reliability through certified test institutions."}
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {getCredentials(language).map((cert, i) => (
-              <div key={i} className={`reveal${i > 0 ? ` d${i}` : ""} bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col h-full`}>
-                {cert.image && (
-                  <div className="relative aspect-[3/4]">
-                    <Image
-                      src={cert.image}
-                      alt={cert.imageAlt}
-                      fill
-                      className="object-contain bg-gray-50 p-3"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                  </div>
-                )}
-                <div className="p-6 flex flex-col flex-1">
-                  <p className="text-[24px] font-bold text-gray-900 mb-1">
-                    {cert.title}
-                    {cert.date && <span className="ml-2 text-[21px] font-normal text-gray-400">({cert.date})</span>}
-                  </p>
-                  <ul className="mt-3 space-y-2">
-                    {cert.bullets.map((b) => (
-                      <li key={b} className="flex items-center gap-2 text-[21px] text-gray-600">
-                        <CheckIcon className="w-4 h-4 text-amber-400 flex-shrink-0" />{b}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Patents */}
       <section className="py-20 bg-white" id="patents">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
@@ -290,6 +234,102 @@ export default function ResearchTab({ language }: { language: "ko" | "en" }) {
                 </div>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* Certifications */}
+      <section className="py-20 bg-gray-50" id="credentials">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+          <div className="mb-14 reveal">
+            <p className="text-[18px] font-semibold text-amber-500 uppercase tracking-widest mb-3">Certifications</p>
+            <div className="w-12 h-0.5 bg-amber-400 mb-4" />
+            <p className="text-[21px] text-gray-500 max-w-2xl">
+              {language === "ko"
+                ? "국내 공인 시험 기관의 성능 검증을 통해 iSafe 플랫폼의 기술적 신뢰성을 입증합니다."
+                : "We validate the iSafe platform's technical reliability through certified test institutions."}
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {getCredentials(language).map((cert, i) => (
+              <div key={i} className={`reveal${i > 0 ? ` d${i}` : ""} bg-white rounded-2xl border border-gray-100 overflow-hidden flex flex-col h-full`}>
+                {cert.image && (
+                  <div className="relative aspect-[3/4]">
+                    <Image
+                      src={cert.image}
+                      alt={cert.imageAlt}
+                      fill
+                      className="object-contain bg-gray-50 p-3"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
+                )}
+                <div className="p-6 flex flex-col flex-1">
+                  <p className="text-[24px] font-bold text-gray-900 mb-1">
+                    {cert.title}
+                    {cert.date && <span className="ml-2 text-[21px] font-normal text-gray-400">({cert.date})</span>}
+                  </p>
+                  <ul className="mt-3 space-y-2">
+                    {cert.bullets.map((b) => (
+                      <li key={b} className="flex items-center gap-2 text-[21px] text-gray-600">
+                        <CheckIcon className="w-4 h-4 text-amber-400 flex-shrink-0" />{b}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Core Research Areas */}
+      <section className="py-20 bg-white" id="rnd">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+          <div className="mb-14 reveal">
+            <p className="text-[18px] font-semibold text-amber-500 uppercase tracking-widest mb-3">R&D</p>
+            <div className="w-12 h-0.5 bg-amber-400" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {getResearchCards(language).map((card) => (
+              <div key={card.title} className="reveal bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow flex flex-col">
+                <div className="aspect-video bg-gray-900 overflow-hidden">
+                  <img src={encodeURI(card.gif)} alt={card.title} className="w-full h-full object-cover" />
+                </div>
+                <div className="p-7">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-2 h-2 rounded-full bg-amber-400" />
+                    <span className="text-[16px] font-semibold text-amber-500 uppercase tracking-wider">{card.tag}</span>
+                  </div>
+                  <p className="text-[24px] font-bold text-gray-900 mb-2">{card.title}</p>
+                  <p className="text-[19px] text-gray-500 leading-relaxed">{card.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* 열화상 — 가로로 긴 영상이라 전체 폭 한 줄로 */}
+          <div className="mt-6 reveal bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
+            <div className="bg-gray-900 overflow-hidden">
+              <img
+                src={encodeURI("/gif/R&D/열화상.gif")}
+                alt={language === "ko" ? "열화상 기반 이상 감지" : "Thermal Imaging Detection"}
+                className="w-full h-auto -mt-[50px]"
+              />
+            </div>
+            <div className="p-7">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                <span className="text-[16px] font-semibold text-amber-500 uppercase tracking-wider">Thermal AI</span>
+              </div>
+              <p className="text-[24px] font-bold text-gray-900 mb-2">
+                {language === "ko" ? "열화상 기반 이상 감지" : "Thermal Imaging Detection"}
+              </p>
+              <p className="text-[19px] text-gray-500 leading-relaxed">
+                {language === "ko"
+                  ? "열화상 영상으로 설비·전기 이상 발열과 화재 징후를 조기에 감지합니다."
+                  : "Detect abnormal heat in equipment and electrical systems—and early signs of fire—through thermal imaging."}
+              </p>
+            </div>
           </div>
         </div>
       </section>

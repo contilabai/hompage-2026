@@ -13,7 +13,7 @@ type AboutTab = "company" | "history" | "research" | "partners";
 const getTabs = (language: "ko" | "en"): { id: AboutTab; label: string }[] => [
   { id: "company", label: language === "ko" ? "비전" : "Vision" },
   { id: "history", label: language === "ko" ? "연혁" : "History" },
-  { id: "research", label: language === "ko" ? "특허/인증/논문" : "Patents/Certs/Papers" },
+  { id: "research", label: language === "ko" ? "특허/인증/R&D" : "Patents/Certs/R&D" },
   { id: "partners", label: language === "ko" ? "파트너스" : "Partners" },
 ];
 
@@ -29,8 +29,8 @@ const getHero = (tab: AboutTab, language: "ko" | "en") => {
       };
     case "research":
       return {
-        label: language === "ko" ? "특허/인증/논문" : "Patents/Certs/Papers",
-        title: language === "ko" ? "특허/인증/논문" : "Patents / Certifications / Papers",
+        label: language === "ko" ? "특허/인증/R&D" : "Patents/Certs/R&D",
+        title: language === "ko" ? "특허/인증/R&D" : "Patents / Certifications / R&D",
         desc: language === "ko"
           ? "안전관리, 위험성평가, 메타버스 기반 안전교육, Vision AI, 블록체인 기반 안전수준 평가 등 산업안전 분야의 핵심 기술에 대한 특허, 인증 및 연구성과를 지속적으로 확보하고 있습니다."
           : "We continuously secure patents, certifications, and research achievements in core industrial-safety technologies—including safety management, risk assessment, metaverse-based safety training, Vision AI, and blockchain-based safety-level evaluation.",

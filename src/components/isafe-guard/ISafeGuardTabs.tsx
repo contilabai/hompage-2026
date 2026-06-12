@@ -24,8 +24,8 @@ const getSolutionFeatures = (language: Lang) => [
     tag: language === "ko" ? "웹 관제 플랫폼" : "Web Monitoring Platform",
     tagColor: "bg-blue-100 text-blue-700",
     headline: language === "ko"
-      ? "몸이 열 개라도\n100CH+ 카메라를 동시에\n볼 수는 없습니다"
-      : "Even with ten pairs of eyes,\nyou can't watch 100+ cameras\nat once",
+      ? "한 사람이 100대 넘는\n카메라를 동시에\n지켜보기는 어렵습니다"
+      : "It's hard for one person\nto watch 100+ cameras\nall at once",
     subhead: language === "ko"
       ? "iSafeGuard가 모든 채널을 동시에 분석하고 이상 징후만 알립니다"
       : "iSafeGuard analyzes every channel at once and alerts you only on anomalies",
@@ -35,7 +35,7 @@ const getSolutionFeatures = (language: Lang) => [
     bullets: language === "ko"
       ? [
           "최대 100+채널 동시 AI 분석·관제",
-          "위험 카테고리 자동 분류 및 알람 리스트업",
+          "위험 카테고리 자동 분류 및 알람 자동 목록화",
           "이벤트 전후 2분 영상 클립 자동 보존",
           "근로자·중장비 간 실제 거리 실시간 측정",
           "모바일 앱으로 현장 밖에서도 즉시 확인",
@@ -104,8 +104,8 @@ const getSolutionFeatures = (language: Lang) => [
     tag: language === "ko" ? "VLM 자동 보고서" : "VLM Auto Reports",
     tagColor: "bg-teal-100 text-teal-700",
     headline: language === "ko"
-      ? "보고서 작성에\n매일 2시간씩\n쓰고 계십니까?"
-      : "Spending 2 hours\nevery day\nwriting reports?",
+      ? "하루 2시간씩 걸리던\n보고서 작성을\nAI가 대신합니다"
+      : "The two hours a day\nspent on reports—\nnow handled by AI",
     subhead: language === "ko"
       ? "VLM AI가 오늘 현장에서 일어난 일을 보고서로 자동 작성합니다"
       : "VLM AI automatically writes a report of what happened on site today",
@@ -115,7 +115,7 @@ const getSolutionFeatures = (language: Lang) => [
     bullets: language === "ko"
       ? [
           "VLM AI가 오늘의 감지 이벤트를 자연어로 서술",
-          "발주처 제출용 형식으로 자동 포맷팅",
+          "발주처 양식에 맞춰 자동 정리",
           "위험 등급별 통계 및 반복 위반 패턴 분석",
           "이메일·앱·웹 동시 발행",
         ]
@@ -175,11 +175,11 @@ function SolutionTab({ language }: { language: Lang }) {
                 <h2 className="text-[30px] font-black text-gray-900 whitespace-pre-line leading-tight mb-3">
                   {feature.headline}
                 </h2>
-                <p className="text-sm font-semibold text-blue-600 mb-3">{feature.subhead}</p>
-                <p className="text-[15px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
+                <p className="text-[18px] font-semibold text-blue-600 mb-3">{feature.subhead}</p>
+                <p className="text-[19px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
                 <ul className="space-y-3 mb-8">
                   {feature.bullets.map((b) => (
-                    <li key={b} className="flex items-start gap-3 text-sm text-gray-700">
+                    <li key={b} className="flex items-start gap-3 text-[18px] text-gray-700">
                       <svg className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
@@ -634,7 +634,7 @@ function DeviceTab({ language }: { language: Lang }) {
                   <span className="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-lg">{product.channels}</span>
                 </div>
                 <h3 className="text-lg font-black text-gray-900 mb-1">{product.name}</h3>
-                <p className="text-sm font-semibold text-blue-600 mb-3">{product.headline}</p>
+                <p className="text-[18px] font-semibold text-blue-600 mb-3">{product.headline}</p>
                 <p className="text-xs text-gray-400 mb-4 leading-relaxed">
                   {language === "ko" ? "적합한 현장: " : "Best for: "}{product.target}
                 </p>
@@ -711,7 +711,21 @@ interface DeploymentCase {
 }
 
 const getDeploymentCases = (language: Lang): DeploymentCase[] => [
-  { image: "/images/accounts/SK ecoplant.png", name: language === "ko" ? "SK에코플랜트" : "SK ecoplant", logo: "/images/clients/partners-sk-ecoplant.jpg" },
+  {
+    image: "/images/accounts/SK ecoplant.png",
+    name: language === "ko" ? "SK에코플랜트" : "SK ecoplant",
+    logo: "/images/clients/partners-sk-ecoplant.jpg",
+    category: language === "ko" ? "건설 현장 · 상하동시 작업" : "Construction · Simultaneous Vertical Work",
+    summary: language === "ko"
+      ? "SK에코플랜트 현장에서 상부와 하부에서 동시에 이뤄지는 위험 작업(상하동시 작업)을 AI로 실시간 탐지해, 낙하물·협착 위험 상황을 식별합니다."
+      : "At an SK ecoplant site, AI detects in real time the hazardous situation of simultaneous work above and below (vertical-simultaneous work), identifying drop and crushing risks.",
+    models: language === "ko"
+      ? ["상하동시 작업 탐지", "객체 탐지"]
+      : ["Simultaneous vertical-work detection", "Object detection"],
+    media: [
+      { src: "/gif/상하동시 작업.gif", caption: language === "ko" ? "상하동시 작업 실시간 탐지" : "Real-time simultaneous vertical-work detection" },
+    ],
+  },
   {
     image: "/images/accounts/DLE&C.png",
     name: "DL E&C",
@@ -779,7 +793,23 @@ const getDeploymentCases = (language: Lang): DeploymentCase[] => [
       { src: "/gif/auto-ptz.gif", caption: language === "ko" ? "Auto PTZ 작업자 추적 및 소형 객체 탐지" : "Auto-PTZ worker tracking & small-object detection" },
     ],
   },
-  { image: "/images/accounts/Jinhae Harbor.png", name: language === "ko" ? "한림 (진해항)" : "HANLIM (Jinhae Harbor)", logo: "/images/clients/partners-hanraim.jpg" },
+  {
+    image: "/images/poc/hanlim3.png",
+    name: language === "ko" ? "한림 (진해항)" : "HANLIM (Jinhae Harbor)",
+    logo: "/images/clients/partners-hanraim.jpg",
+    category: language === "ko" ? "해상 · 선박 충돌 경고" : "Marine · Vessel Collision Alert",
+    summary: language === "ko"
+      ? "진해항 해상 작업 현장에서 DCM 작업선 등 해상 장비와 접근 선박을 AI로 식별하고, AIS 정보(선박명·MMSI·속도·방향)를 연동해 선박 충돌 위험을 실시간으로 경고합니다."
+      : "At a Jinhae Harbor marine worksite, AI identifies marine equipment such as DCM work vessels and approaching ships, and—integrating AIS data (name, MMSI, speed, heading)—warns of vessel collision risks in real time.",
+    models: language === "ko"
+      ? ["해상 작업선·선박 식별", "선박 충돌 경고", "AIS 정보 연동", "객체 탐지"]
+      : ["Work-vessel & ship detection", "Vessel collision alert", "AIS data integration", "Object detection"],
+    media: [
+      { src: "/images/poc/Hanlim1.png", caption: language === "ko" ? "선박 충돌 경고 및 AIS 정보 연동" : "Collision alert & AIS data" },
+      { src: "/images/poc/hanlim2.png", caption: language === "ko" ? "해상 작업선·접근 선박 식별" : "Work-vessel & approaching-ship detection" },
+      { src: "/images/poc/hanlim3.png", caption: language === "ko" ? "실시간 해상 관제 화면" : "Real-time marine monitoring" },
+    ],
+  },
   {
     image: "/images/poc/ISC1.png",
     name: "ISC",
@@ -948,13 +978,13 @@ function DeploymentTab({ language }: { language: Lang }) {
                 {language === "ko" ? "실증 영상" : "Validation Footage"}
               </p>
               {selected.media && selected.media.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className={`grid grid-cols-1 gap-4 ${selected.media.length > 1 ? "sm:grid-cols-2" : ""}`}>
                   {selected.media.map((m) => (
                     <figure key={m.src} className="rounded-xl overflow-hidden border border-gray-100">
                       <div className="relative aspect-video bg-gray-900">
                         <img src={encodeURI(m.src)} alt={m.caption} className="w-full h-full object-contain" />
                       </div>
-                      <figcaption className="px-3 py-2 text-xs text-gray-500">{m.caption}</figcaption>
+                      <figcaption className="px-3 py-2 text-sm text-gray-500">{m.caption}</figcaption>
                     </figure>
                   ))}
                 </div>

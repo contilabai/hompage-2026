@@ -319,11 +319,11 @@ export default function ISafeChainPage() {
                   <h2 className="text-[30px] font-black text-gray-900 whitespace-pre-line leading-tight mb-3">
                     {feature.headline}
                   </h2>
-                  <p className="text-sm font-semibold text-orange-600 mb-3">{feature.subhead}</p>
-                  <p className="text-[15px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
+                  <p className="text-[18px] font-semibold text-orange-600 mb-3">{feature.subhead}</p>
+                  <p className="text-[19px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
                   <ul className="space-y-3 mb-8">
                     {feature.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-3 text-sm text-gray-700">
+                      <li key={b} className="flex items-start gap-3 text-[18px] text-gray-700">
                         <svg className="w-5 h-5 text-orange-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>

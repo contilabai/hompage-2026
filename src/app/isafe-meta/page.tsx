@@ -290,7 +290,7 @@ export default function ISafeMetaPage() {
                   <div className="relative aspect-video rounded-xl overflow-hidden mb-3">
                     <img
                       src="/gif/iSafeMeta Reality Capture and Mesh based Training.gif"
-                      alt={language === "ko" ? "리얼리티 캡처 메쉬 훈련" : "Reality Capture Mesh Training"}
+                      alt={language === "ko" ? "Reality Capture 메쉬 훈련" : "Reality Capture Mesh Training"}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -299,7 +299,7 @@ export default function ISafeMetaPage() {
                       <span className="text-red-400 text-sm flex-shrink-0">🏗️</span>
                       <span className="text-[12px] text-gray-300 leading-snug">
                         {language === "ko"
-                          ? "리얼리티 캡처로 실제 현장과 동일한 3D 메쉬 환경에서 위험을 직접 체험합니다."
+                          ? "Reality Capture로 실제 현장과 동일한 3D 메쉬 환경에서 위험을 직접 체험합니다."
                           : "Reality capture builds a 3D mesh twin of the real site to experience hazards firsthand."}
                       </span>
                     </div>
@@ -393,11 +393,11 @@ export default function ISafeMetaPage() {
                   <h2 className="text-[30px] font-black text-gray-900 whitespace-pre-line leading-tight mb-3">
                     {feature.headline}
                   </h2>
-                  <p className="text-sm font-semibold text-red-600 mb-3">{feature.subhead}</p>
-                  <p className="text-[15px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
+                  <p className="text-[18px] font-semibold text-red-600 mb-3">{feature.subhead}</p>
+                  <p className="text-[19px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
                   <ul className="space-y-3 mb-8">
                     {feature.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-3 text-sm text-gray-700">
+                      <li key={b} className="flex items-start gap-3 text-[18px] text-gray-700">
                         <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                         </svg>

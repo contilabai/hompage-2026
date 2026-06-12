@@ -279,7 +279,7 @@ export default function ISafePlannerPage() {
                   label: language === "ko" ? "도면 직접 3D 변환" : "Direct Drawing-to-3D",
                 },
                 {
-                  value: language === "ko" ? "다중 합치기" : "Multi-merge",
+                  value: "Multi-merge",
                   label: language === "ko" ? "외부 BIM IFC 통합" : "External BIM IFC Integration",
                 },
                 {
@@ -287,7 +287,7 @@ export default function ISafePlannerPage() {
                   label: language === "ko" ? "공정 WBS·안전항목 생성" : "WBS & Safety-Item Generation",
                 },
                 {
-                  value: language === "ko" ? "룰기반" : "Rule-based",
+                  value: "Rule-based",
                   label: language === "ko" ? "위험성 평가·교육자료" : "Risk Assessment & Training",
                 },
               ].map((s) => (
@@ -311,11 +311,11 @@ export default function ISafePlannerPage() {
               <h2 className="text-[30px] font-black text-gray-900 whitespace-pre-line leading-tight mb-3">
                 {feature.headline}
               </h2>
-              <p className="text-sm font-semibold text-green-600 mb-3">{feature.subhead}</p>
-              <p className="text-[15px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
+              <p className="text-[18px] font-semibold text-green-600 mb-3">{feature.subhead}</p>
+              <p className="text-[19px] text-gray-600 leading-relaxed mb-6 max-w-lg">{feature.desc}</p>
               <ul className="space-y-3">
                 {feature.bullets.map((b) => (
-                  <li key={b} className="flex items-start gap-3 text-sm text-gray-700">
+                  <li key={b} className="flex items-start gap-3 text-[18px] text-gray-700">
                     <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
