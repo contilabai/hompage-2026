@@ -42,8 +42,8 @@ const getModules = (language: "ko" | "en") => [
     badge: language === "ko" ? "계획" : "Plan",
     badgeColor: "bg-green-100 text-green-700",
     desc: language === "ko"
-      ? "BIM 기반 동적 공정 분석으로 위험 발생 전에 예측하고 오늘의 훈련 시나리오를 iSafeMeta에 전달합니다."
-      : "Predict risks before they occur with BIM-based analysis. Transfer training scenarios to iSafeMeta.",
+      ? "경량 BIM 기반으로 주요 위험공종 일정을 반영하고 맞춤형 위험성 평가 정보를 제공합니다."
+      : "Reflects key high-risk work schedules on a lightweight BIM and provides tailored risk-assessment information.",
     href: "/isafe-planner",
     color: "border-green-200 hover:border-green-400",
     gradientFrom: "#14532d",
@@ -55,8 +55,8 @@ const getModules = (language: "ko" | "en") => [
     badge: language === "ko" ? "교육" : "Train",
     badgeColor: "bg-red-100 text-red-700",
     desc: language === "ko"
-      ? "iSafePlan의 현장 3D 환경에서 AI Agent 아바타와 함께 오늘 투입될 공정을 미리 훈련합니다."
-      : "Train workers in 3D site environment with AI avatar before deployment.",
+      ? "실제 작업 현장 환경을 반영한 맞춤형 안전교육 콘텐츠를 생성하여 오늘의 위험작업을 이해합니다."
+      : "Generates safety-training content based on the real work-site environment to understand today's hazardous tasks.",
     href: "/isafe-meta",
     color: "border-red-200 hover:border-red-400",
     gradientFrom: "#7f1d1d",
@@ -68,8 +68,8 @@ const getModules = (language: "ko" | "en") => [
     badge: language === "ko" ? "관제" : "Monitor",
     badgeColor: "bg-blue-100 text-blue-700",
     desc: language === "ko"
-      ? "교육받은 근로자가 현장에 투입되면 AI가 100채널 이상을 실시간 관제합니다. 기본 AI 모델 5종은 조건 없이 무료 제공됩니다."
-      : "Real-time AI monitoring of 100+ channels on-site. 5 basic AI models provided free.",
+      ? "Vision AI 카메라가 작업 유형별 위험상황을 탐지하여 사고를 사전에 예방합니다."
+      : "Vision AI cameras detect task-specific hazards to prevent accidents in advance.",
     href: "/isafe-guard",
     color: "border-blue-200 hover:border-blue-400",
     gradientFrom: "#0c2340",
@@ -81,8 +81,8 @@ const getModules = (language: "ko" | "en") => [
     badge: language === "ko" ? "측정" : "Measure",
     badgeColor: "bg-orange-100 text-orange-700",
     desc: language === "ko"
-      ? "iSafeGuard의 관제 데이터와 이수 기록을 블록체인에 저장해 성과를 측정하고 인센티브를 지급합니다."
-      : "Store monitoring data and records on blockchain. Measure performance and distribute incentives.",
+      ? "안전계획·교육·작업 중 생성된 안전활동을 기록하고 측정하여 인센티브를 지급합니다."
+      : "Records and measures safety activities from planning, training, and work to pay out incentives.",
     href: "/isafe-chain",
     color: "border-orange-200 hover:border-orange-400",
     gradientFrom: "#7c2d12",
@@ -101,7 +101,7 @@ const getSteps = (language: "ko" | "en") => [
   },
   {
     step: "02",
-    title: language === "ko" ? "모듈 라이선스 해금" : "Unlock Module Licenses",
+    title: language === "ko" ? "모듈 라이선스 권한 설정" : "Set Module License Permissions",
     desc: language === "ko"
       ? "iSafeGuard 기본 모델은 무상 제공됩니다. 추가 패키지나 다른 모듈은 라이선스 키 입력으로 즉시 활성화되며, 필요에 따라 단계적으로 확장할 수 있습니다."
       : "iSafeGuard basic model is free. Additional packages activate instantly with license keys.",
@@ -159,39 +159,26 @@ export default function PlatformPage() {
                     {language === "ko" ? "솔루션 기본 탑재" : "Base Solution"}
                   </span>
                 </div>
-                <h1 className="text-[38px] lg:text-[48px] font-black text-white leading-tight mb-5">
+                <h1 className="text-[26px] lg:text-[34px] font-black text-white leading-snug mb-8 max-w-xl">
                   {language === "ko" ? (
-                    <>
-                      계획하고, 교육하고,<br />
-                      관제하고, 측정한다<br />
-                      <span className="text-blue-300">안전의 완전한 순환</span>
-                    </>
+                    <>실제 현장 상황을 반영한 위험성평가부터 안전교육, 실시간 관제, 안전성과 측정까지 <span className="text-blue-300">하나의 플랫폼으로 연결합니다.</span></>
                   ) : (
-                    <>
-                      Plan, Train,<br />
-                      Monitor, Measure<br />
-                      <span className="text-blue-300">Complete Safety Cycle</span>
-                    </>
+                    <>From field-reflected risk assessment to safety training, real-time monitoring, and safety-performance measurement, <span className="text-blue-300">all connected in one platform.</span></>
                   )}
                 </h1>
-                <p className="text-blue-100 text-base leading-relaxed mb-6 max-w-lg">
-                  {language === "ko"
-                    ? "위험성평가 · 안전교육 · 실시간 관제 · 기록 분석이 하나의 흐름으로 이어질 때, 현장은 스스로 안전해집니다."
-                    : "When risk assessment, safety training, real-time monitoring, and record analysis flow as one, the site becomes safe on its own."}
-                </p>
                 <ul className="space-y-3 mb-8 max-w-lg">
                   {(language === "ko"
                     ? [
-                        { color: "bg-green-400", text: "iSafePlan가 오늘의 위험 공정을 예측하고" },
-                        { color: "bg-red-400", text: "iSafeMeta가 근로자를 투입 전 가상환경에서 교육하고" },
-                        { color: "bg-blue-400", text: "iSafeGuard가 현장 전체를 AI로 실시간 관제하고" },
-                        { color: "bg-orange-400", text: "iSafeIncentive이 모든 데이터를 측정·기록·보상합니다" },
+                        { color: "bg-green-400", text: "iSafePlan은 작업별 위험요인을 분석하고 위험을 사전에 예측합니다." },
+                        { color: "bg-red-400", text: "iSafeMeta는 실제 현장을 반영한 가상환경에서 근로자를 교육합니다." },
+                        { color: "bg-blue-400", text: "iSafeGuard는 Vision AI 기반으로 현장을 실시간 모니터링하고 위험을 감지합니다." },
+                        { color: "bg-orange-400", text: "iSafeIncentive는 안전활동을 기록·분석하여 안전수준을 측정하고 자발적 참여를 유도합니다." },
                       ]
                     : [
-                        { color: "bg-green-400", text: "iSafePlan predicts today's risks" },
-                        { color: "bg-red-400", text: "iSafeMeta trains workers in virtual environments" },
-                        { color: "bg-blue-400", text: "iSafeGuard monitors the entire site in real-time" },
-                        { color: "bg-orange-400", text: "iSafeIncentive measures, records, and rewards" },
+                        { color: "bg-green-400", text: "iSafePlan analyzes task-specific hazards and predicts risks in advance." },
+                        { color: "bg-red-400", text: "iSafeMeta trains workers in a virtual environment that reflects the real site." },
+                        { color: "bg-blue-400", text: "iSafeGuard monitors the site in real time and detects hazards with Vision AI." },
+                        { color: "bg-orange-400", text: "iSafeIncentive records and analyzes safety activities to measure safety levels and encourage voluntary participation." },
                       ]
                   ).map((item) => (
                     <li key={item.text} className="flex items-start gap-3 text-sm text-blue-100">
@@ -218,7 +205,7 @@ export default function PlatformPage() {
 
               {/* Right: circular flow diagram */}
               <div className="hidden lg:flex items-center justify-center">
-                <div className="relative w-[440px] h-[440px]">
+                <div className="relative w-[520px] h-[520px]">
 
                   {/* SVG: dashed orbit + connecting arrows */}
                   <svg className="absolute inset-0 w-full h-full" viewBox="0 0 440 440" overflow="visible">
@@ -239,13 +226,13 @@ export default function PlatformPage() {
                     <circle cx="220" cy="220" r="150" fill="none" stroke="rgba(147,197,253,0.15)" strokeWidth="2" strokeDasharray="7 5" />
 
                     {/* Plan → Train */}
-                    <path d="M 268 80 A 150 150 0 0 1 358 172" fill="none" stroke="#4ade80" strokeWidth="2" markerEnd="url(#ag)" />
+                    <path d="M 295 90 A 150 150 0 0 1 350 145" fill="none" stroke="#4ade80" strokeWidth="3" markerEnd="url(#ag)" />
                     {/* Train → Monitor */}
-                    <path d="M 358 268 A 150 150 0 0 1 268 358" fill="none" stroke="#f87171" strokeWidth="2" markerEnd="url(#ar)" />
+                    <path d="M 350 295 A 150 150 0 0 1 295 350" fill="none" stroke="#f87171" strokeWidth="3" markerEnd="url(#ar)" />
                     {/* Monitor → Measure */}
-                    <path d="M 172 358 A 150 150 0 0 1 82 268" fill="none" stroke="#60a5fa" strokeWidth="2" markerEnd="url(#ab)" />
+                    <path d="M 145 350 A 150 150 0 0 1 90 295" fill="none" stroke="#60a5fa" strokeWidth="3" markerEnd="url(#ab)" />
                     {/* Measure → Plan */}
-                    <path d="M 82 172 A 150 150 0 0 1 172 82" fill="none" stroke="#fb923c" strokeWidth="2" markerEnd="url(#ao)" />
+                    <path d="M 90 145 A 150 150 0 0 1 145 90" fill="none" stroke="#fb923c" strokeWidth="3" markerEnd="url(#ao)" />
 
                     {/* Subtle spokes to center */}
                     {[[220,70],[370,220],[220,370],[70,220]].map(([x,y], i) => (
@@ -254,40 +241,59 @@ export default function PlatformPage() {
                   </svg>
 
                   {/* Center hub */}
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[96px] h-[96px] rounded-full bg-[#0a1628] border-2 border-blue-400/50 flex flex-col items-center justify-center shadow-2xl shadow-blue-500/30 z-10">
-                    <span className="text-[11px] font-black text-blue-300 uppercase tracking-wider text-center leading-tight">iSafe<br />Platform</span>
-                    <span className="text-[10px] text-blue-500/80 mt-1 font-semibold">Core</span>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[156px] h-[156px] rounded-full bg-[#0a1628] border-2 border-blue-400/50 flex flex-col items-center justify-center text-center px-5 shadow-2xl shadow-blue-500/30 z-10">
+                    <svg className="w-7 h-7 text-blue-300 mb-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" /></svg>
+                    <span className="text-[14px] font-black text-white leading-tight">iSafePlatform</span>
+                    <span className="text-[10px] text-blue-300/90 leading-snug mt-1">
+                      {language === "ko" ? <>데이터로 연결된<br />통합 안전관리 플랫폼</> : <>Integrated safety platform<br />connected by data</>}
+                    </span>
                   </div>
 
                   {/* Plan – top */}
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20">
-                    <div className="bg-[#0a1f0f] border border-green-500/50 rounded-xl px-5 py-3 text-center shadow-lg shadow-green-900/40 min-w-[120px]">
-                      <span className="text-[11px] font-bold text-green-400 uppercase tracking-widest block mb-0.5">Plan</span>
-                      <span className="text-[15px] font-black text-white">iSafePlan</span>
+                    <div className="bg-[#0a1f0f] border border-green-500/50 rounded-xl px-4 py-3 text-center shadow-lg shadow-green-900/40 w-[156px]">
+                      <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest block">Plan</span>
+                      <svg className="w-5 h-5 text-green-400 mx-auto my-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                      <span className="text-[14px] font-black text-white block">iSafePlan</span>
+                      <span className="text-[10px] text-gray-300 leading-snug block mt-1">
+                        {language === "ko" ? <>현장 공정 반영<br />맞춤형 위험성 평가</> : <>Reflects site processes<br />Tailored risk assessment</>}
+                      </span>
                     </div>
                   </div>
 
                   {/* Train – right */}
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20">
-                    <div className="bg-[#1f0a0a] border border-red-500/50 rounded-xl px-5 py-3 text-center shadow-lg shadow-red-900/40 min-w-[120px]">
-                      <span className="text-[11px] font-bold text-red-400 uppercase tracking-widest block mb-0.5">Train</span>
-                      <span className="text-[15px] font-black text-white">iSafeMeta</span>
+                    <div className="bg-[#1f0a0a] border border-red-500/50 rounded-xl px-4 py-3 text-center shadow-lg shadow-red-900/40 w-[156px]">
+                      <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest block">Train</span>
+                      <svg className="w-5 h-5 text-red-400 mx-auto my-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M12 14l9-5-9-5-9 5 9 5z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M12 14l6.16-3.422a12.083 12.083 0 01-.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01-.665-6.479L12 14z" /></svg>
+                      <span className="text-[14px] font-black text-white block">iSafeMeta</span>
+                      <span className="text-[10px] text-gray-300 leading-snug block mt-1">
+                        {language === "ko" ? <>작업 현장 반영<br />AI 기반 안전 교육</> : <>Reflects the work site<br />AI-based safety training</>}
+                      </span>
                     </div>
                   </div>
 
                   {/* Monitor – bottom */}
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20">
-                    <div className="bg-[#070f1f] border border-blue-500/50 rounded-xl px-5 py-3 text-center shadow-lg shadow-blue-900/40 min-w-[120px]">
-                      <span className="text-[11px] font-bold text-blue-400 uppercase tracking-widest block mb-0.5">Monitor</span>
-                      <span className="text-[15px] font-black text-white">iSafeGuard</span>
+                    <div className="bg-[#070f1f] border border-blue-500/50 rounded-xl px-4 py-3 text-center shadow-lg shadow-blue-900/40 w-[156px]">
+                      <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block">Monitor</span>
+                      <svg className="w-5 h-5 text-blue-400 mx-auto my-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" /></svg>
+                      <span className="text-[14px] font-black text-white block">iSafeGuard</span>
+                      <span className="text-[10px] text-gray-300 leading-snug block mt-1">
+                        {language === "ko" ? <>AI 기반 위험 감지<br />실시간 모니터링·알람</> : <>AI-based hazard detection<br />Real-time monitoring &amp; alerts</>}
+                      </span>
                     </div>
                   </div>
 
                   {/* Measure – left */}
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20">
-                    <div className="bg-[#1f0f07] border border-orange-500/50 rounded-xl px-5 py-3 text-center shadow-lg shadow-orange-900/40 min-w-[120px]">
-                      <span className="text-[11px] font-bold text-orange-400 uppercase tracking-widest block mb-0.5">Measure</span>
-                      <span className="text-[15px] font-black text-white">iSafeIncentive</span>
+                    <div className="bg-[#1f0f07] border border-orange-500/50 rounded-xl px-4 py-3 text-center shadow-lg shadow-orange-900/40 w-[156px]">
+                      <span className="text-[10px] font-bold text-orange-400 uppercase tracking-widest block">Measure</span>
+                      <svg className="w-5 h-5 text-orange-400 mx-auto my-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                      <span className="text-[14px] font-black text-white block">iSafeIncentive</span>
+                      <span className="text-[10px] text-gray-300 leading-snug block mt-1">
+                        {language === "ko" ? <>안전활동 기록 및 평가<br />보상기반 자율 안전활동</> : <>Records &amp; evaluates safety activity<br />Reward-based voluntary safety</>}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -338,15 +344,15 @@ export default function PlatformPage() {
                 />
               </div>
               <p className="text-2xl font-semibold text-blue-600 tracking-wider mb-3">
-                {language === "ko" ? "iSafePlatform 아키텍처" : "iSafePlatform Architecture"}
+                iSafePlatform Architecture
               </p>
               <h2 className="text-3xl font-black text-gray-900 mb-4">
-                {language === "ko" ? "Core 위에서 4개 모듈이 순환합니다" : "Four modules cycle on top of the Core"}
+                {language === "ko" ? "하나의 Core, 네 개의 모듈, 하나의 안전관리 체계" : "One Core, four modules, one safety system"}
               </h2>
-              <p className="text-gray-500 max-w-xl mx-auto">
+              <p className="text-gray-500 max-w-3xl mx-auto">
                 {language === "ko"
-                  ? "Core가 4개 모듈을 떠받치고, 현장 데이터는 모듈을 따라 순환해 다시 Core로 모입니다. 필요한 모듈부터 도입하세요."
-                  : "The Core supports four modules while site data cycles through them and converges back into the Core. Start with the modules you need."}
+                  ? "위험성평가(iSafePlan), 안전교육(iSafeMeta), 실시간 관제(iSafeGuard), 안전성과 측정(iSafeIncentive)이 하나의 플랫폼으로 연결됩니다. 현장 데이터는 순환하며 학습되고, 안전문화 혁신으로 이어집니다."
+                  : "Risk assessment (iSafePlan), safety training (iSafeMeta), real-time monitoring (iSafeGuard), and safety-performance measurement (iSafeIncentive) connect in one platform. Site data circulates and is continually learned from, leading to safety-culture innovation."}
               </p>
             </div>
             {/* Layered architecture diagram */}
@@ -355,7 +361,7 @@ export default function PlatformPage() {
               <div className="rounded-2xl bg-gradient-to-r from-[#0d1b2a] to-[#1d6fa4] text-white text-center py-5 px-6">
                 <p className="text-[11px] font-bold text-blue-200 tracking-[0.2em] mb-1">OUTCOME</p>
                 <p className="text-lg font-black">
-                  {language === "ko" ? "사고 예방 · 안전문화 혁신" : "Accident Prevention · Safety Culture Innovation"}
+                  {language === "ko" ? "현장 반영 안전관리 · 사고예방 · 안전문화 혁신" : "Field-reflected Safety Management · Accident Prevention · Safety Culture Innovation"}
                 </p>
               </div>
 
@@ -395,15 +401,6 @@ export default function PlatformPage() {
                     </Link>
                   ))}
                 </div>
-              </div>
-
-              {/* connector with cycle note */}
-              <div className="flex items-center justify-center gap-2 py-2 text-gray-400">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
-                <span className="text-xs font-medium text-gray-400">
-                  {language === "ko" ? "실시간 데이터 수집 · 분석 결과 자동 환류" : "Real-time data collection · automatic feedback"}
-                </span>
-                <svg className="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" /></svg>
               </div>
 
               {/* Core foundation */}
@@ -460,11 +457,18 @@ export default function PlatformPage() {
 
             {/* Deployment note */}
             <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {[
-                { icon: "🖥️", title: "온프레미스", desc: "자체 서버에 직접 설치. 데이터가 외부로 나가지 않습니다." },
-                { icon: "☁️", title: "클라우드", desc: "AWS·Azure 등 클라우드 서버에 동일하게 배포 가능합니다." },
-                { icon: "🔒", title: "VPN·폐쇄망", desc: "가상 사설망 내 온프레미스 구조로도 완전히 운영 가능합니다." },
-              ].map((item) => (
+              {(language === "ko"
+                ? [
+                    { icon: "🖥️", title: "온프레미스", desc: "자체 서버에 직접 설치. 데이터가 외부로 나가지 않습니다." },
+                    { icon: "☁️", title: "클라우드", desc: "AWS·Azure 등 클라우드 서버에 동일하게 배포 가능합니다." },
+                    { icon: "🔒", title: "VPN·폐쇄망", desc: "가상 사설망 내 온프레미스 구조로도 완전히 운영 가능합니다." },
+                  ]
+                : [
+                    { icon: "🖥️", title: "On-Premise", desc: "Installed directly on your own servers—data never leaves your site." },
+                    { icon: "☁️", title: "Cloud", desc: "Deployable the same way on cloud servers such as AWS and Azure." },
+                    { icon: "🔒", title: "VPN · Closed Network", desc: "Fully operable as an on-premise setup within a virtual private network." },
+                  ]
+              ).map((item) => (
                 <div key={item.title} className="flex items-start gap-4 p-5 bg-gray-50 rounded-2xl border border-gray-100">
                   <span className="text-2xl">{item.icon}</span>
                   <div>
@@ -477,58 +481,6 @@ export default function PlatformPage() {
           </div>
         </section>
 
-        {/* ── CTA ───────────────────────────────────────────── */}
-        <section className="py-20 bg-gradient-to-r from-[#0d1b2a] to-[#1b2a3b] text-white">
-          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-black mb-4">
-                  {language === "ko" ? (
-                    <>
-                      지금 쓰는 안전 관리 방식,<br />
-                      5년 뒤에도 유지할 수 있습니까?
-                    </>
-                  ) : (
-                    <>
-                      Can your current safety management<br />
-                      sustain for the next 5 years?
-                    </>
-                  )}
-                </h2>
-                <p className="text-blue-100 mb-8 leading-relaxed">
-                  {language === "ko"
-                    ? "규제는 강화되고, 현장은 복잡해지고, 인력은 부족합니다. iSafePlatform은 그 간극을 AI와 자동화로 채웁니다.\n\nConTILab이 공공기관 및 탑티어 건설사들과 함께 검증한 솔루션입니다."
-                    : "Regulations tighten, sites grow complex, resources shrink. iSafePlatform fills the gap with AI and automation.\n\nValidated with government agencies and top-tier construction firms."}
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <a
-                    href="mailto:contilab@contilab.co.kr"
-                    className="px-8 py-3.5 text-sm font-bold text-blue-900 bg-white hover:bg-blue-50 rounded-xl transition-colors shadow-lg"
-                  >
-                    {language === "ko" ? "도입 문의하기" : "Request Deployment"}
-                  </a>
-                  <Link
-                    href="#modules"
-                    className="px-8 py-3.5 text-sm font-bold text-white border-2 border-white/40 hover:border-white rounded-xl transition-colors"
-                  >
-                    {language === "ko" ? "모듈 살펴보기" : "Explore Modules"}
-                  </Link>
-                </div>
-              </div>
-              <div className="hidden lg:block">
-                <div className="rounded-2xl overflow-hidden border border-white/20 bg-white/5 aspect-video">
-                  <img
-                    src="/gif/%EB%8D%B0%EB%AA%A8%EC%98%81%EC%83%81.gif"
-                    alt={language === "ko"
-                      ? "iSafePlatform을 도입한 건설현장의 실제 운영 영상"
-                      : "Live operation of a construction site running iSafePlatform"}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
       <Footer language={language} />
     </>

@@ -10,7 +10,7 @@ const featureGifs: Record<string, string> = {
   "3d-convert": "/gif/2dto3d.gif",
   "viewer": "/images/planner/planner5.png",
   "scheduler": "/images/planner/planner6.png",
-  "risk-assessment": "/images/planner/planner9.png",
+  "risk-assessment": "/images/planner/위험성평가1.png",
 };
 
 const getPlannerFeatures = (language: "ko" | "en") => [
@@ -46,17 +46,17 @@ const getPlannerFeatures = (language: "ko" | "en") => [
     tag: language === "ko" ? "iSafe 3D 뷰어" : "iSafe 3D Viewer",
     tagColor: "bg-blue-100 text-blue-700",
     headline: language === "ko"
-      ? "여러 IFC를 한 화면에\n합쳐서 보고\n안전을 매핑합니다"
-      : "Merge multiple IFCs\ninto one view\nand map safety on them",
+      ? "여러 IFC를 한 화면에\n연동하여 안전정보를 매핑합니다"
+      : "Connect multiple IFCs in one view\nand map safety information",
     subhead: language === "ko"
-      ? "트레이서 변환 IFC와 외부 BIM을 다중으로 합쳐 봅니다"
-      : "Open and merge tracer-converted IFCs with external BIM.",
+      ? "트레이서 변환 IFC와 외부 BIM을 다중으로 연동합니다."
+      : "Connect tracer-converted IFCs with external BIM.",
     desc: language === "ko"
-      ? "트레이서로 변환한 IFC는 물론 Revit·ArchiCAD 등 외부 BIM IFC를 열고 다중으로 합쳐 봅니다. 3D 화면 위에서 작업과 안전관리 항목을 위치별로 매핑하고 위험성 평가를 진행합니다."
-      : "Open tracer-converted IFCs and external BIM IFCs from Revit, ArchiCAD, and more—merging several into one view. Map work and safety items by location on the 3D model and run risk assessment.",
+      ? "트레이서로 변환한 IFC는 물론 Revit·ArchiCAD 등 외부 BIM IFC를 열고 다중으로 연동합니다. 3D 뷰어에서 작업과 안전관리 항목을 객체와 공간별로 매핑하고 위험성 평가 정보를 제공합니다."
+      : "Open tracer-converted IFCs and external BIM IFCs from Revit, ArchiCAD, and more, connecting several together. In the 3D viewer, map work and safety items by object and space, and provide risk-assessment information.",
     bullets: language === "ko"
-      ? ["IFC 열기 및 다중 모델 합치기", "Revit·ArchiCAD 등 외부 BIM 호환", "3D 위치별 작업·안전 항목 매핑", "위치 기반 위험성 평가 연동"]
-      : ["Open and merge multiple IFC models", "Compatible with external BIM (Revit, ArchiCAD…)", "Map work & safety items by 3D location", "Location-based risk assessment"],
+      ? ["IFC 열기 및 다중 모델 합치기", "Revit·ArchiCAD 등 외부 BIM 호환", "3D 위치별 작업·안전 항목 매핑", "객체 공간 기반 위험성 평가 연동"]
+      : ["Open and merge multiple IFC models", "Compatible with external BIM (Revit, ArchiCAD…)", "Map work & safety items by 3D location", "Object/space-based risk assessment"],
     placeholder: {
       title: language === "ko" ? "IFC 다중 합치기 및 작업·안전 매핑 화면" : "IFC Merge & Work/Safety Mapping Screen",
       description: language === "ko"
@@ -72,8 +72,8 @@ const getPlannerFeatures = (language: "ko" | "en") => [
     tag: language === "ko" ? "주간 작업/일정 작성기" : "Weekly Schedule Builder",
     tagColor: "bg-indigo-100 text-indigo-700",
     headline: language === "ko"
-      ? "층수·구조만 입력하면\n공정과 안전관리 항목이\n자동으로 채워집니다"
-      : "Enter floors & structure—\nschedule and safety items\nfill in automatically",
+      ? "기초 정보만으로\n초기 공정계획과 안전정보가\n자동으로 생성됩니다"
+      : "From basic inputs alone,\nthe initial schedule and safety info\nare generated automatically",
     subhead: language === "ko"
       ? "층수·공사비·구조형식 입력만으로 공정 WBS를 자동 생성합니다"
       : "Auto-generate a work schedule (WBS) from floors, cost, and structure type.",
@@ -189,27 +189,25 @@ export default function ISafePlannerPage() {
                 <h1 className="text-[38px] lg:text-[48px] font-black text-white leading-tight mb-5">
                   {language === "ko" ? (
                     <>
-                      근로자가 들어가기 전에<br />
-                      <span className="text-green-300">위험을 먼저</span><br />
-                      확인합니다
+                      위험을 예측하고,<br />
+                      <span className="text-green-300">안전을 계획합니다</span>
                     </>
                   ) : (
                     <>
-                      Before workers enter,<br />
-                      <span className="text-green-300">we map the risks</span><br />
-                      first
+                      Predict the risks,<br />
+                      <span className="text-green-300">plan the safety</span>
                     </>
                   )}
                 </h1>
                 <p className="text-green-100 text-base leading-relaxed mb-4 max-w-md">
                   {language === "ko"
-                    ? "안전은 현장에 들어가기 전부터 시작됩니다. 도면과 공정에 실제 작업 특성을 반영해 어디가 위험한지 먼저 파악합니다."
-                    : "Safety starts before anyone steps on site. We reflect real task characteristics onto drawings and schedules to see where the risks are—first."}
+                    ? "안전은 작업이 시작되기 전에 결정됩니다. iSafePlan은 경량 BIM과 작업 일정을 기반으로 주요 위험공종의 작업 위치와 시점을 분석하여 위험요인을 사전에 식별합니다."
+                    : "Safety is decided before work begins. Based on a lightweight BIM and the work schedule, iSafePlan analyzes the location and timing of major high-risk activities to identify hazards in advance."}
                 </p>
                 <p className="text-white font-semibold text-base mb-8 max-w-md">
                   {language === "ko"
-                    ? "iSafePlan는 도면 하나로 공정별 위험 지도를 자동으로 그려, 현장 맞춤 위험성평가의 출발점이 됩니다."
-                    : "From a single drawing, iSafePlan auto-maps risk by phase—the starting point of site-tailored risk assessment."}
+                    ? "현장별 맞춤형 위험성평가 정보를 제공하여 보다 안전한 작업계획과 선제적 안전관리를 지원합니다."
+                    : "It provides site-specific risk-assessment information to support safer work planning and proactive safety management."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -302,7 +300,6 @@ export default function ISafePlannerPage() {
 
         {/* Feature sections */}
         {getPlannerFeatures(language).map((feature) => {
-          const isWide = feature.id === "scheduler" || feature.id === "risk-assessment";
           const textBlock = (
             <div className="flex flex-col justify-center">
               <span className={`inline-block px-3 py-1 text-xs font-semibold ${feature.tagColor} rounded-full mb-4 w-fit`}>
@@ -326,32 +323,25 @@ export default function ISafePlannerPage() {
             </div>
           );
           const imageBlock = featureGifs[feature.id] ? (
-            <div className="rounded-2xl overflow-hidden shadow-lg aspect-video">
-              <img src={featureGifs[feature.id]} alt={feature.placeholder.title} className="w-full h-full object-cover rounded-2xl" />
-            </div>
+            feature.id === "scheduler" ? (
+              <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                <img src={encodeURI(featureGifs[feature.id])} alt={feature.placeholder.title} className="w-full h-auto" />
+              </div>
+            ) : (
+              <div className="rounded-2xl overflow-hidden shadow-lg aspect-video">
+                <img src={encodeURI(featureGifs[feature.id])} alt={feature.placeholder.title} className="w-full h-full object-cover rounded-2xl" />
+              </div>
+            )
           ) : (
             <ImagePlaceholder title={feature.placeholder.title} description={feature.placeholder.description} aspectRatio="4/3" />
           );
           return (
             <section key={feature.id} id={feature.id} className={`py-20 ${feature.bgClass}`}>
               <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
-                {isWide ? (
-                  <>
-                    <div className="mb-10">{textBlock}</div>
-                    <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-100">
-                      <img
-                        src={featureGifs[feature.id]}
-                        alt={feature.placeholder.title}
-                        className="w-full h-auto"
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${feature.reverse ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""}`}>
-                    {textBlock}
-                    {imageBlock}
-                  </div>
-                )}
+                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-16 items-center ${feature.reverse ? "lg:[&>*:first-child]:order-2 lg:[&>*:last-child]:order-1" : ""}`}>
+                  {textBlock}
+                  {imageBlock}
+                </div>
               </div>
             </section>
           );
