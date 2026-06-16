@@ -24,28 +24,26 @@ const getSolutionFeatures = (language: Lang) => [
     tag: language === "ko" ? "웹 관제 플랫폼" : "Web Monitoring Platform",
     tagColor: "bg-blue-100 text-blue-700",
     headline: language === "ko"
-      ? "한 사람이 100대 넘는\n카메라를 동시에\n지켜보기는 어렵습니다"
-      : "It's hard for one person\nto watch 100+ cameras\nall at once",
+      ? "AI가 위험을 찾고,\n관리자는 대응에 집중합니다"
+      : "AI finds the risks,\nand managers focus on responding.",
     subhead: language === "ko"
-      ? "iSafeGuard가 모든 채널을 동시에 분석하고 이상 징후만 알립니다"
-      : "iSafeGuard analyzes every channel at once and alerts you only on anomalies",
+      ? "iSafeGuard는 현장 영상을 실시간 분석하여 위험상황만 선별하고 즉시 알려줍니다"
+      : "iSafeGuard analyzes site footage in real time to filter hazard situations and notify you immediately.",
     desc: language === "ko"
-      ? "브라우저 하나로 현장 전체 카메라를 동시에 관제합니다. AI가 매 프레임을 분석하고 위험 카테고리별로 분류하여 이상 상황만 즉시 화면에 띄웁니다. 안전 관리자는 진짜 위험 상황에만 집중할 수 있습니다."
-      : "Monitor every camera on site from a single browser. AI analyzes every frame, classifies by hazard category, and surfaces only anomalies—so safety managers focus only on real risks.",
+      ? "반복적인 모니터링은 AI가 수행하고, 관리자는 중요한 의사결정에 집중할 수 있습니다."
+      : "AI performs repetitive monitoring, allowing managers to focus on important decision-making.",
     bullets: language === "ko"
       ? [
-          "최대 100+채널 동시 AI 분석·관제",
-          "위험 카테고리 자동 분류 및 알람 자동 목록화",
-          "이벤트 전후 2분 영상 클립 자동 보존",
-          "근로자·중장비 간 실제 거리 실시간 측정",
-          "모바일 앱으로 현장 밖에서도 즉시 확인",
+          "100+ 채널 통합 관제",
+          "실시간 위험 감지 및 알림",
+          "이벤트 영상 자동 기록",
+          "현장 위험도 분석 및 레포트 제공",
         ]
       : [
-          "Up to 100+ channels analyzed and monitored at once",
-          "Automatic hazard categorization and alarm listing",
-          "Auto-saves 2-min clips before and after each event",
-          "Real-time distance measurement between workers and equipment",
-          "Instant check from anywhere via mobile app",
+          "Integrated monitoring for 100+ channels",
+          "Real-time hazard detection and notifications",
+          "Automatic recording of event videos",
+          "Provision of site risk analysis and reports",
         ],
     placeholder: {
       title: language === "ko" ? "iSafeGuard 100+채널 웹 관제 화면" : "iSafeGuard 100+ Channel Web Monitoring",
@@ -60,29 +58,31 @@ const getSolutionFeatures = (language: Lang) => [
   {
     id: "danger-zone",
     reverse: true,
-    tag: language === "ko" ? "동적 위험구역 설정" : "Dynamic Hazard Zones",
+    tag: language === "ko" ? "AutoPTZ 기능" : "AutoPTZ Feature",
     tagColor: "bg-indigo-100 text-indigo-700",
     headline: language === "ko"
-      ? "오늘 공사 구역이\n바뀌었습니까?\n5초면 반영됩니다"
-      : "Work zone changed today?\nIt's reflected\nin 5 seconds",
+      ? "사람이 카메라를 조작하는 것이 아니라,\nAI가 스스로 현장을 살펴봅니다"
+      : "AI observes the site on its own,\nrather than people operating the cameras",
     subhead: language === "ko"
-      ? "마우스로 구역을 그리면 그 순간부터 AI가 감지합니다"
-      : "Draw a zone with your mouse and AI detects from that moment",
+      ? "iSafeGuard AutoPTZ는 사전 정의된 위험작업 구간에 대해 자동으로 카메라를 회전·확대·추적하여 가장 중요한 장면을 보여줍니다."
+      : "iSafeGuard AutoPTZ automatically rotates, zooms in, and tracks pre-defined high-risk work sections to show the most important scenes.",
     desc: language === "ko"
-      ? "관리자가 화면 위에 마우스로 구역을 그리면 즉시 AI 감지 영역이 적용됩니다. 타워크레인 인양 범위, 중장비 이동 경로, 당일 위험 공정 구역을 실시간으로 갱신하세요. IT 지식이 필요 없습니다."
-      : "Draw a zone on screen with your mouse and the AI detection area applies instantly. Update tower-crane lifting ranges, equipment paths, and daily hazard zones in real time—no IT knowledge required.",
+      ? "관리자는 수많은 화면을 직접 조작할 필요 없이 실제 위험에 집중할 수 있습니다."
+      : "Managers can focus on actual risks without the need to manually operate numerous screens.",
     bullets: language === "ko"
       ? [
-          "마우스 드래그로 위험구역 즉시 설정",
-          "다각형·원형 등 자유로운 구역 형태",
-          "구역별 알람 민감도 개별 조정",
-          "시간대별 구역 자동 활성화 스케줄",
+          "자동 추적 (Tracking)",
+          "자동 확대 (Zoom-In)",
+          "자동 순찰 (Patrol)",
+          "위험구역 자동 관찰",
+          "AI 기반 PTZ 최적 제어",
         ]
       : [
-          "Set hazard zones instantly by mouse drag",
-          "Free-form zones—polygon, circle, and more",
-          "Per-zone alarm sensitivity adjustment",
-          "Time-based automatic zone activation schedule",
+          "Automatic tracking",
+          "Automatic zoom-in",
+          "Automatic patrol",
+          "Automatic observation of hazard zones",
+          "AI-based PTZ optimal control",
         ],
     placeholder: {
       title: language === "ko" ? "마우스 드래그 위험구역 설정 인터페이스" : "Mouse-Drag Hazard Zone Setup",
@@ -104,26 +104,26 @@ const getSolutionFeatures = (language: Lang) => [
     tag: language === "ko" ? "VLM 자동 보고서" : "VLM Auto Reports",
     tagColor: "bg-teal-100 text-teal-700",
     headline: language === "ko"
-      ? "하루 2시간씩 걸리던\n보고서 작성을\nAI가 대신합니다"
-      : "The two hours a day\nspent on reports—\nnow handled by AI",
+      ? "현장을 분석하고,\n보고서까지 스스로 작성합니다"
+      : "AI analyzes the site\nand even writes the reports itself.",
     subhead: language === "ko"
-      ? "VLM AI가 오늘 현장에서 일어난 일을 보고서로 자동 작성합니다"
-      : "VLM AI automatically writes a report of what happened on site today",
+      ? "iSafeGuard VLM AI는 오늘 현장에서 발생한 위험상황과 안전활동을 분석하여 자연어 기반 안전 레포트를 자동 생성합니다"
+      : "iSafeGuard VLM AI analyzes the hazard situations and safety activities that occurred on-site today to automatically generate natural-language-based safety reports.",
     desc: language === "ko"
-      ? "VLM(Vision Language Model) 엔진이 오늘의 감지 이벤트와 영상을 분석하여 자연어 안전 평가 보고서를 자동으로 작성합니다. 발주처 제출, 내부 보고, 법적 기록을 모두 커버합니다. 관리자는 검토하고 승인만 하면 됩니다."
-      : "The VLM (Vision Language Model) engine analyzes today's detection events and footage to auto-generate a natural-language safety report—covering client submissions, internal reporting, and legal records. Managers just review and approve.",
+      ? "반복적인 보고서 작성은 AI가 수행하고, 관리자는 중요한 의사결정에 집중할 수 있습니다."
+      : "AI handles repetitive report writing, allowing managers to focus on important decision-making.",
     bullets: language === "ko"
       ? [
-          "VLM AI가 오늘의 감지 이벤트를 자연어로 서술",
-          "발주처 양식에 맞춰 자동 정리",
-          "위험 등급별 통계 및 반복 위반 패턴 분석",
-          "이메일·앱·웹 동시 발행",
+          "오늘의 위험 이벤트 자동 요약",
+          "현장 위험도 및 안전수준 평가",
+          "반복 위반 및 주요 이슈 자동 분석",
+          "보고서 자동 생성 및 공유",
         ]
       : [
-          "VLM AI describes today's detection events in natural language",
-          "Auto-formatted for client submission",
-          "Statistics by risk grade and recurring-violation analysis",
-          "Published to email, app, and web simultaneously",
+          "Automatic summary of today's hazard events",
+          "Assessment of site risk levels and safety standards",
+          "Automatic analysis of recurring violations and major issues",
+          "Automatic generation and sharing of reports",
         ],
     placeholder: {
       title: language === "ko" ? "VLM AI 자동 생성 안전 평가 보고서 샘플" : "VLM AI Auto-Generated Safety Report Sample",
@@ -571,12 +571,12 @@ function DeviceTab({ language }: { language: Lang }) {
             {language === "ko" ? "엣지 AI 하드웨어" : "Edge AI Hardware"}
           </p>
           <h2 className="text-3xl font-black text-gray-900 mb-4">
-            {language === "ko" ? "현장 규모에 맞는 엣지 AI 디바이스를 선택하세요" : "Choose the edge AI device that fits your site scale"}
+            {language === "ko" ? "작게 시작하고, 현장과 함께 확장합니다" : "Start small, expand with your site"}
           </h2>
           <p className="text-gray-500 max-w-xl mx-auto">
             {language === "ko"
-              ? "카메라 한 대부터 100채널 이상 대형 현장까지. 기존 CCTV 활용 여부와 현장 규모에 맞는 장비를 선택하세요. 모두 동일한 iSafeGuard 플랫폼으로 관제합니다."
-              : "From a single camera to large sites with 100+ channels. Choose equipment based on whether you reuse existing CCTV and your site scale—all monitored on the same iSafeGuard platform."}
+              ? "iSafeGuard는 카메라 한 대의 현장부터 수백 대의 카메라를 운영하는 대형 현장까지 동일한 플랫폼으로 지원합니다. 기존 CCTV를 그대로 활용하면서도 필요에 따라 AI 관제 범위를 단계적으로 확대할 수 있습니다."
+              : "iSafeGuard supports sites of all sizes on the same platform, from projects with a single camera to large-scale operations with hundreds of cameras. You can utilize your existing CCTV as is, while phasing in and expanding the AI monitoring scope as needed."}
           </p>
         </div>
 

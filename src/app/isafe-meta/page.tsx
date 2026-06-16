@@ -21,26 +21,26 @@ const getMetaFeatures = (language: "ko" | "en") => [
     tag: language === "ko" ? "현장 가상환경" : "Site Virtual Environment",
     tagColor: "bg-red-100 text-red-700",
     headline: language === "ko"
-      ? "오늘 들어갈\n그 현장에서\n미리 훈련합니다"
-      : "Train in the exact site\nyou'll enter today,\nbefore you start",
+      ? "오늘 들어갈\n실제 현장에서\n미리 위험상황을 확인합니다."
+      : "Check hazard situations in advance\non the actual site\nyou will enter today.",
     subhead: language === "ko"
-      ? "A 현장 훈련이 B 현장에서는 의미가 없습니다"
-      : "Training at Site A has no meaning at Site B—until now",
+      ? "현장마다 작업환경과 공정이 달라, 위험도 역시 다릅니다."
+      : "Each site has a different work environment and process, so the level of risk varies accordingly.",
     desc: language === "ko"
-      ? "iSafePlan의 3D BIM 모델을 그대로 가져오거나, 360도 카메라로 실제 현장을 촬영해 디지털 트윈을 구축합니다. 오늘 오전에 들어갈 외부비계 구역, 이번 주에 시작되는 용접 공정. 그 공간에서 미리 훈련합니다."
-      : "Import iSafePlan's 3D BIM models or capture live sites with 360° cameras to build digital twins. Train in the exact scaffolding area you'll enter this morning, or the welding process starting this week.",
+      ? "iSafeMeta는 iSafePlan의 3D BIM 모델을 그대로 활용하거나, 360도 카메라로 실제 현장을 촬영하여 디지털 트윈을 자동 구축합니다."
+      : "iSafeMeta utilizes iSafePlan's 3D BIM model as is, or automatically builds a digital twin by capturing the actual site with a 360-degree camera.",
     bullets: language === "ko"
       ? [
           "iSafePlan 3D BIM 모델 즉시 연동",
           "360도 카메라 촬영 → 디지털 트윈 자동 구축",
-          "실제 현장 구조·공정과 동일한 가상 훈련 환경",
+          "실제 현장 구조·공정과 동일한 가상 교육 훈련 환경",
           "iSafeGuard 위험구역 설정도 훈련에 자동 반영",
         ]
       : [
-          "Instant iSafePlan 3D BIM integration",
-          "360° camera capture → Auto digital twin creation",
-          "Virtual training environment matching actual site conditions",
-          "iSafeGuard hazard zones auto-reflected in training",
+          "Instant integration with iSafePlan 3D BIM models",
+          "360° camera capture → Automatic digital twin construction",
+          "Virtual training environment matching the actual site structure and processes",
+          "iSafeGuard hazard zone settings automatically reflected in training",
         ],
     placeholder: {
       title: language === "ko"
@@ -59,26 +59,26 @@ const getMetaFeatures = (language: "ko" | "en") => [
     tag: language === "ko" ? "디지털 수강 시스템" : "Digital Learning Management",
     tagColor: "bg-orange-100 text-orange-700",
     headline: language === "ko"
-      ? "현장별 맞춤\n교육 커리큘럼을\n디지털로 운영합니다"
+      ? "현장별 맞춤\n교육을\n디지털로 운영합니다"
       : "Run site-specific\ncustomized training\ndigitally",
     subhead: language === "ko"
-      ? "종이 출석부와 PPT 교육에서 벗어나세요"
-      : "Say goodbye to paper rosters and PowerPoint training",
+      ? "교육은 일회성 행사가 아닌 데이터로 관리되는 안전활동이 됩니다."
+      : "Training becomes a data-managed safety activity, rather than a one-time event.",
     desc: language === "ko"
-      ? "건설 현장 안전 교육 자료를 디지털 수강 시스템으로 관리합니다. 공정별·직종별로 필요한 교육 콘텐츠를 배정하고, 근로자가 가상환경 안에서 수강합니다. 수강 진도·테스트 결과·이수 여부가 모두 자동으로 기록됩니다."
-      : "Manage construction safety training through our digital learning system. Assign phase and role-specific content, which workers complete in the virtual environment. All progress, test results, and completion status are automatically logged.",
+      ? "iSafeMeta는 실제 현장을 반영한 가상환경에서 근로자별 맞춤형 안전교육을 제공합니다. 공정과 직종에 따라 필요한 교육 콘텐츠를 자동 생성 및 배정하고, 교육 이수 여부와 평가 결과를 디지털로 관리합니다."
+      : "iSafeMeta provides site-tailored safety training for each worker within a virtual environment that reflects the actual job site. It automatically generates and assigns necessary training content based on processes and trades, and digitally manages training completion and assessment results.",
     bullets: language === "ko"
       ? [
           "공정별·직종별 맞춤 교육 커리큘럼 구성",
-          "가상환경 내 몰입형 교육 콘텐츠 수강",
+          "가상환경 내 안전 교육 콘텐츠 수강",
           "수강 진도·테스트 결과 실시간 관리",
-          "미이수 근로자 자동 감지 및 재배정",
+          "미이수 근로자 자동 관리 및 재교육 지원",
         ]
       : [
-          "Phase and role-specific curriculum composition",
-          "Immersive training content within virtual environment",
-          "Real-time tracking of progress and test results",
-          "Auto-detect non-completion and reassign training",
+          "Customized training curriculum composition by process and trade",
+          "Taking safety training content within the virtual environment",
+          "Real-time management of learning progress and test results",
+          "Automatic management of non-completed workers and re-education support",
         ],
     placeholder: {
       title: language === "ko"
@@ -97,26 +97,26 @@ const getMetaFeatures = (language: "ko" | "en") => [
     tag: language === "ko" ? "현장 특화 AI Agent 아바타" : "Site-Specific AI Agent Avatar",
     tagColor: "bg-pink-100 text-pink-700",
     headline: language === "ko"
-      ? "우리 현장을 아는\nAI가 20개 언어로\n근로자를 안내합니다"
+      ? "우리 현장을 이해하는\nAI가 20개 언어로\n근로자를 안내합니다"
       : "Our site's AI guide,\nin 20 languages,\nby your side",
     subhead: language === "ko"
-      ? "현장 도면·규정·공정 데이터를 학습한 전담 AI Agent"
-      : "AI trained on your site plans, regulations, and process data",
+      ? "SafeMeta AI Agent는 단순 번역기가 아닙니다. 현장 도면, 위험구역, 공정계획, 안전규정을 학습하여 작업자에게 필요한 안전정보를 실시간으로 제공합니다."
+      : "The SafeMeta AI Agent is not a simple translator. It learns site drawings, hazard zones, process plans, and safety regulations to provide necessary safety information to workers in real time.",
     desc: language === "ko"
-      ? "단순 번역 수준이 아닙니다. 이 현장의 위험구역, 오늘의 공정 계획, 회사 안전 내규를 학습한 AI Agent 아바타가 근로자 곁에서 20여 개 언어로 실시간 안내합니다. 외국인 근로자도, 신입 근로자도 현장을 이해하고 투입됩니다."
-      : "Not just translation. This AI avatar learns your site's hazard zones, today's schedule, and company safety rules—then guides workers in 20+ languages in real time. Foreign workers and new hires understand the site before they start.",
+      ? "외국인 근로자도, 처음 투입되는 근로자도 자신의 언어로 현장을 이해하고 안전하게 작업을 시작할 수 있습니다."
+      : "Foreign workers and new hires alike can understand the site in their own language and start working safely.",
     bullets: language === "ko"
       ? [
-          "현장 도면·위험구역·공정 데이터 기반 AI Agent",
-          "20개국 언어 실시간 질의응답 및 안전 안내",
-          "안전 법령·사내 내규 학습한 전문 지식 탑재",
-          "이해도 테스트 결과 자동 기록 및 이수 연동",
+          "현장 도면·공정·위험정보를 학습한 AI Agent",
+          "20개 이상 언어 지원 및 실시간 질의응답",
+          "안전 법령 및 사내 규정 기반 전문 안내",
+          "교육 결과·이해도 평가·이수 이력 자동 관리",
         ]
       : [
-          "AI agent trained on site plans, hazard zones, and process data",
-          "20+ languages for real-time Q&A and safety guidance",
-          "Expert knowledge of safety regulations and company policies",
-          "Auto-record comprehension tests and link to completion",
+          "AI Agent trained on site drawings, processes, and hazard information",
+          "Support for 20+ languages and real-time question and answering",
+          "Expert guidance based on safety regulations and company policies",
+          "Automatic management of training results, comprehension assessments, and completion history",
         ],
     placeholder: {
       title: language === "ko"
@@ -135,26 +135,26 @@ const getMetaFeatures = (language: "ko" | "en") => [
     tag: language === "ko" ? "교육 이수 자동 기록" : "Auto Training Records",
     tagColor: "bg-purple-100 text-purple-700",
     headline: language === "ko"
-      ? "교육한 내용이\n자동으로 기록되고\n증빙으로 남습니다"
-      : "What you taught\nis recorded automatically\nand kept as evidence",
+      ? "교육은 끝나는 것이 아니라,\n신뢰할 수 있는 기록으로 남습니다"
+      : "Training does not just end;\nit remains as a reliable record.",
     subhead: language === "ko"
-      ? "모든 수강 이력이 iSafeIncentive에 자동으로 저장됩니다"
-      : "Every completion automatically saved to iSafeIncentive",
+      ? "iSafeMeta에서 학습한 모든 과정은 자동으로 iSafeIncentive에 기록됩니다"
+      : "Every process learned in iSafeMeta is automatically recorded in iSafeIncentive.",
     desc: language === "ko"
-      ? "교육의 효과는 기록될 때 비로소 증명됩니다. 디지털 수강 시스템의 모든 이수 기록이 자동으로 iSafeIncentive에 전달되어 위변조 불가능한 증빙으로 남아, 필요할 때 신뢰할 수 있는 근거로 활용됩니다."
-      : "Training only counts once it's recorded. Every completion from the digital learning system is automatically sent to iSafeIncentive and kept as tamper-proof evidence—reliable proof whenever you need it.",
+      ? "교육 이수 여부뿐 아니라 이해도 평가, 안전활동 참여 이력까지 데이터로 축적되어 개인과 조직의 안전수준을 객관적으로 관리할 수 있습니다."
+      : "Not only training completion but also comprehension assessments and safety activity participation history are accumulated as data, allowing for the objective management of the safety levels of individuals and organizations.",
     bullets: language === "ko"
       ? [
-          "수강 완료 즉시 iSafeIncentive 블록체인에 자동 저장",
-          "테스트 통과 기준 설정 및 자동 이수 확인",
-          "개인별 교육 이력 관리 대시보드",
-          "부족 항목 감지 시 특화 교육 자동 재배정",
+          "교육 이수 및 평가 결과 자동 기록",
+          "블록체인 기반 디지털 증빙 관리",
+          "개인별 교육·안전활동 이력 통합 관리",
+          "미흡 분야 자동 분석 및 맞춤형 재교육 지원",
         ]
       : [
-          "Auto-save to iSafeIncentive blockchain immediately upon completion",
-          "Set pass criteria and auto-confirm completion",
-          "Per-worker training history dashboard",
-          "Auto-detect gaps and reassign specialized training",
+          "Automatic recording of training completion and assessment results",
+          "Blockchain-based digital evidence management",
+          "Integrated management of individual training and safety activity history",
+          "Automatic analysis of insufficient areas and support for tailored re-education",
         ],
     placeholder: {
       title: language === "ko"
@@ -179,7 +179,7 @@ const getSteps = (language: "ko" | "en") => [
   },
   {
     step: "02",
-    title: language === "ko" ? "커리큘럼 배정 및 수강" : "Assign Curriculum & Train",
+    title: language === "ko" ? "맞춤형 안전교육 자료 배포" : "Distribution of Custom Safety Training Materials",
     desc: language === "ko"
       ? "공정별·직종별 교육 콘텐츠를 배정합니다. 근로자는 가상환경 안에서 AI Agent 아바타와 함께 수강합니다."
       : "Assign phase and role-specific content. Workers train in the virtual environment alongside the AI Agent avatar.",
@@ -188,8 +188,8 @@ const getSteps = (language: "ko" | "en") => [
     step: "03",
     title: language === "ko" ? "이수 기록 자동 저장" : "Auto-Save Completion Records",
     desc: language === "ko"
-      ? "수강 완료 즉시 이수 기록이 iSafeIncentive에 자동 저장됩니다. 미이수자는 시스템이 자동으로 감지해 재배정합니다."
-      : "Completion records auto-save to iSafeIncentive immediately. System auto-detects non-completion and reassigns training.",
+      ? "수강 완료와 동시에 교육 이력이 iSafeIncentive에 자동 저장됩니다. 미이수자와 미흡 항목은 시스템이 자동으로 식별하여 맞춤형 교육을 재배정합니다."
+      : "Completion records auto-save to iSafeIncentive immediately upon course completion. The system automatically identifies non-completed workers and insufficient areas to reassign customized training.",
   },
 ];
 
@@ -239,27 +239,27 @@ export default function ISafeMetaPage() {
                 <h1 className="text-[38px] lg:text-[48px] font-black text-white leading-tight mb-5">
                   {language === "ko" ? (
                     <>
-                      오늘 들어갈 현장을<br />
-                      <span className="text-red-300">가상으로 미리 경험하고</span><br />
-                      AI가 함께 안내합니다
+                      오늘 작업할 현장의<br />
+                      <span className="text-red-300">위험을 경험하고</span><br />
+                      안전을 습관으로 만듭니다
                     </>
                   ) : (
                     <>
-                      Experience the site<br />
-                      <span className="text-red-300">virtually before you enter,</span><br />
-                      with AI by your side
+                      Experience the risks of<br />
+                      <span className="text-red-300">today's job site</span><br />
+                      and turn safety into a habit
                     </>
                   )}
                 </h1>
                 <p className="text-red-100 text-base leading-relaxed mb-4 max-w-md">
                   {language === "ko"
-                    ? "위험을 한 번도 겪어보지 못한 사람은 위험을 알아보지 못합니다. iSafeMeta는 실제 현장과 똑같은 가상환경에서 위험을 직접 체험하게 합니다."
-                    : "Those who have never experienced danger can't recognize it. iSafeMeta lets workers experience hazards firsthand in a virtual replica of the real site."}
+                    ? "위험을 경험해보지 못한 사람은 위험을 인식하기 어렵습니다. iSafeMeta는 실제 현장을 기반으로 구축된 가상환경에서 작업 전 위험요인을 직접 체험하고 안전수칙을 학습할 수 있도록 지원합니다."
+                    : "Those who have never experienced danger find it difficult to recognize it. iSafeMeta allows workers to experience hazards firsthand and learn safety rules within a virtual environment built from the actual site before starting work."}
                 </p>
                 <p className="text-white font-semibold text-base mb-8 max-w-md">
                   {language === "ko"
-                    ? "현장 특화 다국어 AI 아바타가 안내하고 이수 기록을 남겨, 체험으로 익힌 안전을 현장의 습관으로 잇습니다."
-                    : "A site-specific multilingual AI avatar guides each session and logs completion—turning hands-on learning into on-site habits."}
+                    ? "AI 아바타가 작업 절차와 위험상황을 안내하고, 교육 결과와 이수 이력을 관리하여 현장 투입 전 안전역량을 높입니다. 체험으로 익힌 안전은 현장에서의 올바른 행동으로 이어집니다."
+                    : "An AI avatar guides workers through work procedures and hazardous situations, and manages training results and completion history to enhance safety capabilities before entering the site. Safety learned through firsthand experience leads to correct actions on-site."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -329,11 +329,11 @@ export default function ISafeMetaPage() {
                 },
                 {
                   value: language === "ko" ? "2가지" : "2 Ways",
-                  label: language === "ko" ? "가상환경 구축 방식" : "Build Virtual Environment",
+                  label: language === "ko" ? "디지털트윈 및 BIM 환경" : "Digital Twin & BIM Environment",
                 },
                 {
-                  value: language === "ko" ? "디지털" : "Digital",
-                  label: language === "ko" ? "수강 시스템 운영" : "Learning System Operation",
+                  value: language === "ko" ? "교육 시스템" : "Training System",
+                  label: language === "ko" ? "맞춤형 교육자료 생성" : "Custom Safety Material Generation",
                 },
                 {
                   value: language === "ko" ? "자동" : "Auto",

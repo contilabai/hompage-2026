@@ -33,8 +33,8 @@ const getSteps = (language: "ko" | "en") => [
     step: "02",
     title: language === "ko" ? "AI 모델 선택 및 위험구역 설정" : "Select AI Models & Set Hazard Zones",
     desc: language === "ko"
-      ? "기본 AI 모델 5종은 무료로 즉시 활성화됩니다. 특수 공정이 있다면 Pro·Custom 패키지를 추가하세요. 마우스로 위험구역을 그리면 그 순간부터 AI가 감지합니다."
-      : "5 essential AI models activate free, instantly. Add Pro or Custom packages for specialized processes. Draw hazard zones with mouse—AI starts detecting immediately.",
+      ? "기본 AI 모델은 무료로 즉시 활성화됩니다. 탐지가 필요한 위험 작업이 있다면, Pro-Custom 패키지를 추가하세요. 마우스로 위험구역을 그리면 그 순간부터 AI가 감지합니다."
+      : "The basic AI model is activated instantly for free. If you have high-risk activities that require detection, add the Pro-Custom package. Draw a hazard zone with your mouse, and the AI starts detecting from that exact moment.",
   },
   {
     step: "03",
@@ -190,8 +190,8 @@ export default function ISafeGuardPage() {
                   label: language === "ko" ? "VLM 보고서 작성 시간" : "VLM Report Generation",
                 },
                 {
-                  value: language === "ko" ? "기본 무료" : "Free Basic",
-                  label: language === "ko" ? "필수 AI 모델 5종 제공" : "5 Essential AI Models",
+                  value: language === "ko" ? "기본 AI 모델 제공" : "Free Basic AI Models",
+                  label: language === "ko" ? "필수 AI 모델 제공" : "Essential AI Models",
                 },
               ].map((s) => (
                 <div key={s.label} className="text-center px-6 first:pl-0 last:pr-0">

@@ -132,15 +132,15 @@ const getSteps = (language: "ko" | "en") => [
     step: "02",
     title: language === "ko" ? "3D 뷰어에서 작업·안전 매핑" : "Map Work & Safety in the 3D Viewer",
     desc: language === "ko"
-      ? "변환한 IFC와 외부 BIM을 합쳐 보고, 3D 화면 위에서 공정·작업과 안전관리 항목을 위치별로 매핑합니다."
-      : "Merge converted IFCs with external BIM, then map phases, work, and safety items by location on the 3D model.",
+      ? "변환한 IFC와 외부 BIM을 합쳐 보고, 3D 화면 위에서 공정·작업과 안전관리 항목을 객체, 공간별로 매핑합니다."
+      : "Merge converted IFCs with external BIM, then map phases, work, and safety items by object and space on the 3D model.",
   },
   {
     step: "03",
     title: language === "ko" ? "위험성 평가서·교육자료 자동 생성" : "Auto-Generate Reports & Training Materials",
     desc: language === "ko"
-      ? "매핑된 객체·공종·시점을 룰 기반으로 분석해 위험도를 산정하고, 위험성평가서와 안전교육 자료를 자동 생성합니다."
-      : "Rule-based analysis of mapped objects, trades, and timing scores the risk and auto-generates risk reports and safety-training materials.",
+      ? "매핑된 객체 공종 공간을 룰 기반으로 분석해 위험도를 산정하고, 위험성평가서와 안전교육 자료를 자동 생성합니다."
+      : "Rule-based analysis of mapped objects, trades, and spaces scores the risk and auto-generates risk reports and safety-training materials.",
   },
 ];
 
@@ -356,8 +356,8 @@ export default function ISafePlannerPage() {
               </p>
               <h2 className="text-3xl font-black text-gray-900 mb-4">
                 {language === "ko"
-                  ? "도면 업로드부터 현장 투입 브리핑까지"
-                  : "From Plan Upload to Pre-Deployment Briefing"}
+                  ? "도면 업로드부터 현장 위험공종 관리 계획까지"
+                  : "From drawing upload to on-site high-risk construction management planning"}
               </h2>
               <p className="text-gray-500">
                 {language === "ko"

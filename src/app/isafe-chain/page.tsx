@@ -16,29 +16,29 @@ const getChainFeatures = (language: "ko" | "en") => [
   {
     id: "immutable-record",
     reverse: false,
-    tag: language === "ko" ? "위변조 불가 안전 기록" : "Tamper-Proof Safety Records",
+    tag: language === "ko" ? "위변조 불가 안전 기록" : "Forge-Proof Safety Records",
     tagColor: "bg-orange-100 text-orange-700",
     headline: language === "ko"
-      ? "안전관리의 노력을\n위변조 없는 기록으로\n남깁니다"
-      : "Preserve safety efforts\nas records that\ncan't be tampered with",
+      ? "안전관리의 노력을\n신뢰할 수 있는 기록으로 남깁니다"
+      : "Leave safety management efforts\nas reliable records",
     subhead: language === "ko"
-      ? "모든 안전 활동이 자동으로 블록체인에 기록됩니다"
-      : "Every safety activity is automatically recorded on the blockchain.",
+      ? "안전관리의 가치는 기록될 때 증명됩니다."
+      : "The value of safety management is proven when it is recorded.",
     desc: language === "ko"
-      ? "현장의 안전관리 노력은 기록으로 남을 때 비로소 증명됩니다. iSafeIncentive는 iSafeGuard의 감지 기록, iSafeMeta의 교육 이수, 위험구역 출입 이력을 위변조 불가 블록체인에 자동으로 저장해, 필요할 때 신뢰할 수 있는 증빙으로 활용할 수 있게 합니다."
-      : "Safety-management efforts are only proven once they're recorded. iSafeIncentive automatically stores iSafeGuard detections, iSafeMeta training completions, and hazard-zone access logs on a tamper-proof blockchain—so they stand as trustworthy evidence whenever you need them.",
+      ? "iSafeIncentive는 현장에서 발생하는 모든 안전활동을 자동으로 기록하고 관리합니다. 기록된 데이터는 안전수준 평가와 성과 분석, 그리고 신뢰할 수 있는 증빙의 기반이 됩니다."
+      : "iSafeIncentive automatically records and manages all safety activities occurring on-site. The recorded data becomes the foundation for safety level evaluations, performance analyses, and reliable evidence.",
     bullets: language === "ko"
       ? [
-          "모든 안전 이벤트 자동 온체인 기록",
-          "개인정보 마스킹 처리 후 해시값만 저장",
-          "iSafeGuard·iSafeMeta 기록 자동 연동",
-          "언제든지 출력 가능한 법적 증빙 문서",
+          "모든 안전 이벤트 자동 기록",
+          "블록체인 기반 이력 관리",
+          "안전수준 및 성과 평가",
+          "증빙 문서 자동 생성",
         ]
       : [
-          "All safety events auto-recorded on-chain",
-          "PII masked, only hashes stored",
-          "iSafeGuard & iSafeMeta records auto-synced",
-          "Printable legal documentation anytime",
+          "Automatic recording of all safety events",
+          "Blockchain-based history management",
+          "Evaluation of safety levels and performance",
+          "Automatic generation of evidence documents",
         ],
     placeholder: {
       title: language === "ko"
@@ -57,26 +57,26 @@ const getChainFeatures = (language: "ko" | "en") => [
     tag: language === "ko" ? "스마트 컨트랙트 리워드" : "Smart Contract Rewards",
     tagColor: "bg-yellow-100 text-yellow-700",
     headline: language === "ko"
-      ? "안전 수칙을\n지킨 근로자에게\n자동으로 보상합니다"
-      : "Reward workers who\nfollow safety—\nautomatically",
+      ? "안전은 의무가 아니라,\n모두가 얻는 가치가 됩니다"
+      : "Safety is not an obligation,\nbut a value everyone gains",
     subhead: language === "ko"
-      ? "규정과 처벌만으로는 안전 문화를 만들 수 없습니다"
-      : "Rules and penalties alone don't build safety culture",
+      ? "iSafeIncentive는 안전하게 행동한 만큼 인정받고 보상받는 환경을 만듭니다"
+      : "iSafeIncentive creates an environment where acting safely is recognized and rewarded.",
     desc: language === "ko"
-      ? "스마트 컨트랙트가 안전 수칙 준수, 교육 이수, 위험 구역 신고를 자동으로 감지하고 인센티브 포인트를 즉시 지급합니다. 근로자가 스스로 안전을 지키고 싶어지는 환경을 만듭니다. 관리자의 개입 없이 자동으로 운영됩니다."
-      : "Smart contracts auto-detect safety compliance, training completion, and hazard reporting—instantly issuing incentive points. Workers want to stay safe. Zero manual management.",
+      ? "교육, 위험예방, 안전수칙 준수 활동이 자동으로 평가되어 포인트와 인센티브로 연결됩니다."
+      : "Training, risk prevention, and safety compliance activities are automatically evaluated and linked to points and incentives.",
     bullets: language === "ko"
       ? [
-          "안전 수칙 연속 준수 시 자동 포인트 적립",
-          "가상 교육 이수 완료 시 자동 보상",
-          "위험 구역 발견·신고 시 즉시 인센티브",
-          "월간 안전 우수 근로자 자동 선정",
+          "안전활동 자동 평가",
+          "포인트 자동 적립",
+          "우수 근로자 자동 선정",
+          "자발적 안전문화 조성",
         ]
       : [
-          "Auto-award points for continuous safety compliance",
-          "Auto-reward when virtual training completes",
-          "Instant incentive for hazard discovery and reporting",
-          "Auto-select monthly safety excellence workers",
+          "Automatic evaluation of safety activities",
+          "Automatic accumulation of points",
+          "Automatic selection of excellent workers",
+          "Fostering a voluntary safety culture",
         ],
     placeholder: {
       title: language === "ko"
@@ -89,44 +89,6 @@ const getChainFeatures = (language: "ko" | "en") => [
     ctaBg: "bg-yellow-600 hover:bg-yellow-700",
     bgClass: "bg-gray-50",
   },
-  {
-    id: "feedback-loop",
-    reverse: false,
-    tag: language === "ko" ? "자율 진화 피드백 루프" : "Self-Evolving Feedback Loop",
-    tagColor: "bg-red-100 text-red-700",
-    headline: language === "ko"
-      ? "쓸수록 강해지는\niSafePlatform의\n비밀"
-      : "The secret to\niSafePlatform's power:\nit gets stronger with use",
-    subhead: language === "ko"
-      ? "iSafeIncentive이 수집한 데이터로 모든 모듈이 스스로 개선됩니다"
-      : "Every module self-improves using iSafeIncentive's data",
-    desc: language === "ko"
-      ? "iSafeIncentive에 누적된 사고·위반·이수 데이터는 단순 기록으로 끝나지 않습니다. iSafePlan의 위험도 가중치를 재조정하고, iSafeMeta가 특화 훈련을 자동 할당하며, iSafeGuard의 감지 임계치를 강화합니다. 플랫폼이 사용될수록 우리 현장에 맞게 진화합니다."
-      : "iSafeIncentive data—incidents, violations, completions—isn't just stored. It reweights iSafePlan's risk scores, auto-assigns iSafeMeta specialized training, and sharpens iSafeGuard detection thresholds. The platform evolves to fit your site.",
-    bullets: language === "ko"
-      ? [
-          "누적 위반 데이터 → iSafePlan 위험도 자동 재조정",
-          "반복 위반 패턴 → iSafeMeta 특화 훈련 자동 할당",
-          "위반율 트렌드 → iSafeGuard 감지 임계치 자동 강화",
-          "월별 플랫폼 개선 리포트 자동 발행",
-        ]
-      : [
-          "Violation data → iSafePlan risk scores auto-recalibrate",
-          "Repeat patterns → iSafeMeta specialized training auto-assigned",
-          "Violation trends → iSafeGuard detection thresholds auto-strengthen",
-          "Monthly platform improvement report auto-generated",
-        ],
-    placeholder: {
-      title: language === "ko"
-        ? "3종 피드백 루프 자동 개선 현황 화면"
-        : "3-Module Feedback Loop Auto-Improvement Dashboard",
-      description: language === "ko"
-        ? "iSafeIncentive 데이터가 Planner·Meta·Guard에 어떻게 피드백되는지 보여주는 시각화 화면"
-        : "Visualization of how iSafeIncentive data feeds back to Planner, Meta, and Guard",
-    },
-    ctaBg: "bg-red-600 hover:bg-red-700",
-    bgClass: "bg-white",
-  },
 ];
 
 const getSteps = (language: "ko" | "en") => [
@@ -134,22 +96,22 @@ const getSteps = (language: "ko" | "en") => [
     step: "01",
     title: language === "ko" ? "암호화 식별자 등록" : "Register Encrypted IDs",
     desc: language === "ko"
-      ? "모든 근로자와 카메라 노드에 암호화된 고유 ID를 등록합니다. 개인정보는 마스킹 처리됩니다."
-      : "Register encrypted unique IDs for all workers and camera nodes. Personal info is masked.",
+      ? "개인정보는 마스킹 처리되며, 안전활동 기록만 안전하게 관리됩니다."
+      : "Personal information is masked, and only safety activity records are securely managed.",
   },
   {
     step: "02",
     title: language === "ko" ? "안전 활동 자동 기록" : "Auto-Record Safety Activity",
     desc: language === "ko"
-      ? "iSafeGuard와 iSafeMeta의 모든 안전 이벤트가 자동으로 수집되어 블록체인 해시로 저장됩니다."
-      : "All safety events from iSafeGuard and iSafeMeta auto-collected and stored as blockchain hashes.",
+      ? "발생한 모든 안전 이벤트는 자동으로 수집되어 블록체인 해시 기반의 위변조 방지 기록으로 보관됩니다."
+      : "All safety events that occur are automatically collected and stored as forge-proof records based on blockchain hashes.",
   },
   {
     step: "03",
-    title: language === "ko" ? "리워드 지급 및 피드백 루프 가동" : "Rewards & Feedback Loop Live",
+    title: language === "ko" ? "보상 지급" : "Rewards Payout",
     desc: language === "ko"
-      ? "스마트 컨트랙트가 보상을 자동 지급하고, 누적 데이터가 플랫폼 전체를 자동으로 강화합니다."
-      : "Smart contracts auto-issue rewards, cumulative data auto-strengthens the entire platform.",
+      ? "스마트 컨트랙트가 인센티브를 자동 지급하고, 축적된 안전 데이터는 플랫폼 전체의 안전문화와 안전수준을 지속적으로 향상시킵니다."
+      : "Smart contracts automatically pay out incentives, and the accumulated safety data continuously improves the safety culture and standards across the entire platform.",
   },
 ];
 
@@ -197,8 +159,8 @@ export default function ISafeChainPage() {
                 <h1 className="text-[38px] lg:text-[48px] font-black text-white leading-tight mb-5">
                   {language === "ko" ? (
                     <>
-                      모든 안전활동이<br />
-                      <span className="text-orange-300">지워지지 않는 기록으로</span><br />
+                      안전활동은 사라지지 않습니다<br />
+                      <span className="text-orange-300">모두 데이터로</span><br />
                       남습니다
                     </>
                   ) : (
@@ -211,13 +173,13 @@ export default function ISafeChainPage() {
                 </h1>
                 <p className="text-orange-100 text-base leading-relaxed mb-4 max-w-md">
                   {language === "ko"
-                    ? "안전관리의 노력은 증명될 때 비로소 가치가 됩니다. 누가 무엇을 했는지 남지 않으면 평가할 수도, 개선할 수도 없습니다."
-                    : "Safety efforts only count when they can be proven. If no one records who did what, you can neither evaluate nor improve."}
+                    ? "누가, 언제, 어떤 안전활동을 수행했는지 기록되지 않으면 평가도 개선도 어렵습니다."
+                    : "If who, when, and what kind of safety activities were performed are not recorded, it is difficult to evaluate or improve."}
                 </p>
                 <p className="text-white font-semibold text-base mb-8 max-w-md">
                   {language === "ko"
-                    ? "iSafeIncentive은 감지·교육·출입 등 모든 안전활동을 위변조 불가 기록으로 쌓아, 안전수준을 객관적으로 평가하고 개선하는 토대를 만듭니다."
-                    : "iSafeIncentive stacks every safety activity—detection, training, access—into tamper-proof records, a foundation to objectively evaluate and improve safety levels."}
+                    ? "iSafeIncentive는 현장의 모든 안전활동을 자동으로 기록하고 분석하여 안전수준을 객관적으로 측정합니다."
+                    : "iSafeIncentive automatically records and analyzes all safety activities on-site to objectively measure safety levels."}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <a
@@ -282,20 +244,20 @@ export default function ISafeChainPage() {
             <div className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-orange-500">
               {[
                 {
-                  value: language === "ko" ? "위변조 불가" : "Tamper-Proof",
-                  label: language === "ko" ? "블록체인 기록" : "Blockchain Records",
+                  value: "Record",
+                  label: language === "ko" ? "모든 안전활동 자동 기록" : "Automatic recording of all safety activities",
                 },
                 {
-                  value: language === "ko" ? "자동" : "Automatic",
-                  label: language === "ko" ? "스마트 컨트랙트 리워드" : "Smart Contract Rewards",
+                  value: "Trust",
+                  label: language === "ko" ? "블록체인 기반 신뢰성 확보" : "Securing reliability based on blockchain",
                 },
                 {
-                  value: language === "ko" ? "3종" : "3 Types",
-                  label: language === "ko" ? "자율 피드백 루프" : "Self-Feedback Loop",
+                  value: "Measure",
+                  label: language === "ko" ? "안전수준 및 안전성과 평가" : "Evaluation of safety levels and safety performance",
                 },
                 {
-                  value: "24/7",
-                  label: language === "ko" ? "무중단 기록 저장" : "Uninterrupted Recording",
+                  value: "Improve",
+                  label: language === "ko" ? "인센티브 기반 안전문화 혁신" : "Incentive-based safety culture innovation",
                 },
               ].map((s) => (
                 <div key={s.label} className="text-center px-6 first:pl-0 last:pr-0">
