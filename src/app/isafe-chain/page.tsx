@@ -173,14 +173,32 @@ export default function ISafeChainPage() {
                 </h1>
                 <p className="text-orange-100 text-base leading-relaxed mb-4 max-w-md">
                   {language === "ko"
-                    ? "누가, 언제, 어떤 안전활동을 수행했는지 기록되지 않으면 평가도 개선도 어렵습니다."
-                    : "If who, when, and what kind of safety activities were performed are not recorded, it is difficult to evaluate or improve."}
+                    ? "기록된 데이터는 안전성과 평가, 인센티브 운영, 안전문화 혁신의 기반이 됩니다."
+                    : "The recorded data becomes the foundation for safety performance evaluation, incentive operations, and safety culture innovation."}
                 </p>
-                <p className="text-white font-semibold text-base mb-8 max-w-md">
-                  {language === "ko"
-                    ? "iSafeIncentive는 현장의 모든 안전활동을 자동으로 기록하고 분석하여 안전수준을 객관적으로 측정합니다."
-                    : "iSafeIncentive automatically records and analyzes all safety activities on-site to objectively measure safety levels."}
-                </p>
+                <ul className="grid sm:grid-cols-2 gap-x-5 gap-y-2.5 mb-8 max-w-md">
+                  {(language === "ko"
+                    ? [
+                        "모든 안전활동 자동 기록",
+                        "블록체인 기반 신뢰성 확보",
+                        "안전수준 및 안전성과 평가",
+                        "인센티브 및 개선활동 연계",
+                      ]
+                    : [
+                        "Automatic recording of all safety activities",
+                        "Securing reliability based on blockchain",
+                        "Evaluation of safety levels and safety performance",
+                        "Linkage with incentives and improvement activities",
+                      ]
+                  ).map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-white">
+                      <svg className="w-4 h-4 flex-shrink-0 mt-0.5 text-orange-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
                 <div className="flex flex-wrap gap-3">
                   <a
                     href="mailto:contilab@contilab.co.kr"
