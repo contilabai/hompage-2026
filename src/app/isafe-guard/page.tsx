@@ -111,8 +111,8 @@ export default function ISafeGuardPage() {
                 </p>
                 <p className="text-green-300 font-bold text-sm mb-8 max-w-md">
                   {language === "ko"
-                    ? "✓ 기본 AI 모델 5종 · iSafePlatform Core · 관제 뷰어 — 조건 없이 무료 제공"
-                    : "✓ 5 Essential AI Models · iSafePlatform Core · Viewer—Completely Free"}
+                    ? "✓ 기본 AI 모델 2종 · iSafePlatform Core · 관제 뷰어 — 조건 없이 무료 제공"
+                    : "✓ 2 Essential AI Models · iSafePlatform Core · Viewer—Completely Free"}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <Link

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ImagePlaceholder from "@/components/ImagePlaceholder";
@@ -210,7 +210,38 @@ function SolutionTab({ language }: { language: Lang }) {
 // Basic CTA 경로 — 추후 라이선스 자동화 페이지 생성 시 이 값만 변경
 const BASIC_CTA_HREF = "/contact";
 
-const getModelPackages = (language: Lang) => [
+type ModelItem = {
+  name: string;
+  detail: string;
+  tags: string[];
+  // 특화(Pro) 패키지 전용 — 스토어형 카드 렌더링에 사용
+  level?: string;        // 위험도 배지 (고위험 / 필수 / 범용)
+  levelColor?: string;   // 배지 색상 클래스
+  items?: string[];      // 감지 항목 (체크 그리드)
+  scope?: string;        // 적용 공종
+  desc?: string;         // 상세 설명 (모달)
+};
+
+type ModelPackage = {
+  id: string;
+  tier: string;
+  tierColor: string;
+  headerBg: string;
+  accentColor: string;
+  borderColor: string;
+  badge: string;
+  freeLabel?: string;
+  headline: string;
+  target: string;
+  valuePoint: string;
+  models: ModelItem[];
+  cta: string;
+  ctaHref: string;
+  ctaBg: string;       // 신청/문의 버튼 색상 (티어별)
+  popular?: boolean;
+};
+
+const getModelPackages = (language: Lang): ModelPackage[] => [
   {
     id: "basic",
     tier: "Basic",
@@ -224,26 +255,21 @@ const getModelPackages = (language: Lang) => [
       ? "어느 현장에서나\n즉시 쓸 수 있는\n필수 감지 모델"
       : "Essential detection models\nready to use instantly\non any site",
     target: language === "ko"
-      ? "처음 AI 관제를 도입하는 현장, 공통 공정이 대부분인 중소형 현장.\niSafePlatform Core, 관제 뷰어, 필수 AI 모델 5종을 전문 엔지니어가 현장에 직접 무상으로 설치해 드립니다."
-      : "For sites adopting AI monitoring for the first time, or small-to-mid sites with mostly common processes.\nOur engineers install iSafePlatform Core, the monitoring viewer, and 5 essential AI models on site, free of charge.",
+      ? "처음 AI 관제를 도입하는 현장, 공통 공정이 대부분인 중소형 현장.\niSafePlatform Core, 관제 뷰어, 필수 AI 모델 2종을 전문 엔지니어가 현장에 직접 무상으로 설치해 드립니다."
+      : "For sites adopting AI monitoring for the first time, or small-to-mid sites with mostly common processes.\nOur engineers install iSafePlatform Core, the monitoring viewer, and 2 essential AI models on site, free of charge.",
     valuePoint: language === "ko" ? "튜닝 없이 설치 당일부터 감지 시작" : "Detection starts on install day—no tuning needed",
     models: language === "ko"
       ? [
           { name: "개인 보호구 감지", detail: "안전모 착용 여부 실시간 파악", tags: ["외부비계", "사다리", "크레인", "터파기 등 대부분 공정"] },
-          { name: "필수 체결 장비 감지", detail: "안전고리 체결 여부 확인", tags: ["외부비계", "철골 작업"] },
           { name: "안전 인력 배치 감지", detail: "신호수 정상 배치 여부 확인", tags: ["고소작업대", "타워크레인", "지게차 등 장비 운용"] },
-          { name: "장비·근로자 충돌 방지", detail: "장비-작업자 간 안전거리 최소 유지 범위 파악", tags: ["터파기", "백호", "지게차"] },
-          { name: "현장 기본 안전 수칙", detail: "지게차 제한속도 준수, 소화기 비치 여부", tags: ["물류 및 화기 작업"] },
         ]
       : [
           { name: "PPE Detection", detail: "Real-time helmet-wearing check", tags: ["Scaffolding", "Ladder", "Crane", "Excavation & most processes"] },
-          { name: "Essential Fastening Equipment", detail: "Safety-hook fastening check", tags: ["Scaffolding", "Steel framing"] },
           { name: "Safety Personnel Placement", detail: "Signaler placement check", tags: ["Aerial platform", "Tower crane", "Forklift & equipment ops"] },
-          { name: "Equipment–Worker Collision Prevention", detail: "Monitors minimum safe distance between equipment and workers", tags: ["Excavation", "Backhoe", "Forklift"] },
-          { name: "Site Basic Safety Rules", detail: "Forklift speed-limit compliance, fire-extinguisher presence", tags: ["Logistics & hot work"] },
         ],
     cta: language === "ko" ? "무료 방문 설치 신청" : "Request Free On-Site Install",
     ctaHref: BASIC_CTA_HREF,
+    ctaBg: "bg-green-600 hover:bg-green-700 shadow-green-600/20",
   },
   {
     id: "pro",
@@ -255,31 +281,222 @@ const getModelPackages = (language: Lang) => [
     badge: language === "ko" ? "기본+특화 패키지" : "Basic + Specialized",
     freeLabel: undefined,
     headline: language === "ko"
-      ? "크레인 양중 중\n하방에 사람이 들어가는 것,\nBasic으로는 못 잡습니다"
-      : "A person stepping under\na crane lift—Basic alone\ncan't catch that",
+      ? "AI 모델 스토어"
+      : "AI Model Store",
     target: language === "ko"
-      ? "타워크레인·고소작업 등 특수 공정이 포함된 중대형 현장"
-      : "Mid-to-large sites with special processes like tower cranes and aerial work",
+      ? "현장의 공종과 작업환경에 맞는 AI 모델을 선택하여 쉽고 빠르게 적용할 수 있습니다."
+      : "Select the AI models that fit your site's processes and work environment, and apply them quickly and easily.",
     valuePoint: language === "ko"
       ? "Basic 전체 포함 + 복합 행동 분석·공정별 전문 모델 추가"
       : "Includes all of Basic + complex behavior analysis and process-specific models",
     models: language === "ko"
       ? [
-          { name: "중장비 디테일 감지", detail: "전도방지·침하방지 장치 정상 설치 여부", tags: ["사다리", "이동식 비계", "크레인", "펌프카"] },
-          { name: "복합 행동·상태 인식", detail: "비계 이상 오르기, 불안전 자재 밟기 행동 감지", tags: ["외부비계", "고소작업"] },
-          { name: "고위험 고소작업 특화", detail: "고소작업대 3인 이상 탑승, 탑승 중 주행 이동 감지", tags: ["고소작업대", "차량 탑재형"] },
-          { name: "크레인·양중 특화", detail: "낙하구역 내 작업자 진입 통제, 3초 정지 룰 준수 확인", tags: ["이동식 크레인", "타워크레인"] },
-          { name: "가설구조물·환경 안전", detail: "외부비계 상하부 동시작업 통제, 철근캡·개구부 덮개·안전난간 설치 확인", tags: ["외부비계", "개구부", "철근"] },
+          {
+            name: "원경 안전관제 AI",
+            detail: "중장비-근로자 충돌방지",
+            level: "범용",
+            levelColor: "bg-green-500 text-white",
+            items: ["근접거리", "위험구역 진입", "안전모 착용", "침입 감지"],
+            scope: "전체",
+            tags: ["터파기", "장비 운용", "공통 공정"],
+            desc: "CCTV·원격 카메라 영상만으로 넓은 현장 전반의 위험을 한 번에 관제합니다. 중장비와 근로자 간 근접 거리를 실시간으로 계산해 충돌 위험을 사전 경보하고, 사전에 지정한 위험구역 진입과 안전모 미착용을 동시에 감지합니다. 별도 디바이스 없이 기존 카메라에 즉시 적용할 수 있어 도입 부담이 가장 낮은 모델입니다.",
+          },
+          {
+            name: "외부비계 작업 AI",
+            detail: "추락 예방 패키지",
+            level: "고위험",
+            levelColor: "bg-orange-500 text-white",
+            items: ["안전고리 체결", "안전모 착용", "상하 동시작업", "비계 무단등반"],
+            scope: "비계",
+            tags: ["외부비계", "쌍줄비계"],
+            desc: "외부비계는 추락 재해가 가장 빈번한 공종입니다. 작업자의 안전고리 체결 여부와 안전모 착용을 프레임 단위로 확인하고, 상·하부 동시작업이나 비계 무단 등반처럼 추락으로 직결되는 불안전 행동을 즉시 감지해 경보합니다.",
+          },
+          {
+            name: "사다리 작업 AI",
+            detail: "사다리 안전수칙 패키지",
+            level: "고위험",
+            levelColor: "bg-orange-500 text-white",
+            items: ["작업높이 측정", "2인 1조 확인", "아웃트리거 확인"],
+            scope: "전체",
+            tags: ["A형 사다리", "연장 사다리"],
+            desc: "사다리 작업 시 위험 작업 높이를 자동 측정하고, 2인 1조 안전수칙 준수와 아웃트리거 고정 상태를 확인합니다. 간단해 보이지만 사망사고 비중이 높은 사다리 작업의 핵심 수칙을 자동으로 점검합니다.",
+          },
+          {
+            name: "이동식 비계 AI",
+            detail: "이동식 비계 안전 패키지",
+            level: "고위험",
+            levelColor: "bg-orange-500 text-white",
+            items: ["탑승인원 확인", "아웃트리거 확인", "이동 중 탑승"],
+            scope: "비계",
+            tags: ["이동식 비계", "BT 비계"],
+            desc: "이동식(BT) 비계의 적정 탑승 인원과 아웃트리거 전개 상태를 확인하고, 작업자가 탑승한 채 비계를 이동시키는 가장 위험한 행동을 감지해 전도·추락 사고를 예방합니다.",
+          },
+          {
+            name: "시저리프트 AI",
+            detail: "고소작업대 안전 패키지",
+            level: "고위험",
+            levelColor: "bg-orange-500 text-white",
+            items: ["탑승상태 이동", "위험행동 감지", "안전대 체결"],
+            scope: "고소작업대",
+            tags: ["시저리프트", "차량 탑재형"],
+            desc: "시저리프트·고소작업대에서 작업자가 탑승한 상태로 주행 이동하는 상황과 난간을 넘는 위험 행동을 감지하고, 안전대 체결 여부를 확인해 고소작업대 특유의 추락·협착 위험을 관리합니다.",
+          },
+          {
+            name: "양중 안전 AI",
+            detail: "T/C 양중 위험 패키지",
+            level: "필수",
+            levelColor: "bg-red-600 text-white",
+            items: ["양중하부 접근", "작업중지 확인", "신호수 배치", "아웃트리거 확인"],
+            scope: "양중 / 크레인",
+            tags: ["타워크레인", "이동식 크레인"],
+            desc: "크레인 양중 작업 중 인양물 하부로 작업자가 진입하는 순간을 감지해 즉시 경보합니다. 신호수 정상 배치와 작업중지 룰 준수, 이동식 크레인 아웃트리거 전개 상태를 함께 확인해 중량물 낙하 재해를 예방합니다.",
+          },
+          {
+            name: "슬래브 작업 AI",
+            detail: "상부작업 안전 패키지",
+            level: "고위험",
+            levelColor: "bg-orange-500 text-white",
+            items: ["단부 접근", "자재 하부 작업", "개구부 덮개", "고소작업대 위험"],
+            scope: "슬래브",
+            tags: ["슬래브", "데크플레이트"],
+            desc: "슬래브·데크플레이트 상부작업에서 단부 접근, 개구부 덮개 미설치, 자재 적재 하부 작업 등 추락·낙하 위험 요인을 종합 감지합니다. 개구부와 단부가 많은 골조 공사 구간의 핵심 안전 모델입니다.",
+          },
+          {
+            name: "지게차 AI",
+            detail: "충돌방지 패키지",
+            level: "필수",
+            levelColor: "bg-red-600 text-white",
+            items: ["허용속도 초과", "근로자 근접", "충돌 위험 알림"],
+            scope: "장비 / 차량",
+            tags: ["지게차", "전동 운반차"],
+            desc: "지게차의 현장 내 허용속도 초과 운행을 감지하고, 보행 근로자와의 근접 상황을 실시간으로 판별해 충돌 위험을 운전자와 관제실에 동시 경보합니다. 물류·운반 동선의 충돌 재해를 예방합니다.",
+          },
+          {
+            name: "중장비 AI",
+            detail: "협착방지 패키지",
+            level: "필수",
+            levelColor: "bg-red-600 text-white",
+            items: ["신호수 배치", "근접거리 측정", "위험반경 침입"],
+            scope: "장비 / 차량",
+            tags: ["굴착기", "백호", "펌프카"],
+            desc: "굴착기·백호 등 중장비의 회전 반경과 작업 반경 내 근로자 진입을 감지하고, 신호수 배치와 근접 거리를 측정해 협착·충돌 사고를 예방합니다. 장비와 인력이 혼재하는 토공 구간에 필수적입니다.",
+          },
+          {
+            name: "우마 작업 AI",
+            detail: "단부 추락 예방 패키지",
+            level: "고위험",
+            levelColor: "bg-orange-500 text-white",
+            items: ["단부 근접", "위험작업 자세", "작업구역 이탈"],
+            scope: "전체",
+            tags: ["우마(말비계)", "실내 마감"],
+            desc: "말비계(우마) 작업 시 단부 근접, 불안정한 작업 자세, 지정 작업구역 이탈을 감지합니다. 실내 마감 공사에서 빈번하지만 관리 사각지대에 놓이기 쉬운 저고도 추락 위험을 보완합니다.",
+          },
         ]
       : [
-          { name: "Heavy Equipment Detail Detection", detail: "Checks proper installation of anti-overturn and anti-subsidence devices", tags: ["Ladder", "Mobile scaffold", "Crane", "Pump car"] },
-          { name: "Complex Behavior & State Recognition", detail: "Detects abnormal scaffold climbing and stepping on unsafe materials", tags: ["Scaffolding", "Aerial work"] },
-          { name: "High-Risk Aerial Work", detail: "Detects 3+ riders on an aerial platform and travel while occupied", tags: ["Aerial platform", "Vehicle-mounted"] },
-          { name: "Crane & Lifting", detail: "Controls worker entry into drop zones, verifies the 3-second stop rule", tags: ["Mobile crane", "Tower crane"] },
-          { name: "Temporary Structure & Environment", detail: "Controls simultaneous work above/below scaffolds; checks rebar caps, opening covers, guardrails", tags: ["Scaffolding", "Openings", "Rebar"] },
+          {
+            name: "Remote Monitoring AI",
+            detail: "Equipment–worker collision prevention",
+            level: "Universal",
+            levelColor: "bg-green-500 text-white",
+            items: ["Proximity distance", "Danger-zone entry", "Helmet wearing", "Intrusion detection"],
+            scope: "All",
+            tags: ["Excavation", "Equipment ops", "Common processes"],
+            desc: "Monitors hazards across a wide site using only CCTV and remote camera feeds. It calculates the real-time distance between heavy equipment and workers to warn of collision risks in advance, while simultaneously detecting entry into predefined danger zones and missing helmets. It runs on existing cameras with no extra devices, making it the easiest model to adopt.",
+          },
+          {
+            name: "Exterior Scaffold AI",
+            detail: "Fall-prevention package",
+            level: "High-Risk",
+            levelColor: "bg-orange-500 text-white",
+            items: ["Safety-hook fastening", "Helmet wearing", "Above/below work", "Unauthorized climbing"],
+            scope: "Scaffold",
+            tags: ["Exterior scaffold", "Double-row scaffold"],
+            desc: "Exterior scaffolding sees the most frequent fall accidents. The model verifies safety-hook fastening and helmet wearing frame by frame, and instantly detects unsafe behaviors that lead directly to falls, such as simultaneous above/below work or unauthorized scaffold climbing.",
+          },
+          {
+            name: "Ladder Work AI",
+            detail: "Ladder safety-rule package",
+            level: "High-Risk",
+            levelColor: "bg-orange-500 text-white",
+            items: ["Work-height check", "Two-person rule", "Outrigger check"],
+            scope: "All",
+            tags: ["A-frame ladder", "Extension ladder"],
+            desc: "Automatically measures hazardous working heights on ladders and verifies the two-person safety rule and outrigger fixation. It auto-checks the core rules of ladder work—deceptively simple tasks that account for a high share of fatal accidents.",
+          },
+          {
+            name: "Mobile Scaffold AI",
+            detail: "Mobile-scaffold safety package",
+            level: "High-Risk",
+            levelColor: "bg-orange-500 text-white",
+            items: ["Rider count check", "Outrigger check", "Riding while moving"],
+            scope: "Scaffold",
+            tags: ["Mobile scaffold", "BT scaffold"],
+            desc: "Verifies the proper rider count and outrigger deployment on mobile (BT) scaffolds, and detects the most dangerous behavior—moving the scaffold while workers are still aboard—to prevent tip-over and fall accidents.",
+          },
+          {
+            name: "Scissor Lift AI",
+            detail: "Aerial-platform safety package",
+            level: "High-Risk",
+            levelColor: "bg-orange-500 text-white",
+            items: ["Movement while boarded", "Risky behavior", "Lanyard fastening"],
+            scope: "Aerial platform",
+            tags: ["Scissor lift", "Vehicle-mounted"],
+            desc: "Detects traveling while workers are aboard a scissor lift or aerial platform and risky behaviors such as leaning over guardrails, and verifies lanyard fastening to manage the fall and pinch hazards specific to aerial platforms.",
+          },
+          {
+            name: "Lifting Safety AI",
+            detail: "T/C lifting hazard package",
+            level: "Essential",
+            levelColor: "bg-red-600 text-white",
+            items: ["Approach under lift", "Work-stop check", "Signaler placement", "Outrigger check"],
+            scope: "Lifting / Crane",
+            tags: ["Tower crane", "Mobile crane"],
+            desc: "Detects the instant a worker enters beneath a suspended load during crane lifting and alerts immediately. It also verifies proper signaler placement, work-stop rule compliance, and mobile-crane outrigger deployment to prevent dropped-load accidents.",
+          },
+          {
+            name: "Slab Work AI",
+            detail: "Upper-work safety package",
+            level: "High-Risk",
+            levelColor: "bg-orange-500 text-white",
+            items: ["Edge approach", "Work under materials", "Opening covers", "Aerial-platform risk"],
+            scope: "Slab",
+            tags: ["Slab", "Deck plate"],
+            desc: "Comprehensively detects fall and drop hazards in slab and deck-plate upper work—edge approach, missing opening covers, and working beneath stacked materials. It is a core safety model for structural-frame zones with many openings and edges.",
+          },
+          {
+            name: "Forklift AI",
+            detail: "Collision-prevention package",
+            level: "Essential",
+            levelColor: "bg-red-600 text-white",
+            items: ["Over speed limit", "Worker proximity", "Collision-risk alert"],
+            scope: "Equipment / Vehicle",
+            tags: ["Forklift", "Electric cart"],
+            desc: "Detects forklifts exceeding the site speed limit and identifies proximity to pedestrian workers in real time, alerting both the driver and the control room of collision risk. It prevents collision accidents along logistics and transport routes.",
+          },
+          {
+            name: "Heavy Equipment AI",
+            detail: "Pinch-prevention package",
+            level: "Essential",
+            levelColor: "bg-red-600 text-white",
+            items: ["Signaler placement", "Proximity measurement", "Danger-radius intrusion"],
+            scope: "Equipment / Vehicle",
+            tags: ["Excavator", "Backhoe", "Pump car"],
+            desc: "Detects worker entry into the slewing and working radius of heavy equipment such as excavators and backhoes, and measures signaler placement and proximity to prevent pinch and collision accidents. Essential for earthwork zones where equipment and workers mix.",
+          },
+          {
+            name: "Baby Scaffold AI",
+            detail: "Edge fall-prevention package",
+            level: "High-Risk",
+            levelColor: "bg-orange-500 text-white",
+            items: ["Edge approach", "Risky posture", "Leaving work zone"],
+            scope: "All",
+            tags: ["Horse scaffold", "Interior finishing"],
+            desc: "Detects edge approach, unstable working postures, and leaving the designated work zone during horse-scaffold (baby scaffold) work. It covers the low-height fall hazards that are common in interior finishing yet easily fall into management blind spots.",
+          },
         ],
     cta: language === "ko" ? "Pro 패키지 문의" : "Inquire About Pro",
     ctaHref: "mailto:contilab@contilab.co.kr",
+    ctaBg: "bg-blue-600 hover:bg-blue-700 shadow-blue-600/20",
     popular: true,
   },
   {
@@ -315,12 +532,443 @@ const getModelPackages = (language: Lang) => [
         ],
     cta: language === "ko" ? "Custom 패키지 문의" : "Inquire About Custom",
     ctaHref: "mailto:contilab@contilab.co.kr",
+    ctaBg: "bg-orange-500 hover:bg-orange-600 shadow-orange-500/20",
   },
 ];
 
+// 위/아래 보조 패키지(Basic·Custom)용 컴팩트 카드
+function CompactPackageCard({ pkg }: { pkg: ModelPackage }) {
+  const isLink = pkg.ctaHref?.startsWith("/");
+  const ctaClass = `inline-flex items-center gap-2 px-6 py-3 text-sm font-bold text-white rounded-xl transition-colors shadow-lg ${pkg.ctaBg}`;
+  const ctaInner = (
+    <>
+      {pkg.cta}
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+      </svg>
+    </>
+  );
+
+  return (
+    <div className={`rounded-2xl border-2 ${pkg.borderColor} overflow-hidden bg-white grid md:grid-cols-[300px_1fr]`}>
+      {/* Header (좌측) */}
+      <div className={`${pkg.headerBg} px-6 py-7 flex flex-col`}>
+        <div className="flex items-center gap-2 flex-wrap mb-3">
+          <span className={`inline-block px-3 py-1 text-xs font-bold rounded-full ${pkg.tierColor} border`}>
+            {pkg.badge}
+          </span>
+        </div>
+        <h3 className="text-xl font-black text-white whitespace-pre-line leading-tight mb-2">
+          {pkg.headline}
+        </h3>
+        <p className="text-white/70 text-xs leading-relaxed whitespace-pre-line">{pkg.target}</p>
+      </div>
+
+      {/* Models (우측) */}
+      <div className="px-6 py-6 flex flex-col">
+        <div className="flex items-start gap-2 mb-4">
+          <svg className={`w-4 h-4 flex-shrink-0 mt-0.5 ${pkg.accentColor}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+          </svg>
+          <p className={`text-sm font-semibold ${pkg.accentColor}`}>{pkg.valuePoint}</p>
+        </div>
+        <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-3 mb-5">
+          {pkg.models.map((model) => (
+            <li key={model.name} className="flex items-start gap-2">
+              <svg className="w-3.5 h-3.5 flex-shrink-0 mt-1 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+              </svg>
+              <div>
+                <p className="text-sm font-bold text-gray-900">{model.name}</p>
+                <p className="text-xs text-gray-500 leading-relaxed">{model.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-auto flex justify-end">
+          {isLink ? (
+            <Link href={pkg.ctaHref} className={ctaClass}>
+              {ctaInner}
+            </Link>
+          ) : (
+            <a href={pkg.ctaHref} className={ctaClass}>
+              {ctaInner}
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 모델 카테고리 — 새 모델 추가 시 이 맵에 한 줄만 추가하면 필터 탭에 자동 반영
+const CATEGORY_BY_MODEL: Record<string, string> = {
+  // ko
+  "원경 안전관제 AI": "remote",
+  "외부비계 작업 AI": "aerial",
+  "사다리 작업 AI": "aerial",
+  "이동식 비계 AI": "aerial",
+  "시저리프트 AI": "aerial",
+  "양중 안전 AI": "lifting",
+  "슬래브 작업 AI": "slab",
+  "지게차 AI": "equipment",
+  "중장비 AI": "equipment",
+  "우마 작업 AI": "etc",
+  // en
+  "Remote Monitoring AI": "remote",
+  "Exterior Scaffold AI": "aerial",
+  "Ladder Work AI": "aerial",
+  "Mobile Scaffold AI": "aerial",
+  "Scissor Lift AI": "aerial",
+  "Lifting Safety AI": "lifting",
+  "Slab Work AI": "slab",
+  "Forklift AI": "equipment",
+  "Heavy Equipment AI": "equipment",
+  "Baby Scaffold AI": "etc",
+};
+
+// 필터 탭 — 향후 확장 시 여기 항목만 늘리면 됨
+const getModelCategories = (language: Lang): { key: string; label: string }[] => [
+  { key: "all", label: language === "ko" ? "전체" : "All" },
+  { key: "remote", label: language === "ko" ? "원경 관제" : "Remote Monitoring" },
+  { key: "aerial", label: language === "ko" ? "고소작업" : "Aerial Work" },
+  { key: "lifting", label: language === "ko" ? "양중 / 크레인" : "Lifting / Crane" },
+  { key: "equipment", label: language === "ko" ? "장비 / 차량" : "Equipment / Vehicle" },
+  { key: "slab", label: language === "ko" ? "슬래브 / 상부작업" : "Slab / Upper Work" },
+  { key: "etc", label: language === "ko" ? "기타 작업" : "Other Work" },
+];
+
+// 가로 드래그 스크롤 훅 (필터 탭이 늘어나면 드래그/스와이프로 탐색)
+function useDragScroll() {
+  const ref = useRef<HTMLDivElement>(null);
+  const state = useRef({ down: false, startX: 0, scrollLeft: 0, moved: false });
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    state.current = { down: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft, moved: false };
+  };
+  const onMouseMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el || !state.current.down) return;
+    const x = e.pageX - el.offsetLeft;
+    const walk = x - state.current.startX;
+    if (Math.abs(walk) > 4) state.current.moved = true;
+    el.scrollLeft = state.current.scrollLeft - walk;
+  };
+  const endDrag = () => {
+    state.current.down = false;
+  };
+  // 드래그 직후 발생하는 클릭은 무시 (탭 선택 오작동 방지)
+  const didDrag = () => state.current.moved;
+
+  return { ref, onMouseDown, onMouseMove, endDrag, didDrag };
+}
+
+// 중앙 강조 — 특화(Pro) 패키지: 스토어형 모델 카드 그리드
+function FeaturedProPackage({
+  pkg,
+  language,
+  onSelectModel,
+}: {
+  pkg: ModelPackage;
+  language: Lang;
+  onSelectModel: (model: ModelItem) => void;
+}) {
+  const categories = getModelCategories(language);
+  const riskLevels = Array.from(new Set(pkg.models.map((m) => m.level).filter(Boolean))) as string[];
+  const [activeCat, setActiveCat] = useState("all");
+  const [risk, setRisk] = useState("all");
+  const [query, setQuery] = useState("");
+  const drag = useDragScroll();
+
+  const q = query.trim().toLowerCase();
+  const filtered = pkg.models.filter((m) => {
+    const catOk = activeCat === "all" || CATEGORY_BY_MODEL[m.name] === activeCat;
+    const riskOk = risk === "all" || m.level === risk;
+    const searchOk =
+      q === "" ||
+      m.name.toLowerCase().includes(q) ||
+      m.detail.toLowerCase().includes(q) ||
+      (m.items ?? []).some((i) => i.toLowerCase().includes(q)) ||
+      m.tags.some((t) => t.toLowerCase().includes(q));
+    return catOk && riskOk && searchOk;
+  });
+
+  return (
+    <div className="rounded-3xl border-2 border-blue-400 overflow-hidden shadow-2xl bg-white relative">
+      {/* 강조 헤더 */}
+      <div className={`${pkg.headerBg} px-8 pt-8 pb-7 relative`}>
+        <div className="absolute top-5 right-6 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full shadow-lg">
+          {language === "ko" ? "가장 많이 선택" : "Most Chosen"}
+        </div>
+        <div className="flex items-center gap-2 flex-wrap mb-4">
+          <span className={`inline-block px-3 py-1 text-xs font-bold rounded-full ${pkg.tierColor} border`}>
+            {pkg.badge}
+          </span>
+        </div>
+        <h3 className="text-2xl sm:text-3xl font-black text-white whitespace-pre-line leading-tight mb-3">
+          {pkg.headline}
+        </h3>
+        <p className="text-white/75 text-sm leading-relaxed whitespace-pre-line max-w-2xl">{pkg.target}</p>
+        <div className="inline-flex items-center gap-2 mt-5 px-4 py-2 bg-white/10 rounded-xl backdrop-blur-sm">
+          <svg className="w-4 h-4 flex-shrink-0 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+          </svg>
+          <p className="text-sm font-semibold text-white">{pkg.valuePoint}</p>
+        </div>
+      </div>
+
+      {/* 스토어형 모델 카드 그리드 */}
+      <div className="px-6 sm:px-8 py-8 bg-gradient-to-b from-blue-50/40 to-white">
+        <div className="flex items-center justify-between mb-5">
+          <p className="text-base font-bold text-gray-900">
+            {language === "ko" ? `포함 특화 AI 모델 ${pkg.models.length}종` : `${pkg.models.length} Specialized AI Models Included`}
+          </p>
+          <p className="text-xs text-gray-400">
+            {language === "ko" ? "Basic 2종 전체 포함 +" : "All 2 Basic models included +"}
+          </p>
+        </div>
+
+        {/* 검색·필터 바 */}
+        <div className="flex flex-col lg:flex-row lg:items-center gap-3 mb-6">
+          {/* 카테고리 탭 (가로 드래그 가능) */}
+          <div
+            ref={drag.ref}
+            onMouseDown={drag.onMouseDown}
+            onMouseMove={drag.onMouseMove}
+            onMouseUp={drag.endDrag}
+            onMouseLeave={drag.endDrag}
+            className="flex-1 flex items-center gap-2 overflow-x-auto cursor-grab active:cursor-grabbing select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {categories.map((cat) => (
+              <button
+                key={cat.key}
+                type="button"
+                onClick={() => {
+                  if (drag.didDrag()) return;
+                  setActiveCat(cat.key);
+                }}
+                className={`whitespace-nowrap px-4 py-2 text-sm font-semibold rounded-lg transition-colors flex-shrink-0 ${
+                  activeCat === cat.key
+                    ? "bg-blue-600 text-white"
+                    : "bg-white text-gray-600 border border-gray-200 hover:border-blue-300"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          {/* 위험도 + 검색 */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <select
+              value={risk}
+              onChange={(e) => setRisk(e.target.value)}
+              className="px-3 py-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400"
+            >
+              <option value="all">{language === "ko" ? "위험도 전체" : "All risk levels"}</option>
+              {riskLevels.map((lv) => (
+                <option key={lv} value={lv}>{lv}</option>
+              ))}
+            </select>
+            <div className="relative">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+              </svg>
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={language === "ko" ? "모델명 검색" : "Search models"}
+                className="w-40 pl-9 pr-3 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400"
+              />
+            </div>
+          </div>
+        </div>
+
+        {filtered.length === 0 ? (
+          <div className="py-16 text-center text-sm text-gray-400">
+            {language === "ko" ? "조건에 맞는 모델이 없습니다." : "No models match your filters."}
+          </div>
+        ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filtered.map((model) => (
+            <div
+              key={model.name}
+              className="rounded-xl border border-gray-200 bg-white overflow-hidden flex flex-col hover:shadow-md hover:border-blue-300 transition-all"
+            >
+              {/* 카드 헤더: 배지 + 타이틀 */}
+              <div className="px-4 pt-4 pb-3 border-b border-gray-100">
+                <span className={`inline-block px-2.5 py-1 text-[11px] font-bold rounded-md mb-2 ${model.levelColor ?? "bg-gray-200 text-gray-700"}`}>
+                  {model.level}
+                </span>
+                <h4 className="text-base font-black text-gray-900 leading-snug">{model.name}</h4>
+                <p className="text-xs text-gray-500 mt-0.5">{model.detail}</p>
+              </div>
+
+              {/* 감지 항목 체크 그리드 */}
+              <div className="px-4 py-3 grid grid-cols-2 gap-x-3 gap-y-2 flex-1">
+                {model.items?.map((item) => (
+                  <div key={item} className="flex items-start gap-1.5">
+                    <svg className="w-3.5 h-3.5 flex-shrink-0 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-[12px] text-gray-700 leading-tight">{item}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* 메타 푸터 */}
+              <div className="px-4 py-3 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500">
+                <span className="inline-flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {language === "ko" ? `감지 항목 ${model.items?.length ?? 0}개` : `${model.items?.length ?? 0} checks`}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                  {language === "ko" ? `적용 공종 ${model.scope}` : model.scope}
+                </span>
+              </div>
+
+              {/* 모델 자세히 보기 버튼 */}
+              <button
+                type="button"
+                onClick={() => onSelectModel(model)}
+                className="flex items-center justify-between px-4 py-3 border-t border-gray-100 text-xs font-semibold text-blue-600 hover:bg-blue-50 transition-colors"
+              >
+                {language === "ko" ? "모델 자세히 보기" : "View model details"}
+                <span className="flex items-center justify-center w-5 h-5 rounded-full border border-blue-200 text-blue-500">
+                  <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          ))}
+        </div>
+        )}
+
+        {/* CTA */}
+        <div className="mt-7 flex justify-end">
+          <a
+            href={pkg.ctaHref}
+            className={`inline-flex items-center gap-2 px-8 py-3.5 text-sm font-bold text-white rounded-xl transition-colors shadow-lg ${pkg.ctaBg}`}
+          >
+            {pkg.cta}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 모델 상세 모달
+function ModelDetailModal({
+  model,
+  language,
+  onClose,
+}: {
+  model: ModelItem | null;
+  language: Lang;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    if (!model) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [model, onClose]);
+
+  if (!model) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-[fadeIn_0.15s_ease-out]"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="relative w-full max-w-lg max-h-[88vh] overflow-y-auto bg-white rounded-2xl shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* 헤더 */}
+        <div className="bg-gradient-to-br from-[#0c2340] to-[#1d6fa4] px-7 pt-7 pb-6 rounded-t-2xl">
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-4 right-4 flex items-center justify-center w-9 h-9 rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors"
+            aria-label={language === "ko" ? "닫기" : "Close"}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          <span className={`inline-block px-2.5 py-1 text-[11px] font-bold rounded-md mb-3 ${model.levelColor ?? "bg-gray-200 text-gray-700"}`}>
+            {model.level}
+          </span>
+          <h3 className="text-2xl font-black text-white leading-tight">{model.name}</h3>
+          <p className="text-white/70 text-sm mt-1">{model.detail}</p>
+        </div>
+
+        {/* 본문 */}
+        <div className="px-7 py-6">
+          {model.desc && (
+            <p className="text-sm text-gray-600 leading-relaxed mb-6">{model.desc}</p>
+          )}
+
+          {/* 감지 항목 */}
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+            {language === "ko" ? `감지 항목 ${model.items?.length ?? 0}개` : `Detection Items (${model.items?.length ?? 0})`}
+          </p>
+          <ul className="grid sm:grid-cols-2 gap-2.5 mb-6">
+            {model.items?.map((item) => (
+              <li key={item} className="flex items-start gap-2 px-3 py-2 bg-blue-50/60 rounded-lg">
+                <svg className="w-4 h-4 flex-shrink-0 mt-0.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-sm text-gray-700 leading-snug">{item}</span>
+              </li>
+            ))}
+          </ul>
+
+          {/* 적용 공종 / 대상 */}
+          <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">
+            {language === "ko" ? `적용 공종 · ${model.scope}` : `Applicable Processes · ${model.scope}`}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {model.tags.map((tag) => (
+              <span key={tag} className="px-3 py-1.5 bg-gray-100 text-gray-600 text-xs font-medium rounded-md">
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ModelTab({ language }: { language: Lang }) {
-  const [openPackage, setOpenPackage] = useState<string>("pro");
   const modelPackages = getModelPackages(language);
+  const basic = modelPackages.find((p) => p.id === "basic")!;
+  const pro = modelPackages.find((p) => p.id === "pro")!;
+  const custom = modelPackages.find((p) => p.id === "custom")!;
+  const [selectedModel, setSelectedModel] = useState<ModelItem | null>(null);
 
   return (
     <section className="py-20 bg-white">
@@ -343,133 +991,24 @@ function ModelTab({ language }: { language: Lang }) {
           </p>
         </div>
 
-        {/* Package cards — outer wrapper */}
-        <div className="bg-gray-50 border border-gray-200 rounded-3xl p-5 mb-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 items-start">
-          {modelPackages.map((pkg) => (
-            <div
-              key={pkg.id}
-              onClick={() => setOpenPackage(openPackage === pkg.id ? "" : pkg.id)}
-              className={`rounded-2xl border-2 ${pkg.borderColor} overflow-hidden relative cursor-pointer select-none transition-shadow hover:shadow-lg ${pkg.popular ? "shadow-xl" : ""}`}
-            >
-              {pkg.popular && (
-                <div className="absolute top-4 right-4 z-10 px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-full">
-                  {language === "ko" ? "추천" : "Popular"}
-                </div>
-              )}
-
-              {/* Header */}
-              <div className={`${pkg.headerBg} px-6 pt-6 pb-8`}>
-                <div className="flex items-center gap-2 flex-wrap mb-4">
-                  <span className={`inline-block px-3 py-1 text-xs font-bold rounded-full ${pkg.tierColor} border`}>
-                    {pkg.badge}
-                  </span>
-                  {pkg.freeLabel && (
-                    <span className="inline-block px-3 py-1 text-xs font-black rounded-full bg-green-400 text-green-950">
-                      {pkg.freeLabel}
-                    </span>
-                  )}
-                </div>
-                <h3 className="text-[22px] font-black text-white whitespace-pre-line leading-tight mb-3">
-                  {pkg.headline}
-                </h3>
-                <p className="text-white/70 text-xs leading-relaxed whitespace-pre-line">{pkg.target}</p>
-              </div>
-
-              {/* Value point */}
-              <div className="px-6 py-4 bg-gray-50 border-b border-gray-100">
-                <div className="flex items-start gap-2">
-                  <svg className={`w-4 h-4 flex-shrink-0 mt-0.5 ${pkg.accentColor}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <p className={`text-sm font-semibold ${pkg.accentColor}`}>{pkg.valuePoint}</p>
-                </div>
-              </div>
-
-              {/* Model list */}
-              <div className="px-6 py-5">
-                {/* Toggle hint row */}
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-semibold text-gray-700">
-                    {language === "ko" ? `포함 AI 모델 (${pkg.models.length}개)` : `Included AI Models (${pkg.models.length})`}
-                  </span>
-                  <svg
-                    className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${openPackage === pkg.id ? "rotate-180" : ""}`}
-                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-
-                {openPackage === pkg.id && (
-                  <ul className="space-y-4 mb-4 pt-2 border-t border-gray-100">
-                    {pkg.models.map((model) => (
-                      <li key={model.name} className="pt-3">
-                        <p className="text-base font-bold text-gray-900 mb-1">{model.name}</p>
-                        <p className="text-sm text-gray-500 leading-relaxed mb-2">{model.detail}</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {model.tags.map((tag) => (
-                            <span key={tag} className="px-2.5 py-1 bg-gray-100 text-gray-500 text-xs rounded-md">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {pkg.ctaHref?.startsWith("/") ? (
-                  <Link
-                    href={pkg.ctaHref}
-                    onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-colors border bg-green-500 text-white border-green-500 hover:bg-green-600"
-                  >
-                    {pkg.cta}
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                ) : (
-                  <a
-                    href={pkg.ctaHref}
-                    onClick={(e) => e.stopPropagation()}
-                    className={`inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-lg transition-colors border ${
-                      pkg.popular
-                        ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700"
-                        : `border-current ${pkg.accentColor} hover:bg-gray-50`
-                    }`}
-                  >
-                    {pkg.cta}
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                )}
-              </div>
-            </div>
-          ))}
-          </div>
+        {/* 1단 — 기본(Basic) */}
+        <div className="mb-6">
+          <CompactPackageCard pkg={basic} />
         </div>
 
-        {/* Note */}
-        <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-center">
-          <p className="text-sm text-blue-700 font-semibold mb-1">
-            {language === "ko" ? "패키지 선택이 어려우신가요?" : "Not sure which package?"}
-          </p>
-          <p className="text-sm text-blue-600">
-            {language === "ko"
-              ? "현장 규모와 공정 특성을 공유해 주시면 ConTILab 엔지니어가 직접 적합한 패키지를 추천해 드립니다."
-              : "Share your site scale and process details, and a ConTILab engineer will recommend the right package."}
-          </p>
-          <a
-            href="mailto:contilab@contilab.co.kr"
-            className="inline-flex items-center gap-2 mt-4 px-6 py-2.5 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors"
-          >
-            {language === "ko" ? "패키지 추천 받기" : "Get a Recommendation"}
-          </a>
+        {/* 2단 — 특화(Pro) 강조 */}
+        <div className="relative mb-6">
+          <FeaturedProPackage pkg={pro} language={language} onSelectModel={setSelectedModel} />
         </div>
+
+        {/* 3단 — 맞춤 제작(Custom) */}
+        <div className="mb-12">
+          <CompactPackageCard pkg={custom} />
+        </div>
+
       </div>
+
+      <ModelDetailModal model={selectedModel} language={language} onClose={() => setSelectedModel(null)} />
     </section>
   );
 }
