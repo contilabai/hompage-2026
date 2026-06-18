@@ -186,7 +186,7 @@ export default function ISafeGuardPage() {
                   label: language === "ko" ? "무중단 자동 운영" : "Uninterrupted Auto Operation",
                 },
                 {
-                  value: "10초",
+                  value: "10sec",
                   label: language === "ko" ? "VLM 보고서 작성 시간" : "VLM Report Generation",
                 },
                 {
