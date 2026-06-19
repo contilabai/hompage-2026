@@ -1063,12 +1063,16 @@ function ProcessStepCard({ step }: { step: ProcessStep }) {
       <div className={`absolute -top-3 left-4 w-7 h-7 rounded-full ${step.numBg} text-white text-[11px] font-black flex items-center justify-center shadow-md`}>
         {step.no}
       </div>
-      <div className="flex items-center gap-2 mb-1">
-        <ProcessIcon name={step.icon} className={`w-5 h-5 flex-shrink-0 ${step.iconColor}`} />
-        <h4 className="text-sm font-black text-gray-900 leading-tight">{step.title}</h4>
+      {/* 헤더 — 고정 높이 + 단어 단위 줄바꿈, 글자 축소로 최대 2줄 */}
+      <div className="h-[68px]">
+        <div className="flex items-start gap-1.5 mb-1">
+          <ProcessIcon name={step.icon} className={`w-4 h-4 flex-shrink-0 mt-0.5 ${step.iconColor}`} />
+          <h4 className="text-xs font-black text-gray-900 leading-tight break-keep tracking-tight">{step.title}</h4>
+        </div>
+        <p className="text-[11px] text-gray-400 leading-snug break-keep">{step.sub}</p>
       </div>
-      <p className="text-[11px] text-gray-400 mb-3 leading-snug">{step.sub}</p>
-      <ul className="space-y-1.5 mt-auto">
+      {/* 항목 — 상단 정렬 + 구분선으로 통일 */}
+      <ul className="space-y-1.5 pt-3 mt-2 border-t border-gray-100">
         {step.items.map((it) => (
           <li key={it} className="flex items-start gap-1.5 text-[12px] text-gray-600 leading-snug">
             <span className={`mt-1.5 w-1 h-1 rounded-full ${step.dot} flex-shrink-0`} />
