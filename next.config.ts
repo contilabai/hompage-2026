@@ -1,27 +1,13 @@
 import type { NextConfig } from "next";
 
-// 정적 마케팅 사이트용 기본 보안 헤더
-const securityHeaders = [
-  { key: "X-Frame-Options", value: "SAMEORIGIN" },
-  { key: "X-Content-Type-Options", value: "nosniff" },
-  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-  { key: "X-DNS-Prefetch-Control", value: "on" },
-  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
-  // HTTPS 환경에서만 적용됨(평문 HTTP에서는 브라우저가 무시)
-  { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
-];
-
+// 가비아 웹호스팅(Apache) 정적 배포 — 전 페이지 정적이라 Node 서버 불필요.
+// `npm run build` 시 out/ 폴더가 생성되며, 그 내용을 웹호스팅 루트에 업로드.
+// 보안 헤더는 정적 익스포트에서 next.config로 적용되지 않으므로 public/.htaccess에서 처리.
 const nextConfig: NextConfig = {
-  output: "standalone",
+  output: "export",
+  trailingSlash: true,        // /isafe-guard/ → index.html (Apache 폴더 인덱싱 호환)
   poweredByHeader: false,
-  async headers() {
-    return [
-      {
-        source: "/:path*",
-        headers: securityHeaders,
-      },
-    ];
-  },
+  images: { unoptimized: true }, // 정적 호스팅에는 이미지 최적화 서버가 없으므로 원본 제공
 };
 
 export default nextConfig;
