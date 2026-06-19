@@ -9,3 +9,7 @@ README.md
 .env*
 .vercel
 .claude
+docs
+CLAUDE.md
+AGENTS.md
+*.docx

@@ -213,10 +213,7 @@ export default function Header() {
           {/* Language Toggle */}
           <div className="flex items-center gap-0.5 bg-gray-100 rounded-lg p-1.5 mr-4 cursor-pointer">
             <button
-              onClick={() => {
-                console.log("KO clicked");
-                handleLanguageChange("ko");
-              }}
+              onClick={() => handleLanguageChange("ko")}
               className={`px-4 py-2 text-sm font-bold rounded transition-all ${
                 language === "ko"
                   ? "bg-white text-gray-900 shadow-md border border-gray-200"
@@ -226,10 +223,7 @@ export default function Header() {
               한국어
             </button>
             <button
-              onClick={() => {
-                console.log("EN clicked");
-                handleLanguageChange("en");
-              }}
+              onClick={() => handleLanguageChange("en")}
               className={`flex items-center gap-1.5 px-4 py-2 text-sm font-bold rounded transition-all ${
                 language === "en"
                   ? "bg-white text-gray-900 shadow-md border border-gray-200"
