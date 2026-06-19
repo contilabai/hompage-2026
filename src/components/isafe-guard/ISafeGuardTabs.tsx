@@ -382,13 +382,13 @@ const getModelPackages = (language: Lang): ModelPackage[] => [
             desc: "굴착기·백호 등 중장비의 회전 반경과 작업 반경 내 근로자 진입을 감지하고, 신호수 배치와 근접 거리를 측정해 협착·충돌 사고를 예방합니다. 장비와 인력이 혼재하는 토공 구간에 필수적입니다.",
           },
           {
-            name: "우마 작업 AI",
+            name: "말비계 작업 AI",
             detail: "단부 추락 예방 패키지",
             level: "고위험",
             levelColor: "bg-orange-500 text-white",
             items: ["단부 근접", "위험작업 자세", "작업구역 이탈"],
             scope: "전체",
-            tags: ["우마(말비계)", "실내 마감"],
+            tags: ["말비계", "실내 마감"],
             desc: "말비계(우마) 작업 시 단부 근접, 불안정한 작업 자세, 지정 작업구역 이탈을 감지합니다. 실내 마감 공사에서 빈번하지만 관리 사각지대에 놓이기 쉬운 저고도 추락 위험을 보완합니다.",
           },
         ]
@@ -484,7 +484,7 @@ const getModelPackages = (language: Lang): ModelPackage[] => [
             desc: "Detects worker entry into the slewing and working radius of heavy equipment such as excavators and backhoes, and measures signaler placement and proximity to prevent pinch and collision accidents. Essential for earthwork zones where equipment and workers mix.",
           },
           {
-            name: "Baby Scaffold AI",
+            name: "Horse Scaffold AI",
             detail: "Edge fall-prevention package",
             level: "High-Risk",
             levelColor: "bg-orange-500 text-white",
@@ -550,22 +550,22 @@ function CompactPackageCard({ pkg }: { pkg: ModelPackage }) {
   );
 
   return (
-    <div className={`rounded-2xl border-2 ${pkg.borderColor} overflow-hidden bg-white grid md:grid-cols-[300px_1fr]`}>
-      {/* Header (좌측) */}
-      <div className={`${pkg.headerBg} px-6 py-7 flex flex-col`}>
+    <div className={`rounded-2xl border-2 ${pkg.borderColor} overflow-hidden bg-white`}>
+      {/* Hero (상단) */}
+      <div className={`${pkg.headerBg} px-6 sm:px-8 pt-7 pb-6`}>
         <div className="flex items-center gap-2 flex-wrap mb-3">
           <span className={`inline-block px-3 py-1 text-xs font-bold rounded-full ${pkg.tierColor} border`}>
             {pkg.badge}
           </span>
         </div>
-        <h3 className="text-xl font-black text-white whitespace-pre-line leading-tight mb-2">
+        <h3 className="text-xl sm:text-2xl font-black text-white whitespace-pre-line leading-tight mb-2">
           {pkg.headline}
         </h3>
-        <p className="text-white/70 text-xs leading-relaxed whitespace-pre-line">{pkg.target}</p>
+        <p className="text-white/70 text-sm leading-relaxed whitespace-pre-line max-w-2xl">{pkg.target}</p>
       </div>
 
-      {/* Models (우측) */}
-      <div className="px-6 py-6 flex flex-col">
+      {/* Models (하단) */}
+      <div className="px-6 sm:px-8 py-6 flex flex-col">
         <div className="flex items-start gap-2 mb-4">
           <svg className={`w-4 h-4 flex-shrink-0 mt-0.5 ${pkg.accentColor}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
@@ -613,7 +613,7 @@ const CATEGORY_BY_MODEL: Record<string, string> = {
   "슬래브 작업 AI": "slab",
   "지게차 AI": "equipment",
   "중장비 AI": "equipment",
-  "우마 작업 AI": "etc",
+  "말비계 작업 AI": "etc",
   // en
   "Remote Monitoring AI": "remote",
   "Exterior Scaffold AI": "aerial",
@@ -624,7 +624,7 @@ const CATEGORY_BY_MODEL: Record<string, string> = {
   "Slab Work AI": "slab",
   "Forklift AI": "equipment",
   "Heavy Equipment AI": "equipment",
-  "Baby Scaffold AI": "etc",
+  "Horse Scaffold AI": "etc",
 };
 
 // 필터 탭 — 향후 확장 시 여기 항목만 늘리면 됨
@@ -963,6 +963,177 @@ function ModelDetailModal({
   );
 }
 
+// ── ConTI Lab AI 개발 프로세스 (AI 모델 패키지 상단) ──
+function ProcessIcon({ name, className }: { name: string; className?: string }) {
+  const paths: Record<string, React.ReactNode> = {
+    clipboard: <path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2M9 12l2 2 4-4" />,
+    database: <path strokeLinecap="round" strokeLinejoin="round" d="M4 7c0-1.657 3.582-3 8-3s8 1.343 8 3-3.582 3-8 3-8-1.343-8-3zM4 7v5c0 1.657 3.582 3 8 3s8-1.343 8-3V7M4 12v5c0 1.657 3.582 3 8 3s8-1.343 8-3v-5" />,
+    building: <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2M5 21H3m6-14h.01M9 11h.01M9 15h.01M15 7h.01M15 11h.01M15 15h.01" />,
+    monitor: <path strokeLinecap="round" strokeLinejoin="round" d="M9 17v2m6-2v2M4 5h16a1 1 0 011 1v9a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1zM9 19h6" />,
+    chip: <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h12v12H6zM9 2v2m6-2v2M9 20v2m6-2v2M2 9h2m-2 6h2m16-6h2m-2 6h2M10 10h4v4h-4z" />,
+    camera: <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M5 6h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z" />,
+    trending: <path strokeLinecap="round" strokeLinejoin="round" d="M3 17l6-6 4 4 8-8m0 0h-5m5 0v5" />,
+    shield: <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />,
+    target: <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9 9 0 100-18 9 9 0 000 18zM12 16a4 4 0 100-8 4 4 0 000 8zM12 13a1 1 0 100-2 1 1 0 000 2z" />,
+    cube: <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />,
+  };
+  return (
+    <svg className={className} fill="none" stroke="currentColor" strokeWidth={1.6} viewBox="0 0 24 24">
+      {paths[name]}
+    </svg>
+  );
+}
+
+type ProcessStep = {
+  no: string;
+  icon: string;
+  numBg: string;
+  iconColor: string;
+  dot: string;
+  title: string;
+  sub: string;
+  items: string[];
+};
+
+const getDevProcess = (language: Lang): ProcessStep[] => {
+  const ko = language === "ko";
+  return [
+    {
+      no: "01", icon: "clipboard", numBg: "bg-blue-700", iconColor: "text-blue-700", dot: "bg-blue-400",
+      title: ko ? "위험 정의" : "Risk Definition",
+      sub: ko ? "법규정·사고사례 분석" : "Regulation & incident analysis",
+      items: ko
+        ? ["산업안전보건법", "KOSHA 가이드", "중대재해 사고사례", "작업절차서 분석"]
+        : ["Occupational Safety Act", "KOSHA guidelines", "Serious-accident cases", "Work-procedure analysis"],
+    },
+    {
+      no: "02", icon: "database", numBg: "bg-purple-600", iconColor: "text-purple-600", dot: "bg-purple-400",
+      title: ko ? "위험 시나리오 구축" : "Risk Scenario Building",
+      sub: ko ? "100+ 위험상황 라이브러리" : "100+ hazard library",
+      items: ko
+        ? ["추락", "안전고리 미체결", "위험구역 침입", "중장비 접근 등", "14종 이상 위험상황"]
+        : ["Falls", "Unfastened safety hook", "Danger-zone intrusion", "Heavy-equipment approach", "14+ hazard types"],
+    },
+    {
+      no: "03", icon: "building", numBg: "bg-teal-600", iconColor: "text-teal-600", dot: "bg-teal-400",
+      title: ko ? "가상현장 생성" : "Virtual Site Creation",
+      sub: ko ? "3D 디지털 트윈 구축" : "3D digital-twin build",
+      items: ko
+        ? ["BIM / 도면", "Reality Capture", "360° 데이터", "디지털 트윈 구축"]
+        : ["BIM / drawings", "Reality Capture", "360° data", "Digital-twin build"],
+    },
+    {
+      no: "04", icon: "monitor", numBg: "bg-green-600", iconColor: "text-green-600", dot: "bg-green-400",
+      title: ko ? "AI 학습데이터 생성" : "AI Training Data",
+      sub: ko ? "위험상황 자동 재현" : "Auto hazard re-creation",
+      items: ko
+        ? ["위험행동 시뮬레이션", "Auto Labeling", "데이터 증강", "품질 검증"]
+        : ["Hazard-behavior simulation", "Auto labeling", "Data augmentation", "Quality validation"],
+    },
+    {
+      no: "05", icon: "chip", numBg: "bg-orange-500", iconColor: "text-orange-500", dot: "bg-orange-400",
+      title: ko ? "Vision AI 개발" : "Vision AI Development",
+      sub: ko ? "작업특화 AI 모델 개발" : "Task-specialized AI models",
+      items: ko
+        ? ["외부비계 AI", "사다리 AI", "양중 AI", "지게차 AI", "중장비 AI 등"]
+        : ["Exterior Scaffold AI", "Ladder AI", "Lifting AI", "Forklift AI", "Heavy Equipment AI"],
+    },
+    {
+      no: "06", icon: "camera", numBg: "bg-blue-600", iconColor: "text-blue-600", dot: "bg-blue-400",
+      title: ko ? "현장 적용" : "Field Deployment",
+      sub: ko ? "On-device AI + AutoPTZ" : "On-device AI + AutoPTZ",
+      items: ko
+        ? ["AI 카메라", "Edge AI Box", "NPU Server", "Auto PTZ 자동 추적"]
+        : ["AI Camera", "Edge AI Box", "NPU Server", "Auto PTZ tracking"],
+    },
+    {
+      no: "07", icon: "trending", numBg: "bg-[#1e3a5f]", iconColor: "text-blue-900", dot: "bg-blue-500",
+      title: ko ? "지속 고도화" : "Continuous Improvement",
+      sub: ko ? "현장 데이터 재학습" : "On-site data retraining",
+      items: ko
+        ? ["위험 이벤트 수집", "신규 시나리오 추가", "모델 재학습", "성능 개선 및 업데이트"]
+        : ["Hazard-event collection", "New scenario addition", "Model retraining", "Performance updates"],
+    },
+  ];
+};
+
+function ProcessStepCard({ step }: { step: ProcessStep }) {
+  return (
+    <div className="relative h-full flex flex-col rounded-xl border border-gray-200 bg-white px-4 pt-6 pb-4">
+      <div className={`absolute -top-3 left-4 w-7 h-7 rounded-full ${step.numBg} text-white text-[11px] font-black flex items-center justify-center shadow-md`}>
+        {step.no}
+      </div>
+      <div className="flex items-center gap-2 mb-1">
+        <ProcessIcon name={step.icon} className={`w-5 h-5 flex-shrink-0 ${step.iconColor}`} />
+        <h4 className="text-sm font-black text-gray-900 leading-tight">{step.title}</h4>
+      </div>
+      <p className="text-[11px] text-gray-400 mb-3 leading-snug">{step.sub}</p>
+      <ul className="space-y-1.5 mt-auto">
+        {step.items.map((it) => (
+          <li key={it} className="flex items-start gap-1.5 text-[12px] text-gray-600 leading-snug">
+            <span className={`mt-1.5 w-1 h-1 rounded-full ${step.dot} flex-shrink-0`} />
+            {it}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function AIDevProcess({ language }: { language: Lang }) {
+  const steps = getDevProcess(language);
+
+  return (
+    <div className="rounded-2xl border-2 border-blue-200 overflow-hidden bg-white">
+      {/* Hero (상단) */}
+      <div className="bg-gradient-to-br from-[#060f1a] via-[#0c2340] to-[#1d6fa4] px-6 sm:px-8 pt-7 pb-6">
+        <div className="flex items-center gap-2 flex-wrap mb-3">
+          <span className="inline-block px-3 py-1 text-xs font-bold rounded-full bg-blue-500/20 text-blue-100 border border-blue-400/40">
+            {language === "ko" ? "AI 개발 프로세스" : "AI Development Process"}
+          </span>
+        </div>
+        <h3 className="text-2xl sm:text-3xl font-black text-white mb-2">
+          {language === "ko" ? "ConTI Lab AI 개발 프로세스" : "ConTI Lab AI Development Process"}
+        </h3>
+        <p className="text-blue-100/80 text-sm leading-relaxed max-w-2xl">
+          {language === "ko"
+            ? "법규정과 사고사례를 분석하고, 가상현장에서 학습시켜 실제 현장에 적용합니다."
+            : "We analyze regulations and incident cases, train AI in virtual sites, and apply it to real sites."}
+        </p>
+      </div>
+
+      {/* Body (하단) */}
+      <div className="px-6 sm:px-8 py-8">
+
+      {/* 데스크탑: 가로 플로우 + 화살표 */}
+      <div className="hidden lg:flex items-stretch gap-1 pt-2">
+        {steps.map((s, i) => (
+          <div key={s.no} className="flex items-stretch flex-1 min-w-0">
+            <div className="flex-1 min-w-0">
+              <ProcessStepCard step={s} />
+            </div>
+            {i < steps.length - 1 && (
+              <div className="flex items-center px-0.5 text-gray-300">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* 모바일·태블릿: 그리드 */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 lg:hidden pt-3">
+        {steps.map((s) => (
+          <ProcessStepCard key={s.no} step={s} />
+        ))}
+      </div>
+      </div>
+    </div>
+  );
+}
+
 function ModelTab({ language }: { language: Lang }) {
   const modelPackages = getModelPackages(language);
   const basic = modelPackages.find((p) => p.id === "basic")!;
@@ -989,6 +1160,11 @@ function ModelTab({ language }: { language: Lang }) {
               ? "단순 객체 인식부터 복합 행동 분석, 현장 맞춤 학습까지. 116개 AI 디텍터를 3단계로 구조화했습니다."
               : "From simple object recognition to complex behavior analysis and site-specific training—116 AI detectors structured into 3 tiers."}
           </p>
+        </div>
+
+        {/* ConTI Lab AI 개발 프로세스 */}
+        <div className="mb-6">
+          <AIDevProcess language={language} />
         </div>
 
         {/* 1단 — 기본(Basic) */}

@@ -251,7 +251,7 @@ export default function PlatformPage() {
 
                   {/* Plan – top */}
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 z-20">
-                    <div className="bg-[#0a1f0f] border border-green-500/50 rounded-xl px-4 py-3 text-center shadow-lg shadow-green-900/40 w-[156px]">
+                    <div className="bg-[#0a1f0f] border border-green-500/50 rounded-xl px-4 text-center shadow-lg shadow-green-900/40 w-[156px] h-[152px] flex flex-col justify-center">
                       <span className="text-[10px] font-bold text-green-400 uppercase tracking-widest block">Plan</span>
                       <svg className="w-5 h-5 text-green-400 mx-auto my-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
                       <span className="text-[14px] font-black text-white block">iSafePlan</span>
@@ -263,7 +263,7 @@ export default function PlatformPage() {
 
                   {/* Train – right */}
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 z-20">
-                    <div className="bg-[#1f0a0a] border border-red-500/50 rounded-xl px-4 py-3 text-center shadow-lg shadow-red-900/40 w-[156px]">
+                    <div className="bg-[#1f0a0a] border border-red-500/50 rounded-xl px-4 text-center shadow-lg shadow-red-900/40 w-[156px] h-[152px] flex flex-col justify-center">
                       <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest block">Train</span>
                       <svg className="w-5 h-5 text-red-400 mx-auto my-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M12 14l9-5-9-5-9 5 9 5z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M12 14l6.16-3.422a12.083 12.083 0 01-.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01-.665-6.479L12 14z" /></svg>
                       <span className="text-[14px] font-black text-white block">iSafeMeta</span>
@@ -275,7 +275,7 @@ export default function PlatformPage() {
 
                   {/* Monitor – bottom */}
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20">
-                    <div className="bg-[#070f1f] border border-blue-500/50 rounded-xl px-4 py-3 text-center shadow-lg shadow-blue-900/40 w-[156px]">
+                    <div className="bg-[#070f1f] border border-blue-500/50 rounded-xl px-4 text-center shadow-lg shadow-blue-900/40 w-[156px] h-[152px] flex flex-col justify-center">
                       <span className="text-[10px] font-bold text-blue-400 uppercase tracking-widest block">Monitor</span>
                       <svg className="w-5 h-5 text-blue-400 mx-auto my-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.36a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" /></svg>
                       <span className="text-[14px] font-black text-white block">iSafeGuard</span>
@@ -287,7 +287,7 @@ export default function PlatformPage() {
 
                   {/* Measure – left */}
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 z-20">
-                    <div className="bg-[#1f0f07] border border-orange-500/50 rounded-xl px-4 py-3 text-center shadow-lg shadow-orange-900/40 w-[156px]">
+                    <div className="bg-[#1f0f07] border border-orange-500/50 rounded-xl px-4 text-center shadow-lg shadow-orange-900/40 w-[156px] h-[152px] flex flex-col justify-center">
                       <span className="text-[10px] font-bold text-orange-400 uppercase tracking-widest block">Measure</span>
                       <svg className="w-5 h-5 text-orange-400 mx-auto my-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.6} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
                       <span className="text-[14px] font-black text-white block">iSafeIncentive</span>
