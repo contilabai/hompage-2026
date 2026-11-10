@@ -1,0 +1,931 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>ConTI Lab — 산업 안전 AI 플랫폼</title>
+<style>
+  :root{
+    --paper:#EEF0ED;--panel:#FFFFFF;--ink:#14171C;--ink-2:#3D454F;--mut:#6A7480;--faint:#9AA3AE;--line:#DCDFDA;
+    --void:#0E1114;--void-2:#161B21;--void-ink:#ECEFF3;--void-mut:#8B96A3;--void-line:#28313B;
+    --hi:#EE9E12;--ok:#2EA45C;--alert:#E0523B;--scan:#1FA6BE;--semi:#7C6FE0;--blue:#2F6BEA;
+    --sans:system-ui,-apple-system,"Segoe UI","Malgun Gothic","Apple SD Gothic Neo",Roboto,sans-serif;
+    --mono:ui-monospace,"Cascadia Code","Consolas","D2Coding",monospace;
+    --shadow:0 2px 6px rgba(14,20,28,.06),0 24px 60px -26px rgba(14,20,28,.4);
+    --card-sh:0 1px 2px rgba(14,20,28,.05),0 18px 40px -24px rgba(14,20,28,.35);
+  }
+  @media (prefers-color-scheme:dark){:root{--paper:#0A0D11;--panel:#141A20;--ink:#ECEFF3;--ink-2:#C2CBD5;--mut:#8C97A4;--faint:#5E6a76;--line:#232B34}}
+  :root[data-theme="light"]{--paper:#EEF0ED;--panel:#FFFFFF;--ink:#14171C;--ink-2:#3D454F;--mut:#6A7480;--faint:#9AA3AE;--line:#DCDFDA}
+  :root[data-theme="dark"]{--paper:#0A0D11;--panel:#141A20;--ink:#ECEFF3;--ink-2:#C2CBD5;--mut:#8C97A4;--faint:#5E6a76;--line:#232B34}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5}
+  .wrap{max-width:960px;margin:0 auto;padding:0 18px 64px}
+  a{color:inherit;text-decoration:none}
+  .view{display:none;animation:fade .32s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ---------- topbar (sub views) ---------- */
+  .topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line)}
+  .topbar .in{max-width:960px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:14px}
+  /* 실제 <button> — font-family 는 버튼이 상속하지 않으므로 명시한다 */
+  .back{font-family:var(--sans);font-size:.9rem;font-weight:700;line-height:1.15;color:var(--mut);
+    display:inline-flex;align-items:center;gap:.42em;cursor:pointer;
+    border:1px solid var(--line);background:var(--panel);border-radius:999px;
+    padding:.44em .9em .44em .72em;  /* 화살표쪽 여백을 좁혀 시각적 균형을 맞춘다 */
+    transition:color .15s,border-color .15s,background .15s}
+  .back:hover{color:var(--ink);border-color:var(--faint);background:color-mix(in srgb,var(--ink) 4%,var(--panel))}
+  .back:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
+  .back svg{width:14px;height:14px;transition:transform .15s}
+  .back:hover svg{transform:translateX(-2px)}
+  .crumb{font-weight:800;letter-spacing:-.02em;font-size:1rem;display:flex;align-items:center;gap:.55em}
+  .crumb::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--c,var(--hi))}
+  .brand{margin-left:auto;display:inline-flex;align-items:center;gap:.45em;font-weight:800;letter-spacing:-.02em;font-size:.92rem;color:var(--ink);transition:opacity .15s}
+  .brand:hover{opacity:.7}
+  .brand .mark{height:21px;width:auto;display:block}
+  /* 메인(홈) 버튼을 우측 구석으로(브랜드 오른쪽 끝) */
+  /* 뒤로가기 → 현재 위치 → 브랜드 순. .brand 의 margin-left:auto 가 브랜드만 우측으로 민다 */
+  .topbar .in .back{order:1}
+  .topbar .in .crumb{order:2}
+  .topbar .in .brand{order:3}
+
+  /* ---------- HOME ---------- */
+  #home .hero{text-align:center;padding:clamp(46px,9vw,92px) 18px clamp(26px,4vw,40px)}
+  .logo{display:inline-flex;align-items:center;gap:.62em;margin-bottom:1.6em;transition:opacity .15s}
+  .logo:hover{opacity:.7}
+  .logo .mark{height:36px;width:auto;display:block}
+  .logo .wm{font-weight:800;letter-spacing:-.02em;font-size:1.34rem;color:var(--ink)}
+  #home h1{font-size:calc(clamp(1.9rem,5.6vw,3.15rem) - 3px);font-weight:850;letter-spacing:-.035em;line-height:1.18;margin:0 auto;max-width:12em;text-wrap:balance}
+  #home h1 .g{background:linear-gradient(92deg,var(--blue),var(--scan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  #home .sub{margin:clamp(18px,2.6vw,26px) auto 0;max-width:52ch;color:var(--ink-2);font-size:clamp(.98rem,1.7vw,1.12rem);line-height:1.7;text-wrap:balance}
+  .kk{color:var(--ink);font-weight:600}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,20px);margin-top:clamp(30px,5vw,48px)}
+  .card{position:relative;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:20px;
+    padding:clamp(22px,2.6vw,30px);cursor:pointer;overflow:hidden;box-shadow:var(--card-sh);transition:transform .2s cubic-bezier(.2,.7,.3,1),border-color .2s,box-shadow .2s;text-align:left}
+  .card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--c)}
+  .card::after{content:"";position:absolute;right:-40%;top:-40%;width:80%;height:80%;background:radial-gradient(circle,color-mix(in srgb,var(--c) 16%,transparent),transparent 68%);pointer-events:none}
+  .card:hover{transform:translateY(-6px);border-color:color-mix(in srgb,var(--c) 55%,var(--line));box-shadow:0 3px 8px rgba(14,20,28,.08),0 34px 60px -30px color-mix(in srgb,var(--c) 60%,transparent)}
+  .card:focus-visible{outline:2px solid var(--c);outline-offset:3px}
+  .cnum{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;color:var(--c);font-weight:600}
+  .cicon{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;margin:14px 0 18px;
+    background:color-mix(in srgb,var(--c) 14%,transparent);color:var(--c)}
+  .cicon svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.7}
+  .card h3{margin:0;font-size:clamp(1.12rem,1.8vw,1.32rem);font-weight:800;letter-spacing:-.02em;line-height:1.28}
+  .card p{margin:.7em 0 0;color:var(--mut);font-size:.92rem;line-height:1.6;flex:1}
+  .cgo{margin-top:18px;display:inline-flex;align-items:center;gap:.5em;font-weight:700;font-size:.86rem;color:var(--c)}
+  .cgo svg{width:15px;height:15px;transition:transform .2s}
+  .card:hover .cgo svg{transform:translateX(4px)}
+  .home-foot{text-align:center;margin-top:clamp(34px,6vw,54px);color:var(--mut);font-family:var(--mono);font-size:.74rem}
+  .home-foot b{color:var(--ink)}
+
+  /* ---------- shared section head ---------- */
+  .lead{text-align:center;padding:clamp(30px,5vw,52px) 8px clamp(10px,2vw,20px)}
+  .lead .eb{font-family:var(--mono);font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--c);font-weight:600}
+  .lead h2{font-size:clamp(1.5rem,3.6vw,2.25rem);font-weight:850;letter-spacing:-.03em;margin:.5em auto .1em;max-width:20ch;text-wrap:balance;line-height:1.22}
+  .lead p{color:var(--ink-2);max-width:46ch;margin:.7em auto 0;font-size:1rem;line-height:1.65}
+
+  /* ---------- MODEL (brochure) ---------- */
+  .tabs{position:sticky;top:57px;z-index:10;background:color-mix(in srgb,var(--paper) 90%,transparent);backdrop-filter:blur(10px);
+    display:flex;gap:4px;justify-content:center;flex-wrap:wrap;padding:12px 10px;border-bottom:1px solid var(--line);margin-bottom:clamp(16px,3vw,24px)}
+  .tab{font-family:var(--sans);font-size:.92rem;font-weight:700;color:var(--mut);background:transparent;border:1px solid transparent;
+    border-radius:999px;padding:.5em 1.1em;cursor:pointer;transition:all .16s;display:flex;align-items:center;gap:.5em}
+  .tab::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);opacity:.45;transition:opacity .16s}
+  .tab:hover{color:var(--ink);background:var(--panel)}
+  .tab.active{color:#fff;background:var(--c);box-shadow:0 6px 18px -8px var(--c)}
+  .tab.active::before{background:#fff;opacity:1}
+  .tab:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+  .mtitle{text-align:center;font-size:clamp(1.05rem,2.3vw,1.4rem);font-weight:800;letter-spacing:-.025em;margin:6px auto 20px;max-width:26ch;text-wrap:balance;transition:color .2s;min-height:1.4em}
+  .panel{display:none;animation:fade .3s ease}
+  .panel.active{display:block}
+  .item{background:var(--void);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);position:relative}
+  .item::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--c);z-index:3}
+  .cap{padding:clamp(15px,3vw,26px) clamp(18px,3.6vw,32px);display:flex;flex-direction:column;gap:.6em;position:relative;overflow:hidden}
+  .cap::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 160% at 100% 0,color-mix(in srgb,var(--c) 18%,transparent),transparent 60%);pointer-events:none}
+  .eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--c);font-weight:600;display:flex;align-items:center;gap:.7em}
+  .eyebrow::before{content:"";width:18px;height:2px;background:var(--c)}
+  .cap h4{margin:0;color:var(--void-ink);font-size:clamp(1.05rem,2.4vw,1.4rem);font-weight:750;letter-spacing:-.02em;line-height:1.35;text-wrap:balance;position:relative}
+  .risks{display:flex;flex-wrap:wrap;gap:7px;position:relative}
+  .risks span{font-size:.8rem;font-weight:500;color:var(--void-ink);background:rgba(255,255,255,.05);border:1px solid var(--void-line);border-radius:7px;padding:.34em .66em;display:inline-flex;align-items:center;gap:.5em}
+  .risks span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--c);flex:none}
+  .vid{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;background:#000}
+  .vcap{background:var(--void-2);color:var(--void-mut);font-family:var(--mono);font-size:.65rem;letter-spacing:.04em;padding:.65em clamp(18px,3.6vw,32px);border-top:1px solid var(--void-line);display:flex;justify-content:space-between;gap:12px}
+  .vcap .live{color:var(--void-ink);display:flex;align-items:center;gap:.5em}
+  .vcap .live::before{content:"";width:7px;height:7px;border-radius:50%;background:#E0523B;animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .more{margin-top:16px}
+  .more__label{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);font-weight:600;display:flex;align-items:center;gap:.6em;margin-bottom:11px}
+  .more__label::before{content:"+";color:var(--c);font-weight:800}
+  .more__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+  .mcard{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:10px;padding:13px 15px}
+  .mcard b{display:block;font-size:.92rem;font-weight:750;letter-spacing:-.01em;margin-bottom:3px}
+  .mcard span{font-size:.82rem;color:var(--mut);line-height:1.5}
+
+  /* ---------- 건설 서브탭(칩) ---------- */
+  .subhead{text-align:center;margin:2px 0 16px}
+  .subhead .se{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--hi);font-weight:600}
+  .subhead h3{font-size:clamp(1.22rem,2.7vw,1.66rem);font-weight:820;letter-spacing:-.025em;margin:.4em 0 .2em}
+  .subhead h3 b{color:var(--hi)}
+  .subhead p{color:var(--ink-2);font-size:.92rem;line-height:1.6;max-width:46ch;margin:.3em auto 0;text-wrap:balance}
+  .chips{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:0 0 18px;padding:0}
+  .chip{font-family:var(--sans);font-size:.86rem;font-weight:650;color:var(--mut);background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.44em .95em;cursor:pointer;transition:all .15s}
+  .chip:hover{color:var(--ink);border-color:var(--faint)}
+  .chip.active{color:#fff;background:var(--hi);border-color:var(--hi);box-shadow:0 6px 16px -8px var(--hi)}
+  .chip:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
+
+  /* 언어 전환 */
+  .langsw{position:fixed;top:14px;right:16px;z-index:60;display:inline-flex;gap:2px;padding:3px;
+    border-radius:999px;background:color-mix(in srgb,var(--panel) 90%,transparent);
+    border:1px solid var(--line);box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+  .langsw button{font-family:var(--mono);font-size:.68rem;letter-spacing:.05em;font-weight:700;
+    border:0;background:transparent;color:var(--mut);padding:.42em .9em;border-radius:999px;cursor:pointer;
+    transition:background .15s,color .15s}
+  .langsw button[aria-pressed="true"]{background:var(--hi);color:#fff}
+  .langsw button:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
+  @media (max-width:1080px){.langsw{top:auto;bottom:14px;right:12px}}
+  .subpanel{display:none;animation:fade .3s ease}
+  .subpanel.active{display:block}
+  .ovgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .ovcard{display:flex;flex-direction:column;text-align:left;background:var(--void);border:1px solid var(--void-line);border-radius:13px;overflow:hidden;cursor:pointer;padding:0;font:inherit;position:relative;transition:transform .18s cubic-bezier(.2,.7,.3,1),border-color .18s}
+  .ovcard::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--hi);z-index:2;opacity:0;transition:opacity .18s}
+  .ovcard:hover{transform:translateY(-5px);border-color:color-mix(in srgb,var(--hi) 55%,var(--void-line))}
+  .ovcard:hover::before{opacity:1}
+  .ovcard:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
+  .ovcard img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#000}
+  .ovcard__t{font-weight:750;font-size:.96rem;color:var(--void-ink);padding:11px 13px 2px}
+  .ovcard__d{font-size:.78rem;color:var(--void-mut);padding:0 13px 13px;line-height:1.4}
+
+  /* 건설: 슬라브 단부·개구부 2단 */
+  .slabpair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  /* 건설: 영상별 AI 관제 설명 카드 */
+  .dtl{margin-top:16px}
+  .dtl__label{font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--hi);font-weight:600;display:flex;align-items:center;gap:.6em;margin-bottom:11px}
+  .dtl__label::before{content:"";width:16px;height:2px;background:var(--hi);flex:none}
+
+  /* ---------- NPU ---------- */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(14px,2vw,20px);margin-top:6px}
+  .tier{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--card-sh);position:relative}
+  .tier::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:var(--c)}
+  .tier .badge{position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:2;font-size:.72rem;font-weight:700;color:#fff;background:var(--c);border-radius:999px;padding:.3em .9em;box-shadow:0 6px 16px -6px var(--c)}
+  .tier .shot{aspect-ratio:1/.82;display:grid;place-items:center;padding:34px 18px 14px;background:radial-gradient(120% 100% at 50% 0,color-mix(in srgb,var(--c) 9%,var(--panel)),var(--panel))}
+  .tier .shot img{max-width:82%;max-height:150px;object-fit:contain;filter:drop-shadow(0 16px 22px rgba(14,20,28,.22))}
+  .tier .body{padding:4px 20px 22px;display:flex;flex-direction:column;flex:1}
+  .tier .ch{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;color:var(--c);font-weight:600}
+  .tier h3{margin:.35em 0 .2em;font-size:1.16rem;font-weight:800;letter-spacing:-.02em}
+  .tier .tag{color:var(--ink-2);font-size:.9rem;font-weight:600;margin-bottom:14px}
+  .tier .tag em{font-style:normal;color:var(--c)}
+  .feat{list-style:none;margin:0;padding:14px 0 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:13px}
+  .feat li{display:flex;gap:11px;align-items:flex-start}
+  .feat .fi{width:30px;height:30px;flex:none;border-radius:9px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 13%,transparent);color:var(--c)}
+  .feat .fi svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+  .feat b{display:block;font-size:.9rem;font-weight:750}
+  .feat span{font-size:.82rem;color:var(--mut);line-height:1.45}
+  .flow{margin-top:clamp(22px,3.5vw,34px);background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,3vw,30px);text-align:center}
+  .flow .ft{font-size:1.02rem;font-weight:800;letter-spacing:-.02em}
+  .flow .ft em{font-style:normal;color:var(--blue)}
+  .flow .steps{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 6px;margin-top:20px}
+  .flow .step{display:flex;align-items:center;gap:9px;color:var(--ink-2);font-weight:650;font-size:.9rem}
+  .flow .step .n{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--blue) 12%,transparent);color:var(--blue)}
+  .flow .step .n svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7}
+  .flow .arw{color:var(--faint);margin:0 2px}
+
+  /* ---------- VLM ---------- */
+  .vrow{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(16px,2.4vw,26px);align-items:center;margin-top:clamp(20px,3.4vw,34px)}
+  .vrow.rev{grid-template-columns:.85fr 1.15fr}
+  .vrow.rev .vtext{order:2}.vrow.rev .vmedia{order:1}
+  .vmedia{border-radius:15px;overflow:hidden;background:var(--void);box-shadow:var(--shadow);position:relative}
+  .vmedia video,.vmedia img{display:block;width:100%;height:auto}
+  .vmedia .tagline{position:absolute;left:0;right:0;bottom:0;padding:8px 14px;font-family:var(--mono);font-size:.62rem;letter-spacing:.05em;color:var(--void-ink);background:linear-gradient(transparent,rgba(0,0,0,.72));display:flex;align-items:center;gap:.5em}
+  .vmedia .tagline::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--semi);flex:none;animation:pulse 1.6s infinite}
+  .vtext .eb{font-family:var(--mono);font-size:.73rem;letter-spacing:.14em;text-transform:uppercase;color:var(--semi);font-weight:600;display:flex;align-items:center;gap:.6em}
+  .vtext .eb::before{content:"";width:18px;height:2px;background:var(--semi)}
+  .vtext h3{margin:.5em 0 .35em;font-size:clamp(1.2rem,2.4vw,1.6rem);font-weight:820;letter-spacing:-.025em;line-height:1.28;text-wrap:balance}
+  .vtext p{margin:0;color:var(--ink-2);font-size:.96rem;line-height:1.65}
+  .vtext .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .vtext .chips span{font-size:.78rem;font-weight:600;color:var(--semi);background:color-mix(in srgb,var(--semi) 11%,transparent);border:1px solid color-mix(in srgb,var(--semi) 26%,transparent);border-radius:7px;padding:.32em .64em}
+
+  footer{text-align:center;margin-top:clamp(30px,6vw,54px);color:var(--mut);font-family:var(--mono);font-size:.72rem}
+  footer .row{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 22px;margin-bottom:12px}
+  footer b{color:var(--ink)}
+
+  /* NPU: 도입 비용대 + 업역별 표 */
+  .tprice{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);display:flex;flex-direction:column;gap:2px}
+  .tprice__lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+  .tprice__num{font-size:1.32rem;font-weight:820;letter-spacing:-.02em;color:var(--ink)}
+  .tprice__num em{font-style:normal;font-size:.82rem;font-weight:600;color:var(--mut);margin-left:3px}
+  .tprice__sub{font-size:.76rem;color:var(--c);font-weight:600}
+  /* 업역별 카드 — 펼치면 적용 기능이 나오는 드롭다운(details/summary) */
+  .costgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:4px;align-items:start}
+  .ccard{background:var(--panel);border:1px solid var(--line);border-radius:14px;position:relative;overflow:hidden;transition:border-color .18s,box-shadow .18s}
+  .ccard::before{content:"";position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--c);z-index:1}
+  .ccard[open]{border-color:color-mix(in srgb,var(--c) 45%,var(--line));box-shadow:var(--card-sh)}
+  .ccard > summary{list-style:none;cursor:pointer;padding:16px 18px 15px;display:flex;flex-direction:column;gap:6px}
+  .ccard > summary::-webkit-details-marker{display:none}
+  .ccard > summary:focus-visible{outline:2px solid var(--c);outline-offset:-3px;border-radius:12px}
+  .ccard__ind{font-weight:800;font-size:1.05rem;letter-spacing:-.01em}
+  .ccard__cfg{font-size:.84rem;color:var(--mut);line-height:1.5}
+  .ccard__basis{font-size:.78rem;font-weight:650;color:var(--c);margin-top:6px;line-height:1.45}
+  .ccard__more{display:flex;align-items:center;gap:.4em;margin-top:8px;padding-top:10px;border-top:1px dashed var(--line);
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--c);font-weight:650}
+  .ccard__more svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.4;margin-left:auto;transition:transform .2s}
+  .ccard[open] .ccard__more svg{transform:rotate(180deg)}
+  .ccard__fn{padding:0 18px 16px;display:flex;flex-direction:column;gap:6px;animation:fade .24s ease}
+  .ccard__fn span{font-size:.8rem;color:var(--ink-2);line-height:1.45;padding-left:1.1em;position:relative}
+  .ccard__fn span::before{content:"";position:absolute;left:0;top:.52em;width:5px;height:5px;border-radius:2px;background:var(--c)}
+  .ccard__fn b{font-weight:680;color:var(--ink)}
+  .costnote{margin-top:16px;font-size:.8rem;color:var(--ink-2);line-height:1.65;text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 18px}
+  .costnote b{color:var(--ink)}
+
+  /* ---------- NPU: 월 구독료 · 비용 구성 · 견적 CTA ---------- */
+  #npu-cost{scroll-margin-top:72px}
+  .mrate{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-top:4px}
+  .mrate__head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    padding:18px 22px;border-bottom:1px dashed var(--line);border-left:4px solid var(--ok)}
+  .mrate__lbl{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mut)}
+  .mrate__num{font-size:1.7rem;font-weight:820;letter-spacing:-.025em;color:var(--ink)}
+  .mrate__num em{font-style:normal;font-size:.84rem;font-weight:600;color:var(--mut);margin-left:5px}
+  .mrate__break{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .mrate__break > div{padding:16px 22px;display:flex;flex-direction:column;gap:5px}
+  .mrate__break > div + div{border-left:1px solid var(--line)}
+  .mrate__break b{font-size:.98rem;font-weight:800;color:var(--ok);letter-spacing:-.01em}
+  .mrate__break span{font-size:.84rem;color:var(--mut);line-height:1.55}
+  .cincl{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,1.6vw,16px);margin-top:14px}
+  .cincl div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px}
+  .cincl b{display:block;font-size:.9rem;font-weight:800;margin-bottom:.5em}
+  .cincl li{color:var(--mut);font-size:.85rem;line-height:1.7;margin-left:1.1em}
+  .cnote{margin-top:16px;color:var(--faint);font-size:.82rem;line-height:1.7}
+  .cnote b{color:var(--mut)}
+  .ccta{margin-top:clamp(22px,3vw,30px);background:var(--panel);border:1px solid var(--line);border-radius:18px;
+    padding:clamp(20px,3vw,28px);text-align:center}
+  .ccta h4{margin:0 0 .5em;font-size:1.05rem;font-weight:800;letter-spacing:-.02em}
+  .ccta p{margin:0 0 1.1em;color:var(--mut);font-size:.9rem;line-height:1.6}
+  .ccta a{display:inline-flex;align-items:center;gap:.5em;font-weight:700;font-size:.92rem;color:#fff;background:var(--ok);
+    border-radius:999px;padding:.7em 1.5em;transition:opacity .15s}
+  .ccta a:hover{opacity:.88}
+
+  @media (max-width:820px){
+    .cards,.tiers,.cincl{grid-template-columns:1fr}
+    .ovgrid{grid-template-columns:repeat(2,1fr)}
+    .vrow,.vrow.rev{grid-template-columns:1fr}
+    .vrow .vtext{order:1}.vrow .vmedia{order:2}
+    .vrow.rev .vtext{order:1}.vrow.rev .vmedia{order:2}
+    .tier .shot{aspect-ratio:16/7.5}
+    .tier .shot img{max-height:150px}
+    .card h3 br{display:none}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 15px 52px}
+    .topbar .in{gap:10px;padding:11px 15px}
+    .back{flex:none}
+    .crumb{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:.9rem}
+    .brand{display:none}
+    .tabs{top:52px}
+    .flow .arw{display:none}
+    .flow .steps{gap:12px 16px}
+    #home h1 br{display:none}
+  }
+  @media (max-width:560px){
+    .cap{gap:.5em}
+    .tab{font-size:.86rem;padding:.5em .8em}
+    .chip{font-size:.8rem;padding:.4em .8em}
+    .ovgrid{grid-template-columns:1fr}
+    .risks span{font-size:.76rem}
+    .vcap{flex-direction:column;gap:3px}
+    .more__grid{grid-template-columns:1fr}
+    .slabpair{grid-template-columns:1fr}
+    .tier .badge{font-size:.68rem}
+  }
+  @media (max-width:380px){.tab{font-size:.8rem;padding:.45em .66em;gap:.35em}}
+</style>
+
+<!-- ============================= HOME ============================= -->
+</head>
+<body>
+<div class="langsw" role="group" aria-label="Language">
+  <button type="button" data-lang="ko" aria-pressed="true">한국어</button>
+  <button type="button" data-lang="en" aria-pressed="false">EN</button>
+</div>
+<section id="home" class="view active">
+  <div class="hero">
+    <a class="logo" href="/" title="ConTILab 홈페이지로 이동"><img class="mark" src="assets/mark.png" alt="ConTILab"><span class="wm">ConTILab</span></a>
+    <h1 data-i18n="h1">위험을 예측하고,<br><span class="g">안전문화</span>를 혁신합니다</h1>
+    <p class="sub" data-i18n="sub">실제 작업현장이 반영된 <span class="kk">위험성평가와 안전교육</span>, <span class="kk">Vision AI 기반 위험 감지</span>, <span class="kk">안전활동 분석</span>을 통해 자발적 안전관리를 실현합니다.</p>
+  </div>
+  <div class="wrap">
+    <div class="cards">
+      <div class="card" style="--c:var(--hi)" role="button" tabindex="0" data-go="model">
+        <span class="cnum">01 / MODEL</span>
+        <div class="cicon"><svg viewBox="0 0 24 24"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v6l9 4 9-4V7"/><circle cx="12" cy="9" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+        <h3>위험작업 특화<br>AI 모델</h3>
+        <p>건설·물류·화학·항만·반도체 — 현장별 위험작업에 특화된 Vision AI 검출 모델로 실시간 감지·경고합니다.</p>
+        <span class="cgo">모델 보기 <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+      <div class="card" style="--c:var(--scan)" role="button" tabindex="0" data-go="npu">
+        <span class="cnum">02 / COMPUTE</span>
+        <div class="cicon"><svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/></svg></div>
+        <h3>NPU 기반<br>AI 연산 시스템</h3>
+        <p data-i18n="card2">온디바이스 AI 카메라부터 100채널 서버까지, 현장 규모에 맞춘 NPU AI 연산 인프라 라인업과 <b>업역별 도입 비용</b>.</p>
+        <span class="cgo">라인업 · 도입 비용 <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+      <div class="card" style="--c:var(--semi)" role="button" tabindex="0" data-go="vlm">
+        <span class="cnum">03 / ANALYSIS</span>
+        <div class="cicon"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>VLM 기반 작업상황<br>정밀 분석 시스템</h3>
+        <p>영상을 읽고 상황을 이해하는 VLM으로 자동 안전 보고서·위험구역 추적·정밀 분석을 수행합니다.</p>
+        <span class="cgo">분석 보기 <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </div>
+    </div>
+    <div class="home-foot" data-i18n="homefoot"><b>ContiLab</b> · 콘티랩 주식회사 · 산업 안전 AI 플랫폼 · contilab.co.kr</div>
+  </div>
+</section>
+
+<!-- ============================= MODEL (brochure) ============================= -->
+<section id="model" class="view">
+  <div class="topbar"><div class="in">
+    <button class="back" type="button" data-go="home" aria-label="메인으로 돌아가기"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.4" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>메인</button>
+    <span class="crumb" style="--c:var(--hi)">위험작업 특화 AI 모델</span>
+    <a class="brand" href="/" title="ConTILab 홈페이지로 이동"><img class="mark" src="assets/mark.png" alt="">ConTILab</a>
+  </div></div>
+  <nav class="tabs" role="tablist" aria-label="산업 분류">
+    <button class="tab active" data-i="0" style="--c:var(--hi)" role="tab">건설</button>
+    <button class="tab" data-i="1" style="--c:var(--ok)" role="tab">물류</button>
+    <button class="tab" data-i="2" style="--c:var(--alert)" role="tab">화학</button>
+    <button class="tab" data-i="3" style="--c:var(--scan)" role="tab">항만</button>
+    <button class="tab" data-i="4" style="--c:var(--semi)" role="tab">반도체</button>
+  </nav>
+  <div class="wrap">
+    <section class="panel active" data-i="0" style="--c:var(--hi)">
+      <nav class="chips" role="tablist" aria-label="건설 작업 분류">
+        <button class="chip active" data-s="remote" role="tab">원경 관제</button>
+        <button class="chip" data-s="height" role="tab">고소작업</button>
+        <button class="chip" data-s="crane" role="tab">양중·크레인</button>
+        <button class="chip" data-s="equip" role="tab">장비·차량</button>
+        <button class="chip" data-s="slab" role="tab">슬라브·상부작업</button>
+        <button class="chip" data-s="ppe" role="tab">안전보호구</button>
+        <button class="chip" data-s="etc" role="tab">기타 작업</button>
+      </nav>
+
+      <div class="subpanel active" data-s="remote">
+        <div class="item">
+          <div class="cap"><span class="eyebrow">원경 관제 · Wide-area</span>
+            <h4>지정된 위험작업 구간을 자동 탐색·확대하여 위험상황을 자동으로 판별합니다</h4>
+            <div class="risks"><span>위험구역 침입</span><span>AutoPTZ 스케줄 순찰</span><span>사각지대 감시</span></div></div>
+          <video class="vid" data-src="assets/c_remote_v2.mp4" muted loop playsinline preload="none"></video>
+          <div class="vcap"><span class="live">AI 실시간 · AutoPTZ</span><span>함양 현장 · 원경 CCTV</span></div>
+        </div>
+        <div class="dtl"><div class="dtl__label">이 영상의 AI 관제</div><div class="more__grid">
+          <div class="mcard"><b>AutoPTZ 자동 탐색</b><span>중장비를 자동으로 확대·추적하며 원거리 관제</span></div>
+          <div class="mcard"><b>위험구역 침입 감지</b><span>지정 구역(Zone) 진입을 실시간 경고</span></div>
+          <div class="mcard"><b>사각지대 스케줄 순찰</b><span>고정 카메라가 놓치는 구역까지 자동 순회</span></div>
+        </div></div>
+      </div>
+
+      <div class="subpanel" data-s="height">
+        <div class="item">
+          <div class="cap"><span class="eyebrow">고소작업 · Work at Height</span>
+            <h4>비계 위 작업자를 추적해 상하 동시작업과 수직 위험반경을 경고합니다</h4>
+            <div class="risks"><span>상하 동시작업</span><span>수직 위험반경 침범</span><span>안전고리 체결 판독</span></div></div>
+          <video class="vid" data-src="assets/c_height.mp4" muted loop playsinline preload="none"></video>
+          <div class="vcap"><span class="live">Task-specific · Virtual Grid</span><span>비계 · 고소 작업</span></div>
+        </div>
+        <div class="dtl"><div class="dtl__label">이 영상의 AI 관제</div><div class="more__grid">
+          <div class="mcard"><b>상하 동시작업 감지</b><span>수직으로 겹친 작업을 실시간 판별·경고</span></div>
+          <div class="mcard"><b>안전고리 미체결 경고</b><span>비계 작업자의 안전고리 착용 판독</span></div>
+          <div class="mcard"><b>수직 위험반경 관제</b><span>상부 작업 하부 진입 위험 감지</span></div>
+        </div></div>
+      </div>
+
+      <div class="subpanel" data-s="crane">
+        <div class="item">
+          <div class="cap"><span class="eyebrow">양중·크레인 · Lifting</span>
+            <h4>크레인 인양물과 작업자의 거리를 실측해 인양물 하부 진입을 경고합니다</h4>
+            <div class="risks"><span>인양물 하부 진입</span><span>중장비 위험반경</span><span>작업자·크레인 동시 추적</span></div></div>
+          <video class="vid" data-src="assets/c_crane.mp4" muted loop playsinline preload="none"></video>
+          <div class="vcap"><span class="live">AI 실시간 검출 · 인양물 추적</span><span>함양합천 1공구 · 자재 인양</span></div>
+        </div>
+        <div class="dtl"><div class="dtl__label">이 영상의 AI 관제</div><div class="more__grid">
+          <div class="mcard"><b>인양물 하부 진입 감지</b><span>크레인 자재 아래 작업자 접근 경고</span></div>
+          <div class="mcard"><b>이동식 크레인 추적</b><span>장비 위치·작업반경 실시간 모니터링</span></div>
+          <div class="mcard"><b>현장 인원 집계</b><span>작업자 수를 자동 카운트</span></div>
+        </div></div>
+      </div>
+
+      <div class="subpanel" data-s="equip">
+        <div class="item">
+          <div class="cap"><span class="eyebrow">장비·차량 · Equipment</span>
+            <h4>공사 차량·중장비와 작업자의 근접을 감지해 협착·충돌을 예방합니다</h4>
+            <div class="risks"><span>차량·작업자 근접</span><span>중장비 이동 경로</span><span>협착 위험</span></div></div>
+          <video class="vid" data-src="assets/c_equip.mp4" muted loop playsinline preload="none"></video>
+          <div class="vcap"><span class="live">AI 실시간 검출 · best20</span><span>코오롱글로벌 · 토공 중장비</span></div>
+        </div>
+        <div class="dtl"><div class="dtl__label">이 영상의 AI 관제</div><div class="more__grid">
+          <div class="mcard"><b>차량·작업자 근접 감지</b><span>협착·충돌 위험을 실시간 경고</span></div>
+          <div class="mcard"><b>중장비 이동경로 관제</b><span>장비 동선을 추적·기록</span></div>
+          <div class="mcard"><b>작업구역 출입 관리</b><span>지정 구역 진입을 감지</span></div>
+        </div></div>
+      </div>
+
+      <div class="subpanel" data-s="slab">
+        <div class="item">
+          <div class="cap"><span class="eyebrow">슬라브·상부작업 · Slab</span>
+            <h4>슬라브 개구부·단부 접근을 추적해 낙하 위험을 감시합니다</h4>
+            <div class="risks"><span>개구부·단부 접근</span><span>위험구간 진입</span><span>Zone Tracking · AutoPTZ</span></div></div>
+          <video class="vid" data-src="assets/c_slab.mp4" muted loop playsinline preload="none"></video>
+          <div class="vcap"><span class="live">Zone Tracking · 단부·개구부</span><span>코오롱 슬래브 · 단부·개구부 감지</span></div>
+        </div>
+        <div class="dtl"><div class="dtl__label">이 영상의 AI 관제</div><div class="more__grid">
+          <div class="mcard"><b>개구부·단부 접근 감지</b><span>슬래브 가장자리 낙하 위험 경고</span></div>
+          <div class="mcard"><b>고소 작업자 추적</b><span>옥상·상부 작업 인원 관제</span></div>
+          <div class="mcard"><b>위험구간 Zone Tracking</b><span>지정 위험구역 진입 추적</span></div>
+        </div></div>
+      </div>
+
+      <div class="subpanel" data-s="ppe">
+        <div class="item">
+          <div class="cap"><span class="eyebrow">안전보호구 · PPE Check</span>
+            <h4>작업 투입 전, 근로자 안전보호구 착용 여부를 자동으로 점검하고 관리합니다</h4>
+            <div class="risks"><span>안전보호구 착용 여부 확인</span><span>블록체인 기반 안전수준 평가 및 인센티브</span><span>PPE Guard 관리 시스템</span></div></div>
+          <video class="vid" data-src="assets/ppe_check_intro.mp4" muted loop playsinline preload="none"></video>
+          <div class="vcap"><span class="live">TBM 점검 · 수시 스팟 체크 · 즉시 스캔</span><span>PPE Guard · 현장 앱과 관리 시스템</span></div>
+        </div>
+
+        <div class="dtl"><div class="dtl__label">이 영상의 AI 관제</div><div class="more__grid">
+          <div class="mcard"><b>PPE 착용 여부 확인</b><span>작업 전 필수 PPE 착용 여부를 자동으로 기록</span></div>
+          <div class="mcard"><b>안전수준 평가</b><span>기록된 데이터는 블록체인에 저장되어 개인·업체 안전수준 평가에 활용</span></div>
+          <div class="mcard"><b>인센티브</b><span>안전수준 평가 기록을 토큰화하여 인센티브 제공을 통한 자율 안전활동 유도</span></div>
+        </div></div>
+      </div>
+
+      <div class="subpanel" data-s="etc">
+        <div class="item">
+          <div class="cap"><span class="eyebrow">기타 작업 · Others</span>
+            <h4>여름철 외부작업시 작업자 수, 작업시간을 측정하여 온열질환 위험을 관리합니다</h4>
+            <div class="risks"><span>외부작업</span><span>작업자 밀집</span><span>온열질환 경고</span></div></div>
+          <video class="vid" data-src="assets/c_etc.mp4" muted loop playsinline preload="none"></video>
+          <div class="vcap"><span class="live">AI 실시간 검출</span><span>함양 현장 · 사면 작업</span></div>
+        </div>
+        <div class="dtl"><div class="dtl__label">이 영상의 AI 관제</div><div class="more__grid">
+          <div class="mcard"><b>작업자 밀집 감지</b><span>외부작업시 작업인원 실시간 관제</span></div>
+          <div class="mcard"><b>온열질환 위험환경 관리</b><span>외부 온습도, 작업시간 모니터링</span></div>
+        </div></div>
+      </div>
+
+    </section>
+
+    <section class="panel" data-i="1" style="--c:var(--ok)">
+      <div class="item">
+        <div class="cap"><span class="eyebrow">Logistics · 물류</span>
+          <h4>지게차와 작업자의 근접을 계산해 충돌 위험을 경고합니다</h4>
+          <div class="risks"><span>지게차–보행자 근접</span><span>하역 위험구역 진입</span><span>공간좌표 거리 산출</span><span>가상그리드</span></div></div>
+        <video class="vid" data-src="assets/logi.mp4" muted loop playsinline preload="none"></video>
+        <div class="vcap"><span class="live">Virtual Grid · 거리 산출</span><span>하역장 → 야드 가상그리드</span></div>
+      </div>
+      <div class="more"><div class="more__label">확장 적용 · Extended</div><div class="more__grid">
+        <div class="mcard"><b>중장비·차량 속도 측정</b><span>구역별 제한속도 초과 주행을 자동 감지·경고</span></div>
+        <div class="mcard"><b>하역 중 깔림 방지</b><span>지게차 후방·사각지대 작업자 진입 실시간 경보</span></div>
+        <div class="mcard"><b>통로 동선·역주행 감지</b><span>일방통행 위반·혼잡 동선을 분석해 사고 예방</span></div>
+      </div></div>
+    </section>
+
+    <section class="panel" data-i="2" style="--c:var(--alert)">
+      <div class="item">
+        <div class="cap"><span class="eyebrow">Chemical · 화학</span>
+          <h4>배관 횡단, 단독 작업, 압력 게이지를 자동 판독합니다</h4>
+          <div class="risks"><span>배관 근처 침입</span><span>단독 작업 방지</span><span>충전 안전거리</span><span>게이지 자동 판독</span></div></div>
+        <video class="vid" data-src="assets/chem.mp4" muted loop playsinline preload="none"></video>
+        <div class="vcap"><span class="live">AI 검출 · 이벤트</span><span>Approtium · 배관→충전</span></div>
+      </div>
+      <div class="more"><div class="more__label">확장 적용 · Extended</div><div class="more__grid">
+        <div class="mcard"><b>위험 작업 자동 줌인</b><span>이벤트 발생 시 PTZ 확대·집중 관제로 전환</span></div>
+        <div class="mcard"><b>센서 연동 누출 감지</b><span>가스·압력 센서와 영상 융합으로 누출 조기 경보</span></div>
+        <div class="mcard"><b>게이지 이상값 경보</b><span>계기 수치를 판독해 정상 범위 이탈을 자동 알림</span></div>
+      </div></div>
+    </section>
+
+    <section class="panel" data-i="3" style="--c:var(--scan)">
+      <div class="item">
+        <div class="cap"><span class="eyebrow">Port &amp; Maritime · 항만</span>
+          <h4>선박의 위치·속도·항로를 추적해 접근·충돌 위험을 알립니다</h4>
+          <div class="risks"><span>선박 접근·항로 이탈</span><span>속도·방향 추적</span><span>충돌 위험</span></div></div>
+        <video class="vid" data-src="assets/port.mp4" muted loop playsinline preload="none"></video>
+        <div class="vcap"><span class="live">선박 관제 · 추적</span><span>다중 선박 추적</span></div>
+      </div>
+      <div class="more"><div class="more__label">확장 적용 · Extended</div><div class="more__grid">
+        <div class="mcard"><b>컨테이너 하역 근접 방지</b><span>크레인·야드 트럭과 작업자 간 근접 위험 감지</span></div>
+        <div class="mcard"><b>야간·악천후 IR 추적</b><span>적외선 영상 융합으로 저조도·안개에서도 선박 추적</span></div>
+      </div></div>
+    </section>
+
+    <section class="panel" data-i="4" style="--c:var(--semi)">
+      <div class="item">
+        <div class="cap"><span class="eyebrow">Semiconductor · 반도체</span>
+          <h4>장비 도어의 개폐를 24시간 감지해, 작업자 없는 개방을 즉시 경고합니다</h4>
+          <div class="risks"><span>도어 열림 감지</span><span>클린복·작업자</span><span>테일게이팅</span><span>구역 출입</span></div></div>
+        <video class="vid" data-src="assets/semi.mp4" muted loop playsinline preload="none"></video>
+        <div class="vcap"><span class="live">도어·작업자 관제</span><span>ISC · 도어 개폐 감지</span></div>
+      </div>
+      <div class="more"><div class="more__label">확장 적용 · Extended</div><div class="more__grid">
+        <div class="mcard"><b>누수·연기 이상 감지</b><span>바닥 누수·미세 연기 등 설비 이상을 조기 포착</span></div>
+        <div class="mcard"><b>장비 상태등 모니터링</b><span>설비 장비 상태등 색상을 판독해 이상 상태 알림</span></div>
+      </div></div>
+    </section>
+  </div>
+</section>
+
+<!-- ============================= NPU ============================= -->
+<section id="npu" class="view">
+  <div class="topbar"><div class="in">
+    <button class="back" type="button" data-go="home" aria-label="메인으로 돌아가기"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.4" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>메인</button>
+    <span class="crumb" style="--c:var(--scan)">NPU 기반 AI 연산 시스템</span>
+    <a class="brand" href="/" title="ConTILab 홈페이지로 이동"><img class="mark" src="assets/mark.png" alt="">ConTILab</a>
+  </div></div>
+  <div class="wrap">
+    <div class="lead" style="--c:var(--scan)">
+      <div class="eb">On-Device AI → Server</div>
+      <h2>온디바이스 AI부터 대규모 서버 인프라까지</h2>
+      <p>현장 규모에 딱 맞는 NPU AI 연산 시스템. 카메라 단독부터 100채널 통합 관제까지, 한 라인업으로 확장합니다.</p>
+    </div>
+
+    <div class="tiers">
+      <div class="tier" style="--c:var(--ok)">
+        <span class="badge">설치 간편 · 카메라 단독</span>
+        <div class="shot"><img src="assets/dev_cam.png" alt="온디바이스 AI 카메라"></div>
+        <div class="body">
+          <span class="ch">EDGE · STANDALONE</span>
+          <h3>온디바이스 AI 카메라</h3>
+          <div class="tag" data-i18n="tag1">카메라 자체에서 <em>AI 분석</em></div>
+          <ul class="feat">
+            <li><span class="fi"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6v6H9z"/></svg></span><div><b>NPU 내장</b><span>별도 PC 없이 카메라에서 즉시 AI 분석</span></div></li>
+            <li><span class="fi"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg></span><div><b>실시간 분석</b><span>대역폭 부담 없이 빠른 처리</span></div></li>
+            <li><span class="fi"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 007 0l3-3a5 5 0 00-7-7l-1 1"/><path d="M14 11a5 5 0 00-7 0l-3 3a5 5 0 007 7l1-1"/></svg></span><div><b>간편 설치</b><span>기존 CCTV 교체 방식으로 손쉽게</span></div></li>
+          </ul>
+          <div class="tprice"><span class="tprice__lbl">예상 도입 비용대</span><span class="tprice__num" data-i18n="price1">240~310<em>만원대 / 대</em></span></div>
+        </div>
+      </div>
+
+      <div class="tier" style="--c:var(--blue)">
+        <span class="badge">중소현장 · 최대 10CH</span>
+        <div class="shot"><img src="assets/dev_edge.png" alt="AI 엣지 박스"></div>
+        <div class="body">
+          <span class="ch">EDGE BOX · 10CH</span>
+          <h3>AI 엣지 박스</h3>
+          <div class="tag" data-i18n="tag2">기존 CCTV 그대로, <em>랜선만 연결</em></div>
+          <ul class="feat">
+            <li><span class="fi"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="12" r="2.4"/><circle cx="6" cy="18" r="2.4"/><path d="M8 7l8 4M8 17l8-4"/></svg></span><div><b>최대 10채널</b><span>동시 AI 분석 지원</span></div></li>
+            <li><span class="fi"><svg viewBox="0 0 24 24"><path d="M9 7V4h6v3M12 7v4M7 11h10v3a5 5 0 01-10 0z"/></svg></span><div><b>랜선 연결</b><span>간편 설치 및 확장</span></div></li>
+            <li><span class="fi"><svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 4-7 5 6"/></svg></span><div><b>NPU 기반</b><span>안정적이고 효율적인 분석</span></div></li>
+          </ul>
+          <div class="tprice"><span class="tprice__lbl">예상 도입 비용대</span><span class="tprice__num" data-i18n="price2">180~250<em>만원대 / 대</em></span></div>
+        </div>
+      </div>
+
+      <div class="tier" style="--c:var(--hi)">
+        <span class="badge">대형현장 · 100CH+</span>
+        <div class="shot"><img src="assets/dev_server.png" alt="멀티채널 NPU PC 서버"></div>
+        <div class="body">
+          <span class="ch">NPU PC SERVER · 100CH+</span>
+          <h3>멀티채널 NPU PC 서버</h3>
+          <div class="tag" data-i18n="tag3">대규모 CCTV를 <em>한 서버로 분석</em></div>
+          <ul class="feat">
+            <li><span class="fi"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="6" rx="1.5"/><rect x="4" y="14" width="16" height="6" rx="1.5"/><path d="M8 7h.01M8 17h.01"/></svg></span><div><b>100채널 이상</b><span>대규모 동시 AI 분석</span></div></li>
+            <li><span class="fi"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.4"/><circle cx="18" cy="12" r="2.4"/><circle cx="6" cy="18" r="2.4"/><path d="M8 7l8 4M8 17l8-4"/></svg></span><div><b>멀티 현장 통합 관제</b><span>현장별 통합 관리</span></div></li>
+            <li><span class="fi"><svg viewBox="0 0 24 24"><path d="M6 16a4 4 0 010-8 5 5 0 019.6-1.3A4 4 0 0118 16z"/></svg></span><div><b>유연한 확장</b><span>온프레미스·클라우드 지원</span></div></li>
+          </ul>
+          <div class="tprice"><span class="tprice__lbl">예상 도입 비용대</span><span class="tprice__num" data-i18n="price3">1,500<em>만원대~ / 대</em></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lead" id="npu-monthly" style="--c:var(--ok)">
+      <div class="eb">Monthly · 월 구독료</div>
+      <h2>카메라당 월 운영 비용</h2>
+      <p>카메라마다 현장 데이터를 모아 AI를 학습시켜야 하므로, 어떤 작업을 감지하느냐에 따라 공수가 크게 달라집니다.</p>
+    </div>
+    <div class="mrate">
+      <div class="mrate__head">
+        <span class="mrate__lbl">카메라당 월 비용</span>
+        <span class="mrate__num" data-i18n="mrate">5~15<em>만원대 / 대·월</em></span>
+      </div>
+      <div class="mrate__break">
+        <div><b>AI 학습 · 현장 데이터 수집</b><span>카메라마다 현장 데이터를 모아 위험작업 검출 모델을 학습시킵니다</span></div>
+        <div><b>검출 모델 업데이트 · 유지보수</b><span>운영 중 지속적인 모델 개선과 기술지원을 제공합니다</span></div>
+      </div>
+    </div>
+    <div class="costnote" data-i18n="note1">※ 감지 대상 작업의 난이도와 데이터 확보 난이도에 따라 조정되며, 카메라 대수가 많을수록 단가가 낮아집니다.</div>
+
+    <div class="lead" id="npu-cost" style="--c:var(--scan)">
+      <div class="eb">By Industry · 권장 구성</div>
+      <h2>업역별 권장 구성</h2>
+      <p>현장 규모와 기존 CCTV 유무에 따라 위 3가지 배치를 조합합니다. 업역별로 권장하는 구성과 적용 기능을 정리했으며, 금액은 위 장비 단가를 기준으로 합니다.</p>
+    </div>
+    <div class="costgrid">
+      <details class="ccard" style="--c:var(--hi)">
+        <summary>
+          <div class="ccard__ind">건설</div>
+          <div class="ccard__cfg">통합 NPU 서버 1대 + 광각·PTZ 다수 — AutoPTZ·낙하물 추적</div>
+          <div class="ccard__basis">장비 단가 기준 · 대수는 현장 실사 후 산정</div>
+          <span class="ccard__more">적용 기능 7<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+        </summary>
+        <div class="ccard__fn">
+          <span><b>원경 관제</b> — AutoPTZ 자동 탐색·사각지대 순찰</span>
+          <span><b>고소작업</b> — 상하 동시작업·안전고리 체결 판독</span>
+          <span><b>양중·크레인</b> — 인양물 하부 진입·위험반경</span>
+          <span><b>장비·차량</b> — 협착·충돌 위험 근접 감지</span>
+          <span><b>슬라브·상부작업</b> — 개구부·단부 접근 추적</span>
+          <span><b>안전보호구</b> — PPE 착용 확인·안전수준 평가</span>
+          <span><b>기타 작업</b> — 작업자 밀집·온열질환 경고</span>
+        </div>
+      </details>
+      <details class="ccard" style="--c:var(--ok)">
+        <summary>
+          <div class="ccard__ind">물류</div>
+          <div class="ccard__cfg">엣지박스 1대(창고 기존 CCTV 활용) 또는 온디바이스 수 대</div>
+          <div class="ccard__basis">장비 단가 기준 · 대수는 현장 실사 후 산정</div>
+          <span class="ccard__more">적용 기능 5<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+        </summary>
+        <div class="ccard__fn">
+          <span>지게차–작업자 근접 충돌 경고</span>
+          <span>하역 위험구역 진입 감지</span>
+          <span>가상그리드 공간좌표 거리 산출</span>
+          <span>중장비·차량 제한속도 초과 감지</span>
+          <span>통로 동선·역주행 분석</span>
+        </div>
+      </details>
+      <details class="ccard" style="--c:var(--alert)">
+        <summary>
+          <div class="ccard__ind">화학</div>
+          <div class="ccard__cfg">온디바이스 AI 카메라(방폭·개별 설치) · 게이지 판독</div>
+          <div class="ccard__basis">장비 단가 기준 · 대수는 현장 실사 후 산정</div>
+          <span class="ccard__more">적용 기능 6<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+        </summary>
+        <div class="ccard__fn">
+          <span>배관 횡단·근처 침입 감지</span>
+          <span>단독 작업 방지</span>
+          <span>충전 안전거리 관제</span>
+          <span>압력 게이지 자동 판독</span>
+          <span>이벤트 발생 시 위험 작업 자동 줌인</span>
+          <span>센서 연동 누출 조기 경보</span>
+        </div>
+      </details>
+      <details class="ccard" style="--c:var(--scan)">
+        <summary>
+          <div class="ccard__ind">항만</div>
+          <div class="ccard__cfg">통합 서버 + 고배율·IR 카메라 — 광역·선박 추적</div>
+          <div class="ccard__basis">장비 단가 기준 · 대수는 현장 실사 후 산정</div>
+          <span class="ccard__more">적용 기능 5<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+        </summary>
+        <div class="ccard__fn">
+          <span>선박 접근·항로 이탈 감지</span>
+          <span>속도·방향 실시간 추적</span>
+          <span>충돌 위험 경고</span>
+          <span>컨테이너 하역 근접 방지</span>
+          <span>야간·악천후 IR 영상 추적</span>
+        </div>
+      </details>
+      <details class="ccard" style="--c:var(--semi)">
+        <summary>
+          <div class="ccard__ind">반도체</div>
+          <div class="ccard__cfg">엣지박스(도어 다채널·기존 CCTV 활용) · 클린룸</div>
+          <div class="ccard__basis">장비 단가 기준 · 대수는 현장 실사 후 산정</div>
+          <span class="ccard__more">적용 기능 5<svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+        </summary>
+        <div class="ccard__fn">
+          <span>장비 도어 개폐 24시간 감지</span>
+          <span>클린복·작업자 식별</span>
+          <span>테일게이팅·구역 출입 관제</span>
+          <span>누수·연기 이상 조기 포착</span>
+          <span>장비 상태등 색상 판독</span>
+        </div>
+      </details>
+    </div>
+    <div class="costnote" data-i18n="note2">※ 총 도입 금액은 <b>채널 수·장비 대수·현장 여건</b>에 따라 결정됩니다. 카메라 신규 설치와 배선 공사는 별도이며, 정확한 금액은 <b>현장 실사 후 맞춤 견적</b>으로 안내드립니다.</div>
+
+    <div class="lead" style="--c:var(--ok)">
+      <div class="eb">Scope · 비용 구성</div>
+      <h2>무엇이 포함되나</h2>
+      <p>도입 비용은 1회성 구축비이며, AI 학습·원격 관제·VLM 분석은 월 구독으로 운영됩니다.</p>
+    </div>
+    <div class="cincl">
+      <div><b>초기 구축비 (1회)</b><ul>
+        <li>경량 NPU — 전 채널 24시간 상시 감시</li>
+        <li>고성능 NPU — 고위험 채널 정밀 분석</li>
+        <li>업역별 위험작업 검출 모델 라이선스</li>
+        <li>현장 방문 설치·셋업 및 초기 캘리브레이션</li>
+        <li>로컬 관제 서버 구성·담당자 교육</li>
+      </ul></div>
+      <div><b>월 구독료 (카메라당)</b><ul>
+        <li>카메라별 현장 데이터 수집·AI 학습</li>
+        <li>검출 모델 업데이트·유지보수</li>
+        <li>관제 뷰어 원격 접속 — 사내 어디서든</li>
+        <li>VLM 자동 안전 보고서·분석 토큰</li>
+        <li>원격 기술지원</li>
+      </ul></div>
+    </div>
+    <div class="cnote" data-i18n="cnote">
+      <b>별도 산정</b> — CCTV 신규 설치·배선 공사, 네트워크 회선·전원 인입 공사, 현장 맞춤 모델 신규 학습(데이터 수집 포함), 타 시스템 연동 개발.<br>
+      <b>장비 산정 기준</b> — 고성능 NPU는 채널 수가 아니라 <b>동시 고위험 작업 수</b>로 사이징하므로, 대규모 현장일수록 채널당 단가가 낮아집니다.
+    </div>
+
+    <div class="ccta">
+      <h4>현장에 맞는 정확한 견적이 필요하신가요?</h4>
+      <p>현장 규모와 관제 목적을 알려주시면 표준 구성 기준으로 산출한 견적서를 보내드립니다.</p>
+      <a href="/contact/">견적 문의하기 <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.2" style="width:15px;height:15px" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+
+    <div class="flow">
+      <div class="ft" data-i18n="ft">모든 제품, <em>iSafePlatform</em>과 완벽 연동</div>
+      <div class="steps">
+        <div class="step"><span class="n"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></svg></span>위험 감지</div>
+        <span class="arw">→</span>
+        <div class="step"><span class="n"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M10 20a2 2 0 004 0"/></svg></span>실시간 알림</div>
+        <span class="arw">→</span>
+        <div class="step"><span class="n"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>데이터 분석</div>
+        <span class="arw">→</span>
+        <div class="step"><span class="n"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 13h5M10 16h5"/></svg></span>리포트 자동화</div>
+        <span class="arw">→</span>
+        <div class="step"><span class="n"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3 20a6 6 0 0112 0M14 20a5 5 0 017-4.5"/></svg></span>통합 관제</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= VLM ============================= -->
+<section id="vlm" class="view">
+  <div class="topbar"><div class="in">
+    <button class="back" type="button" data-go="home" aria-label="메인으로 돌아가기"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2.4" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>메인</button>
+    <span class="crumb" style="--c:var(--semi)">VLM 기반 작업상황 정밀 분석 시스템</span>
+    <a class="brand" href="/" title="ConTILab 홈페이지로 이동"><img class="mark" src="assets/mark.png" alt="">ConTILab</a>
+  </div></div>
+  <div class="wrap">
+    <div class="lead" style="--c:var(--semi)">
+      <div class="eb">Vision-Language Model</div>
+      <h2>영상을 읽고, 상황을 이해합니다</h2>
+      <p>단순 검출을 넘어 VLM이 현장 맥락을 해석해 자동 보고서·위험구역 추적·정밀 분석을 수행합니다.</p>
+    </div>
+
+    <div class="vrow">
+      <div class="vtext">
+        <div class="eb">Auto Report</div>
+        <h3>VLM 자동 안전 보고서</h3>
+        <p>하루의 모든 감지 데이터를 VLM이 읽고, 위험 유형·시간대·현장별로 종합해 일일 안전 보고서로 자동 정리합니다. 관리자는 요약된 리포트만 확인하면 됩니다.</p>
+        <div class="chips"><span>AI 종합 분석</span><span>실시간 감지 로그</span><span>위험 유형 분포</span><span>일일 리포트</span></div>
+      </div>
+      <div class="vmedia"><video data-src="assets/vlm_report.mp4" muted loop playsinline preload="none"></video><div class="tagline">VLM 자동 생성 · 일일 안전 보고서</div></div>
+    </div>
+
+    <div class="vrow rev">
+      <div class="vmedia"><video data-src="assets/vlm_ptz.mp4" muted loop playsinline preload="none"></video><div class="tagline">Auto PTZ · 위험구역 트래킹</div></div>
+      <div class="vtext">
+        <div class="eb">Auto PTZ Tracking</div>
+        <h3>능동형 PTZ 추적 &amp; 위험구역 관제</h3>
+        <p>인양물·중장비 등 위험 대상을 PTZ 카메라가 자동으로 따라가며 확대 관제합니다. 지정된 위험구역(Risk Area) 진입을 실시간으로 추적해 이벤트를 기록합니다.</p>
+        <div class="chips"><span>Auto PTZ</span><span>Risk Area 추적</span><span>이벤트 자동 기록</span></div>
+      </div>
+    </div>
+
+    <div class="vrow">
+      <div class="vtext">
+        <div class="eb">Spatial Grid</div>
+        <h3>가상그리드 공간좌표 분석</h3>
+        <p>영상 평면을 실제 공간좌표 격자로 변환해, 작업자·장비 간 실측 거리와 이동 동선을 계산합니다. 근접·침입 위험을 물리적 거리 기준으로 정밀 판정합니다.</p>
+        <div class="chips"><span>공간좌표 변환</span><span>실측 거리</span><span>동선 분석</span></div>
+      </div>
+      <div class="vmedia"><video data-src="assets/vlm_grid.mp4" muted loop playsinline preload="none"></video><div class="tagline">Virtual Grid · 공간좌표 거리 산출</div></div>
+    </div>
+
+    <div class="vrow rev">
+      <div class="vmedia"><img src="assets/vdata.jpg" alt="가상 합성 데이터 샘플"><div class="tagline">Synthetic Data · 가상 현장 데이터</div></div>
+      <div class="vtext">
+        <div class="eb">Synthetic Data</div>
+        <h3>합성(가상) 데이터 기반 학습</h3>
+        <p>실제와 유사한 가상 현장을 생성해 위험 상황 학습 데이터를 대량 확보합니다. 촬영이 어려운 사고·희귀 상황까지 커버해 AI 검출 정밀도를 끌어올립니다.</p>
+        <div class="chips"><span>데이터 증강</span><span>희귀 상황 학습</span><span>정밀도 강화</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="row" data-i18n="frow"><span><b>ContiLab</b> · 콘티랩 주식회사</span><span>contilab.co.kr</span><span>산업 안전 AI 플랫폼</span></div>
+  <div>Vision AI · NPU Compute · VLM Analysis · 2026</div>
+</footer>
+
+<script>
+  const views=[...document.querySelectorAll('.view')];
+  const HEAD=[
+    "중장비와 작업자의 거리를 실측해 위험반경 접근을 경고합니다",
+    "지게차와 작업자의 근접을 계산해 충돌 위험을 경고합니다",
+    "배관 횡단, 단독 작업, 압력 게이지를 자동 판독합니다",
+    "선박의 위치·속도·항로를 추적해 접근·충돌 위험을 알립니다",
+    "장비 도어의 개폐를 24시간 감지해, 작업자 없는 개방을 즉시 경고합니다"
+  ];
+  const CC=["--hi","--ok","--alert","--scan","--semi"];
+  const tabs=[...document.querySelectorAll('#model .tab')], panels=[...document.querySelectorAll('#model .panel')];
+  const root=document.documentElement;
+  let curTab=0;
+
+  function loadPlay(v){ if(!v)return; if(!v.src&&v.dataset.src)v.src=v.dataset.src; v.play&&v.play().catch(()=>{}); }
+  function loadPlayAll(c){ if(c)c.querySelectorAll('video').forEach(loadPlay); }
+  function pauseAll(){ document.querySelectorAll('video').forEach(v=>v.pause&&v.pause()); }
+
+  // 패널 재생: 서브패널(칩)이 있으면 활성 서브패널의 영상만, 없으면 단일 영상.
+  function playPanel(p){
+    p.querySelectorAll('video').forEach(v=>v.pause&&v.pause());
+    const sub=p.querySelector('.subpanel.active');
+    loadPlayAll(sub||p);   // 서브패널(칩)의 모든 영상 재생(슬라브=3개)
+  }
+  function showTab(i){
+    curTab=i;
+    tabs.forEach(t=>t.classList.toggle('active',+t.dataset.i===i));
+    panels.forEach(p=>{const on=+p.dataset.i===i;p.classList.toggle('active',on);
+      if(on)playPanel(p); else p.querySelectorAll('video').forEach(v=>v.pause&&v.pause());});
+  }
+  tabs.forEach(t=>t.addEventListener('click',()=>showTab(+t.dataset.i)));
+
+  // 건설 서브탭(칩)
+  const chips=[...document.querySelectorAll('#model .chip')];
+  const subpanels=[...document.querySelectorAll('#model .subpanel')];
+  function showChip(s){
+    chips.forEach(c=>c.classList.toggle('active',c.dataset.s===s));
+    subpanels.forEach(sp=>{const on=sp.dataset.s===s;sp.classList.toggle('active',on);
+      if(!on)sp.querySelectorAll('video').forEach(v=>v.pause&&v.pause());});
+    loadPlayAll(document.querySelector('#model .subpanel.active'));
+  }
+  chips.forEach(c=>c.addEventListener('click',()=>showChip(c.dataset.s)));
+  document.querySelectorAll('#model .ovcard').forEach(o=>o.addEventListener('click',()=>showChip(o.dataset.goto)));
+
+  function go(v){
+    views.forEach(s=>s.classList.toggle('active',s.id===v));
+    pauseAll();
+    if(v==='model')showTab(curTab);
+    else if(v==='vlm')document.querySelectorAll('#vlm video').forEach(loadPlay);
+    window.scrollTo({top:0,behavior:'instant'in window?'instant':'auto'});
+    try{history.replaceState(null,'','#'+v)}catch(e){}
+  }
+  document.querySelectorAll('[data-go]').forEach(el=>{
+    el.addEventListener('click',()=>go(el.dataset.go));
+    // <button>은 Enter/Space가 이미 click을 발생시키므로 중복 호출을 막는다
+    if(el.tagName!=='BUTTON')
+      el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go(el.dataset.go);}});
+  });
+
+  const init=(location.hash||'').replace('#','');
+  if(['model','npu','vlm'].includes(init))go(init); else showTab(0);
+</script>
+<script>
+/* 국문/영문 전환 — 태그로 쪼개진 문장은 BLOCK 으로 통째 교체하고,
+   나머지는 텍스트 노드 단위로 사전 치환한다. */
+(function(){
+  const BLOCK = {"h1": "Predict the risk,<br>reinvent <span class=\"g\">safety culture</span>", "sub": "Grounded in real site conditions — <span class=\"kk\">risk assessment and safety training</span>, <span class=\"kk\">Vision AI hazard detection</span> and <span class=\"kk\">safety-activity analytics</span> together enable voluntary safety management.", "card2": "From on-device AI cameras to 100-channel servers, an NPU compute lineup sized to your site, with <b>deployment cost by industry</b>.", "tag1": "<em>AI analysis</em> on the camera itself", "tag2": "Keep your CCTV, <em>just add a LAN cable</em>", "tag3": "Large CCTV estates <em>analysed on one server</em>", "homefoot": "<b>ContiLab</b> · ConTILab Inc. · Industrial Safety AI Platform · contilab.co.kr", "note1": "※ Adjusted to the difficulty of the target work and of obtaining training data; the unit price falls as camera count rises.", "note2": "※ The total depends on <b>channel count, equipment quantity and site conditions</b>. New CCTV installation and cabling are quoted separately; exact figures come with a <b>tailored quote after a site survey</b>.", "cnote": "<b>Quoted separately</b> — new CCTV installation and cabling, network lines and power supply work, training a new site-specific model (data collection included), and integration with other systems.<br><b>Sizing basis</b> — high-performance NPUs are sized by <b>the number of concurrent high-risk tasks</b> rather than channel count, so the per-channel cost falls on larger sites.", "ft": "Every product integrates seamlessly with <em>iSafePlatform</em>", "price1": "2.4M–3.1M<em>KRW / unit</em>", "price2": "1.8M–2.5M<em>KRW / unit</em>", "price3": "15M<em>KRW and up / unit</em>", "mrate": "50K–150K<em>KRW / unit·month</em>", "frow": "<span><b>ContiLab</b> · ConTILab Inc.</span><span>contilab.co.kr</span><span>Industrial Safety AI Platform</span>"};
+  const T = {"위험작업 특화": "Hazard-Specific", "AI 모델": "AI Models", "건설·물류·화학·항만·반도체 — 현장별 위험작업에 특화된 Vision AI 검출 모델로 실시간 감지·경고합니다.": "Construction, logistics, chemical, port and semiconductor — Vision AI models tuned to each site's hazardous work, detecting and alerting in real time.", "모델 보기": "View models", "NPU 기반": "NPU-Based", "AI 연산 시스템": "AI Compute Systems", "업역별 도입 비용": "deployment cost by industry", "라인업 · 도입 비용": "Lineup · cost", "VLM 기반 작업상황": "VLM-Based Work Context", "정밀 분석 시스템": "Analysis System", "영상을 읽고 상황을 이해하는 VLM으로 자동 안전 보고서·위험구역 추적·정밀 분석을 수행합니다.": "A VLM that reads footage and understands context — automated safety reports, risk-area tracking and detailed analysis.", "분석 보기": "View analysis", "메인": "Home", "위험작업 특화 AI 모델": "Hazard-Specific AI Models", "건설": "Construction", "물류": "Logistics", "화학": "Chemical", "항만": "Port", "반도체": "Semiconductor", "원경 관제": "Wide-Area", "고소작업": "Work at Height", "양중·크레인": "Lifting & Crane", "장비·차량": "Equipment & Vehicles", "슬라브·상부작업": "Slab & Overhead", "안전보호구": "PPE", "기타 작업": "Other Work", "원경 관제 · Wide-area": "Wide-Area Monitoring", "지정된 위험작업 구간을 자동 탐색·확대하여 위험상황을 자동으로 판별합니다": "Automatically sweeps and zooms into designated hazardous zones to identify risk situations", "위험구역 침입": "Restricted-zone entry", "AutoPTZ 스케줄 순찰": "AutoPTZ scheduled patrol", "사각지대 감시": "Blind-spot coverage", "AI 실시간 · AutoPTZ": "Real-time AI · AutoPTZ", "함양 현장 · 원경 CCTV": "Hamyang site · wide-area CCTV", "이 영상의 AI 관제": "AI monitoring in this clip", "AutoPTZ 자동 탐색": "AutoPTZ auto-sweep", "중장비를 자동으로 확대·추적하며 원거리 관제": "Zooms and tracks heavy equipment automatically at long range", "위험구역 침입 감지": "Restricted-zone entry detection", "지정 구역(Zone) 진입을 실시간 경고": "Real-time alert when a designated zone is entered", "사각지대 스케줄 순찰": "Blind-spot scheduled patrol", "고정 카메라가 놓치는 구역까지 자동 순회": "Automatically patrols areas fixed cameras miss", "고소작업 · Work at Height": "Work at Height", "비계 위 작업자를 추적해 상하 동시작업과 수직 위험반경을 경고합니다": "Tracks workers on scaffolding and warns of simultaneous vertical work and danger radius", "상하 동시작업": "Simultaneous vertical work", "수직 위험반경 침범": "Danger-radius intrusion", "안전고리 체결 판독": "Safety-hook fastening check", "비계 · 고소 작업": "Scaffolding · work at height", "상하 동시작업 감지": "Simultaneous vertical work detection", "수직으로 겹친 작업을 실시간 판별·경고": "Identifies and warns of vertically overlapping work in real time", "안전고리 미체결 경고": "Unfastened safety-hook alert", "비계 작업자의 안전고리 착용 판독": "Reads whether scaffolding workers have hooked on", "수직 위험반경 관제": "Vertical danger-radius monitoring", "상부 작업 하부 진입 위험 감지": "Detects entry beneath overhead work", "양중·크레인 · Lifting": "Lifting & Crane", "크레인 인양물과 작업자의 거리를 실측해 인양물 하부 진입을 경고합니다": "Measures the real distance between a lifted load and workers, warning when anyone moves underneath", "인양물 하부 진입": "Entry beneath a load", "중장비 위험반경": "Heavy-equipment danger radius", "작업자·크레인 동시 추적": "Simultaneous worker & crane tracking", "AI 실시간 검출 · 인양물 추적": "Real-time AI · load tracking", "함양합천 1공구 · 자재 인양": "Hamyang-Hapcheon Section 1 · material lifting", "인양물 하부 진입 감지": "Under-load entry detection", "크레인 자재 아래 작업자 접근 경고": "Warns when a worker approaches beneath crane material", "이동식 크레인 추적": "Mobile crane tracking", "장비 위치·작업반경 실시간 모니터링": "Real-time monitoring of equipment position and working radius", "현장 인원 집계": "On-site headcount", "작업자 수를 자동 카운트": "Counts workers automatically", "장비·차량 · Equipment": "Equipment & Vehicles", "공사 차량·중장비와 작업자의 근접을 감지해 협착·충돌을 예방합니다": "Detects proximity between vehicles, heavy equipment and workers to prevent crushing and collisions", "차량·작업자 근접": "Vehicle–worker proximity", "중장비 이동 경로": "Heavy-equipment path", "협착 위험": "Crushing hazard", "AI 실시간 검출 · best20": "Real-time AI detection · best20", "코오롱글로벌 · 토공 중장비": "Kolon Global · earthwork equipment", "차량·작업자 근접 감지": "Vehicle–worker proximity detection", "협착·충돌 위험을 실시간 경고": "Real-time warning of crushing and collision risk", "중장비 이동경로 관제": "Heavy-equipment route monitoring", "장비 동선을 추적·기록": "Tracks and logs equipment movement", "작업구역 출입 관리": "Work-zone access control", "지정 구역 진입을 감지": "Detects entry into designated zones", "슬라브·상부작업 · Slab": "Slab & Overhead Work", "슬라브 개구부·단부 접근을 추적해 낙하 위험을 감시합니다": "Tracks approach to slab openings and edges to monitor fall risk", "개구부·단부 접근": "Opening & edge approach", "위험구간 진입": "Hazard-zone entry", "Zone Tracking · 단부·개구부": "Zone tracking · edges & openings", "코오롱 슬래브 · 단부·개구부 감지": "Kolon slab · edge & opening detection", "개구부·단부 접근 감지": "Opening & edge approach detection", "슬래브 가장자리 낙하 위험 경고": "Warns of fall risk at slab edges", "고소 작업자 추적": "Elevated-worker tracking", "옥상·상부 작업 인원 관제": "Monitors personnel on rooftops and upper levels", "위험구간 Zone Tracking": "Hazard-zone tracking", "지정 위험구역 진입 추적": "Tracks entry into designated hazard zones", "안전보호구 · PPE Check": "PPE Check", "작업 투입 전, 근로자 안전보호구 착용 여부를 자동으로 점검하고 관리합니다": "Automatically checks and records whether workers are wearing required PPE before they start work", "안전보호구 착용 여부 확인": "PPE compliance check", "블록체인 기반 안전수준 평가 및 인센티브": "Blockchain-based safety scoring & incentives", "PPE Guard 관리 시스템": "PPE Guard management system", "TBM 점검 · 수시 스팟 체크 · 즉시 스캔": "Toolbox meeting · spot check · instant scan", "PPE Guard · 현장 앱과 관리 시스템": "PPE Guard · field app & management system", "PPE 착용 여부 확인": "PPE compliance check", "작업 전 필수 PPE 착용 여부를 자동으로 기록": "Automatically records required PPE before work begins", "안전수준 평가": "Safety scoring", "기록된 데이터는 블록체인에 저장되어 개인·업체 안전수준 평가에 활용": "Records are stored on the blockchain and used to score individual and contractor safety", "인센티브": "Incentives", "안전수준 평가 기록을 토큰화하여 인센티브 제공을 통한 자율 안전활동 유도": "Safety scores are tokenised into incentives that encourage voluntary safety behaviour", "기타 작업 · Others": "Other Work", "여름철 외부작업시 작업자 수, 작업시간을 측정하여 온열질환 위험을 관리합니다": "Measures headcount and working hours during summer outdoor work to manage heat-illness risk", "외부작업": "Outdoor work", "작업자 밀집": "Worker density", "온열질환 경고": "Heat-illness alert", "AI 실시간 검출": "Real-time AI detection", "함양 현장 · 사면 작업": "Hamyang site · slope work", "작업자 밀집 감지": "Worker-density detection", "외부작업시 작업인원 실시간 관제": "Real-time headcount for outdoor work", "온열질환 위험환경 관리": "Heat-illness risk management", "외부 온습도, 작업시간 모니터링": "Monitors outdoor temperature, humidity and working hours", "Logistics · 물류": "Logistics", "지게차와 작업자의 근접을 계산해 충돌 위험을 경고합니다": "Calculates forklift–worker proximity and warns of collision risk", "지게차–보행자 근접": "Forklift–worker proximity", "하역 위험구역 진입": "Loading-zone entry", "공간좌표 거리 산출": "Spatial-coordinate distance", "가상그리드": "Virtual grid", "Virtual Grid · 거리 산출": "Virtual grid · distance calculation", "하역장 → 야드 가상그리드": "Dock → yard virtual grid", "확장 적용 · Extended": "Extended Applications", "중장비·차량 속도 측정": "Equipment & vehicle speed", "구역별 제한속도 초과 주행을 자동 감지·경고": "Automatically detects and warns of speeding by zone", "하역 중 깔림 방지": "Crush prevention during loading", "지게차 후방·사각지대 작업자 진입 실시간 경보": "Real-time alert when a worker enters a forklift's rear or blind spot", "통로 동선·역주행 감지": "Aisle flow & wrong-way detection", "일방통행 위반·혼잡 동선을 분석해 사고 예방": "Analyses one-way violations and congestion to prevent accidents", "Chemical · 화학": "Chemical", "배관 횡단, 단독 작업, 압력 게이지를 자동 판독합니다": "Detects pipe crossing and lone working, and reads pressure gauges automatically", "배관 근처 침입": "Pipe-area intrusion", "단독 작업 방지": "Lone-working prevention", "충전 안전거리": "Filling safety distance", "게이지 자동 판독": "Automatic gauge reading", "AI 검출 · 이벤트": "AI detection · events", "Approtium · 배관→충전": "Approtium · pipe → filling", "위험 작업 자동 줌인": "Auto zoom on hazardous work", "이벤트 발생 시 PTZ 확대·집중 관제로 전환": "Switches to PTZ zoom and focused monitoring when an event occurs", "센서 연동 누출 감지": "Sensor-linked leak detection", "가스·압력 센서와 영상 융합으로 누출 조기 경보": "Fuses gas and pressure sensors with video for early leak warning", "게이지 이상값 경보": "Gauge out-of-range alert", "계기 수치를 판독해 정상 범위 이탈을 자동 알림": "Reads instrument values and flags deviations from the normal range", "Port & Maritime · 항만": "Port & Maritime", "선박의 위치·속도·항로를 추적해 접근·충돌 위험을 알립니다": "Tracks vessel position, speed and course to warn of approach and collision risk", "선박 접근·항로 이탈": "Vessel approach & course deviation", "속도·방향 추적": "Speed & heading tracking", "충돌 위험": "Collision risk", "선박 관제 · 추적": "Vessel monitoring · tracking", "다중 선박 추적": "Multi-vessel tracking", "컨테이너 하역 근접 방지": "Container-handling proximity prevention", "크레인·야드 트럭과 작업자 간 근접 위험 감지": "Detects proximity risk between cranes, yard trucks and workers", "야간·악천후 IR 추적": "Night & bad-weather IR tracking", "적외선 영상 융합으로 저조도·안개에서도 선박 추적": "Fuses infrared imagery to track vessels in low light and fog", "Semiconductor · 반도체": "Semiconductor", "장비 도어의 개폐를 24시간 감지해, 작업자 없는 개방을 즉시 경고합니다": "Monitors equipment doors around the clock and instantly flags an opening with no worker present", "도어 열림 감지": "Door-open detection", "클린복·작업자": "Cleanroom suit & worker", "테일게이팅": "Tailgating", "구역 출입": "Zone access", "도어·작업자 관제": "Door & worker monitoring", "ISC · 도어 개폐 감지": "ISC · door open/close detection", "누수·연기 이상 감지": "Leak & smoke anomaly detection", "바닥 누수·미세 연기 등 설비 이상을 조기 포착": "Catches facility anomalies such as floor leaks and faint smoke early", "장비 상태등 모니터링": "Status-light monitoring", "설비 장비 상태등 색상을 판독해 이상 상태 알림": "Reads equipment status-light colour and reports abnormal states", "NPU 기반 AI 연산 시스템": "NPU-Based AI Compute Systems", "온디바이스 AI부터 대규모 서버 인프라까지": "From on-device AI to large-scale server infrastructure", "현장 규모에 딱 맞는 NPU AI 연산 시스템. 카메라 단독부터 100채널 통합 관제까지, 한 라인업으로 확장합니다.": "NPU compute sized to your site — from a standalone camera to 100-channel integrated monitoring, all in one lineup.", "설치 간편 · 카메라 단독": "Easy install · standalone camera", "온디바이스 AI 카메라": "On-device AI camera", "AI 분석": "AI analysis", "NPU 내장": "Built-in NPU", "별도 PC 없이 카메라에서 즉시 AI 분석": "Runs AI on the camera itself, no separate PC", "실시간 분석": "Real-time analysis", "대역폭 부담 없이 빠른 처리": "Fast processing with no bandwidth load", "간편 설치": "Simple installation", "기존 CCTV 교체 방식으로 손쉽게": "Drops in as a replacement for existing CCTV", "예상 도입 비용대": "Estimated cost range", "만원대 / 대": "0K KRW range / unit", "중소현장 · 최대 10CH": "Mid-size site · up to 10 CH", "AI 엣지 박스": "AI edge box", "랜선만 연결": "just plug in a LAN cable", "최대 10채널": "Up to 10 channels", "동시 AI 분석 지원": "Simultaneous AI analysis", "랜선 연결": "LAN connection", "간편 설치 및 확장": "Easy to install and expand", "안정적이고 효율적인 분석": "Stable, efficient analysis", "대형현장 · 100CH+": "Large site · 100 CH+", "멀티채널 NPU PC 서버": "Multi-channel NPU PC server", "한 서버로 분석": "analysed on a single server", "100채널 이상": "100+ channels", "대규모 동시 AI 분석": "Large-scale simultaneous AI analysis", "멀티 현장 통합 관제": "Multi-site integrated monitoring", "현장별 통합 관리": "Unified management across sites", "유연한 확장": "Flexible scaling", "온프레미스·클라우드 지원": "On-premise and cloud supported", "만원대~ / 대": "0K KRW range and up / unit", "Monthly · 월 구독료": "Monthly · Subscription", "카메라당 월 운영 비용": "Monthly cost per camera", "카메라마다 현장 데이터를 모아 AI를 학습시켜야 하므로, 어떤 작업을 감지하느냐에 따라 공수가 크게 달라집니다.": "Each camera needs site data collected and a model trained, so the effort varies considerably with the type of work being detected.", "카메라당 월 비용": "Monthly cost per camera", "만원대 / 대·월": "0K KRW range / unit·month", "AI 학습 · 현장 데이터 수집": "AI training · site data collection", "카메라마다 현장 데이터를 모아 위험작업 검출 모델을 학습시킵니다": "Site data is collected per camera to train the hazardous-work detection model", "검출 모델 업데이트 · 유지보수": "Model updates · maintenance", "운영 중 지속적인 모델 개선과 기술지원을 제공합니다": "Ongoing model improvement and technical support during operation", "By Industry · 권장 구성": "By Industry · Recommended Setup", "업역별 권장 구성": "Recommended Setup by Industry", "현장 규모와 기존 CCTV 유무에 따라 위 3가지 배치를 조합합니다. 업역별로 권장하는 구성과 적용 기능을 정리했으며, 금액은 위 장비 단가를 기준으로 합니다.": "The three configurations above are combined according to site scale and whether CCTV is already in place. Recommended setups and applicable features are listed per industry; pricing follows the unit costs above.", "통합 NPU 서버 1대 + 광각·PTZ 다수 — AutoPTZ·낙하물 추적": "One integrated NPU server + multiple wide-angle/PTZ cameras — AutoPTZ and falling-object tracking", "장비 단가 기준 · 대수는 현장 실사 후 산정": "Based on unit price · quantity determined after a site survey", "적용 기능 7": "7 features", "적용 기능 6": "6 features", "적용 기능 5": "5 features", "— AutoPTZ 자동 탐색·사각지대 순찰": "— AutoPTZ sweep & blind-spot patrol", "— 상하 동시작업·안전고리 체결 판독": "— Simultaneous vertical work & safety-hook check", "— 인양물 하부 진입·위험반경": "— Under-load entry & danger radius", "— 협착·충돌 위험 근접 감지": "— Crushing & collision proximity detection", "— 개구부·단부 접근 추적": "— Opening & edge approach tracking", "— PPE 착용 확인·안전수준 평가": "— PPE compliance & safety scoring", "— 작업자 밀집·온열질환 경고": "— Worker density & heat-illness alerts", "엣지박스 1대(창고 기존 CCTV 활용) 또는 온디바이스 수 대": "One edge box (reusing warehouse CCTV) or several on-device cameras", "지게차–작업자 근접 충돌 경고": "Forklift–worker collision warning", "하역 위험구역 진입 감지": "Loading hazard-zone entry detection", "가상그리드 공간좌표 거리 산출": "Virtual-grid spatial distance calculation", "중장비·차량 제한속도 초과 감지": "Equipment & vehicle speeding detection", "통로 동선·역주행 분석": "Aisle flow & wrong-way analysis", "온디바이스 AI 카메라(방폭·개별 설치) · 게이지 판독": "On-device AI cameras (explosion-proof, individually installed) · gauge reading", "배관 횡단·근처 침입 감지": "Pipe crossing & intrusion detection", "충전 안전거리 관제": "Filling safety-distance monitoring", "압력 게이지 자동 판독": "Automatic pressure-gauge reading", "이벤트 발생 시 위험 작업 자동 줌인": "Auto zoom on hazardous work when an event occurs", "센서 연동 누출 조기 경보": "Sensor-linked early leak warning", "통합 서버 + 고배율·IR 카메라 — 광역·선박 추적": "Integrated server + high-zoom/IR cameras — wide-area and vessel tracking", "선박 접근·항로 이탈 감지": "Vessel approach & course-deviation detection", "속도·방향 실시간 추적": "Real-time speed & heading tracking", "충돌 위험 경고": "Collision-risk warning", "야간·악천후 IR 영상 추적": "Night & bad-weather IR tracking", "엣지박스(도어 다채널·기존 CCTV 활용) · 클린룸": "Edge box (multi-door, reusing existing CCTV) · cleanroom", "장비 도어 개폐 24시간 감지": "24/7 equipment-door monitoring", "클린복·작업자 식별": "Cleanroom suit & worker identification", "테일게이팅·구역 출입 관제": "Tailgating & zone-access monitoring", "누수·연기 이상 조기 포착": "Early detection of leaks and smoke", "장비 상태등 색상 판독": "Equipment status-light colour reading", "Scope · 비용 구성": "Scope · What's Included", "무엇이 포함되나": "What's Included", "도입 비용은 1회성 구축비이며, AI 학습·원격 관제·VLM 분석은 월 구독으로 운영됩니다.": "Deployment cost is a one-off build fee; AI training, remote monitoring and VLM analysis run on a monthly subscription.", "초기 구축비 (1회)": "Initial build cost (one-off)", "경량 NPU — 전 채널 24시간 상시 감시": "Lightweight NPU — 24/7 coverage on every channel", "고성능 NPU — 고위험 채널 정밀 분석": "High-performance NPU — detailed analysis on high-risk channels", "업역별 위험작업 검출 모델 라이선스": "Industry-specific hazard-detection model licence", "현장 방문 설치·셋업 및 초기 캘리브레이션": "On-site installation, setup and initial calibration", "로컬 관제 서버 구성·담당자 교육": "Local monitoring server setup and operator training", "월 구독료 (카메라당)": "Monthly subscription (per camera)", "카메라별 현장 데이터 수집·AI 학습": "Per-camera site data collection and AI training", "검출 모델 업데이트·유지보수": "Detection model updates and maintenance", "관제 뷰어 원격 접속 — 사내 어디서든": "Remote viewer access — from anywhere in the company", "VLM 자동 안전 보고서·분석 토큰": "VLM automated safety reports and analysis tokens", "원격 기술지원": "Remote technical support", "동시 고위험 작업 수": "the number of concurrent high-risk tasks", "현장에 맞는 정확한 견적이 필요하신가요?": "Need an accurate quote for your site?", "현장 규모와 관제 목적을 알려주시면 표준 구성 기준으로 산출한 견적서를 보내드립니다.": "Tell us your site scale and monitoring goals and we'll send a quote based on the standard configuration.", "견적 문의하기": "Request a quote", "위험 감지": "Hazard detection", "실시간 알림": "Real-time alerts", "데이터 분석": "Data analysis", "리포트 자동화": "Automated reporting", "통합 관제": "Integrated monitoring", "VLM 기반 작업상황 정밀 분석 시스템": "VLM-Based Work Context Analysis", "영상을 읽고, 상황을 이해합니다": "Reads the footage, understands the situation", "단순 검출을 넘어 VLM이 현장 맥락을 해석해 자동 보고서·위험구역 추적·정밀 분석을 수행합니다.": "Beyond simple detection — a VLM interprets site context to produce automated reports, risk-area tracking and detailed analysis.", "VLM 자동 안전 보고서": "VLM automated safety report", "하루의 모든 감지 데이터를 VLM이 읽고, 위험 유형·시간대·현장별로 종합해 일일 안전 보고서로 자동 정리합니다. 관리자는 요약된 리포트만 확인하면 됩니다.": "The VLM reads every detection from the day and compiles it by hazard type, time of day and site into an automated daily safety report. Managers only need to review the summary.", "AI 종합 분석": "AI synthesis", "실시간 감지 로그": "Real-time detection log", "위험 유형 분포": "Hazard-type distribution", "일일 리포트": "Daily report", "VLM 자동 생성 · 일일 안전 보고서": "VLM-generated · daily safety report", "Auto PTZ · 위험구역 트래킹": "Auto PTZ · risk-area tracking", "능동형 PTZ 추적 & 위험구역 관제": "Active PTZ tracking & risk-area monitoring", "인양물·중장비 등 위험 대상을 PTZ 카메라가 자동으로 따라가며 확대 관제합니다. 지정된 위험구역(Risk Area) 진입을 실시간으로 추적해 이벤트를 기록합니다.": "PTZ cameras automatically follow and zoom in on hazardous subjects such as lifted loads and heavy equipment, tracking entry into designated risk areas in real time and logging each event.", "Risk Area 추적": "Risk-area tracking", "이벤트 자동 기록": "Automatic event logging", "가상그리드 공간좌표 분석": "Virtual-grid spatial analysis", "영상 평면을 실제 공간좌표 격자로 변환해, 작업자·장비 간 실측 거리와 이동 동선을 계산합니다. 근접·침입 위험을 물리적 거리 기준으로 정밀 판정합니다.": "The image plane is converted into a real-world coordinate grid to calculate true distances and movement paths between workers and equipment, judging proximity and intrusion risk by physical distance.", "공간좌표 변환": "Coordinate conversion", "실측 거리": "True distance", "동선 분석": "Path analysis", "Virtual Grid · 공간좌표 거리 산출": "Virtual grid · spatial distance calculation", "Synthetic Data · 가상 현장 데이터": "Synthetic data · virtual site data", "합성(가상) 데이터 기반 학습": "Training on synthetic data", "실제와 유사한 가상 현장을 생성해 위험 상황 학습 데이터를 대량 확보합니다. 촬영이 어려운 사고·희귀 상황까지 커버해 AI 검출 정밀도를 끌어올립니다.": "Realistic virtual sites are generated to produce large volumes of hazard training data, covering accidents and rare situations that are difficult to film and raising detection accuracy.", "산업 안전 AI 플랫폼": "Industrial Safety AI Platform", "데이터 증강": "Data augmentation", "희귀 상황 학습": "Rare-case training", "정밀도 강화": "Accuracy boost", "ConTILab 홈페이지로 이동": "Go to the ConTILab website", "가상 합성 데이터 샘플": "Synthetic data sample", "건설 작업 분류": "Construction work categories", "메인으로 돌아가기": "Back to home", "산업 분류": "Industry categories", "중장비와 작업자의 거리를 실측해 위험반경 접근을 경고합니다": "Measures the real distance between heavy equipment and workers, warning on danger-radius approach"};
+  const blocks = [...document.querySelectorAll('[data-i18n]')];
+  blocks.forEach(el => el.setAttribute('data-ko-html', el.innerHTML));
+
+  const inBlock = n => {
+    for (let p = n.parentNode; p; p = p.parentNode)
+      if (p.nodeType === 1 && p.hasAttribute('data-i18n')) return true;
+    return false;
+  };
+  const KO = /[가-힣]/;
+  const nodes = [];
+  const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let n; (n = w.nextNode());) {
+    const t = n.nodeValue.trim();
+    if (t && KO.test(t) && !inBlock(n)) nodes.push({ n, ko: n.nodeValue, key: t });
+  }
+  const attrs = [];
+  document.querySelectorAll('[title],[alt],[aria-label]').forEach(el => {
+    ['title','alt','aria-label'].forEach(a => {
+      const v = el.getAttribute(a);
+      if (v && KO.test(v)) attrs.push({ el, a, ko: v });
+    });
+  });
+
+  function apply(lang){
+    const en = lang === 'en';
+    blocks.forEach(el => {
+      el.innerHTML = en ? (BLOCK[el.getAttribute('data-i18n')] || el.getAttribute('data-ko-html'))
+                        : el.getAttribute('data-ko-html');
+    });
+    nodes.forEach(o => {
+      o.n.nodeValue = (en && T[o.key]) ? o.ko.replace(o.key, T[o.key]) : o.ko;
+    });
+    attrs.forEach(o => o.el.setAttribute(o.a, (en && T[o.ko]) ? T[o.ko] : o.ko));
+    document.documentElement.lang = lang;
+    document.querySelectorAll('.langsw button').forEach(b =>
+      b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+    try { localStorage.setItem('brochureLang', lang); } catch(e){}
+  }
+
+  document.querySelectorAll('.langsw button').forEach(b =>
+    b.addEventListener('click', () => apply(b.dataset.lang)));
+
+  let init = 'ko';
+  try { init = localStorage.getItem('brochureLang') || 'ko'; } catch(e){}
+  if (init === 'en') apply('en');
+})();
+</script>
+</body>
+</html>

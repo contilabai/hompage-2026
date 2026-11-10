@@ -195,6 +195,14 @@ export default function Header() {
               )}
             </div>
 
+            {/* 브로셔 — Next 라우터 밖의 정적 파일이라 Link 대신 <a> 사용 */}
+            <a
+              href="/brochure/"
+              className="px-5 py-3 text-[20px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+            >
+              {language === "ko" ? "브로셔" : "Brochure"}
+            </a>
+
             <Link
               href="/news"
               className="px-5 py-3 text-[20px] font-medium text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
@@ -286,6 +294,14 @@ export default function Header() {
                 ))}
               </div>
             )}
+
+            <a
+              href="/brochure/"
+              className="block py-3 text-sm font-medium text-gray-700 border-b border-gray-50 hover:text-blue-600"
+              onClick={() => setMobileOpen(false)}
+            >
+              {language === "ko" ? "브로셔" : "Brochure"}
+            </a>
 
             <Link
               href="/news"
