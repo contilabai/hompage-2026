@@ -332,6 +332,40 @@ export default function ISafeChainPage() {
           </section>
         ))}
 
+        {/* PPE 점검 영상 */}
+        <section className="py-20 bg-white">
+          <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
+            <div className="text-center mb-12">
+              <span className="inline-block px-3 py-1 text-xs font-semibold bg-orange-100 text-orange-700 rounded-full mb-4">
+                {language === "ko" ? "안전보호구 점검" : "PPE Check"}
+              </span>
+              <h2 className="text-[30px] font-black text-gray-900 leading-tight mb-3">
+                {language === "ko"
+                  ? "작업 투입 전, 보호구 착용을 자동으로 확인합니다"
+                  : "Verify protective equipment before work begins"}
+              </h2>
+              <p className="text-[19px] text-gray-600 leading-relaxed max-w-3xl mx-auto">
+                {language === "ko"
+                  ? "아침 TBM 점검부터 수시 스팟 체크까지, 스마트폰으로 비추면 AI가 안전모·조끼·안전화를 즉시 판별합니다. 점검 결과는 자동으로 기록되어 개인·업체 안전수준 평가와 인센티브 산정의 근거가 됩니다."
+                  : "From morning toolbox meetings to spot checks, just point a phone and AI instantly verifies helmets, vests, and boots. Every result is recorded automatically, forming the basis for safety scoring and incentive calculation."}
+              </p>
+            </div>
+            <div className="max-w-[960px] mx-auto rounded-2xl overflow-hidden shadow-lg bg-black">
+              <video
+                className="w-full h-auto block"
+                src="/videos/ppe-check.mp4"
+                poster="/videos/ppe-check-poster.jpg"
+                autoPlay
+                muted
+                loop
+                controls
+                playsInline
+                preload="metadata"
+              />
+            </div>
+          </div>
+        </section>
+
         {/* How it works */}
         <section className="py-20 bg-gray-50">
           <div className="max-w-[1280px] mx-auto px-4 sm:px-6">
