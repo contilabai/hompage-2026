@@ -21,6 +21,58 @@ interface NewsItem {
 }
 
 const items: NewsItem[] = [
+  // ── 2025~2026 추가분 (2026-11 갱신) ────────────────────────────
+  {
+    id: "kicem-2026",
+    category: "news",
+    date: "2026.11.05",
+    title: "한국건설관리학회 학회상 대상 수상, KICEM 2026 학술발표 2편",
+    excerpt:
+      "11월 5일 열린 한국건설관리학회 2026 정기총회 및 학회상 시상식에서 학회상 대상을 수상했습니다. 같은 기간 여수에서 열린 정기학술발표대회(11월 4~6일)에서는 '거리정보와 VLM을 활용한 건설현장 Vision AI 안전 이벤트 검증'과 '경량 BIM과 공정·안전정보 연계 기반 건설현장 안전관리 시스템 개발' 두 편의 연구를 발표했습니다.",
+    source: "한국건설관리학회",
+    tags: ["수상", "학술발표", "KICEM 2026"],
+  },
+  {
+    id: "smart-construction-challenge-2026",
+    category: "news",
+    date: "2026.10.01",
+    title: "2026 스마트건설 챌린지 안전관리 분야 혁신상 수상 (국토안전관리원 원장상)",
+    excerpt:
+      "국토교통부가 주최한 2026 스마트건설 챌린지 '안전관리 분야 스마트 기술' 부문에서 혁신상(국토안전관리원 원장상)을 수상했습니다. 중장비 접근 감지, 슬래브 단부·개구부 위험구역 감지, AI 자동 안전 보고서로 이어지는 iSafeGuard 관제 과정을 시연해 현장 적용성을 인정받았습니다.",
+    source: "2026 스마트건설 챌린지",
+    sourceUrl: "https://smartconstchallenge.com/main/?mc_code=1210",
+    tags: ["수상", "스마트건설 챌린지", "iSafeGuard"],
+  },
+  {
+    id: "aecbytes-2025",
+    category: "news",
+    date: "2025.03.26",
+    title: "미국 건설 IT 전문 매체 AECbytes, 건설 안전 컴퓨터 비전 사례로 iSafe 소개",
+    excerpt:
+      "AECbytes가 '건설 안전 모니터링과 품질 관리를 위한 컴퓨터 비전' 특집 기사에서 ConTILab의 iSafe 플랫폼을 실제 적용 사례로 다뤘습니다. 기사는 iSafeGuard가 일반 목적 시스템과 달리 건설 공종별 위험을 인식하도록 학습된 점과, iSafeMeta의 3D 가상 현장 기반 안전 검토 기능을 소개했습니다.",
+    source: "AECbytes",
+    sourceUrl: "https://aecbytes.com/feature/2025/ComputerVision-Construction.html",
+    tags: ["해외 보도", "AECbytes", "iSafe"],
+  },
+  {
+    id: "blog-detection-update-2026-11",
+    category: "blog",
+    date: "2026.11.10",
+    title: "감지 항목 확대: 화재·연기, 배회, 인양물 하부 진입",
+    excerpt:
+      "iSafeGuard가 감지하는 위험 유형을 넓혔습니다. 화재·연기 경보, 위험구역 안에서 일정 시간 머무는 배회 감지, 크레인 인양물 아래로 작업자가 들어가는 상황 감지를 추가했습니다. 이벤트가 발생하면 앞뒤 구간 영상을 함께 저장해, 관리자가 당시 상황을 바로 확인할 수 있습니다.",
+    tags: ["제품 업데이트", "iSafeGuard", "화재 감지"],
+  },
+  {
+    id: "blog-mobile-report-2026-11",
+    category: "blog",
+    date: "2026.11.02",
+    title: "휴대폰 관제와 AI 일일·주간 안전 보고서",
+    excerpt:
+      "관제 화면을 휴대폰에서도 그대로 볼 수 있게 바꿨습니다. 위험이 감지된 카메라가 화면 맨 위에 크게 올라오고, 휴대폰 인증으로 로그인합니다. 또 하루 동안 쌓인 감지 기록을 AI가 정리해 카메라별·현장별 일일 보고서와 주간 보고서를 자동으로 만듭니다. 관리자는 요약된 보고서만 확인하면 됩니다.",
+    tags: ["제품 업데이트", "모바일 관제", "AI 보고서"],
+  },
+
   // ── 뉴스 ──────────────────────────────────────────────────────
   {
     id: "tips-2024",
@@ -73,7 +125,6 @@ const items: NewsItem[] = [
     excerpt:
       "중앙대학교 건설기술혁신연구실 스핀오프 스타트업 ConTILab이 내년 1월 미국 라스베이거스에서 열리는 CES 2024에 공식 참가합니다. iSafe 플랫폼을 통해 기존 안전관리 방식을 혁신하고, 글로벌 건설 안전 시장에 본격 진출할 계획입니다.",
     source: "ConTILab 공식 발표",
-    sourceUrl: "http://contilab.co.kr/news-231218/",
     tags: ["CES 2024", "iSafe", "글로벌 진출"],
   },
   {
@@ -194,7 +245,126 @@ const items: NewsItem[] = [
   },
 ];
 
-const getCategoryLabels = (language: "ko" | "en"): Record<Category, string> => ({
+// 최신순 정렬. 날짜가 연도만 있는 글("2024")은 그 해의 맨 뒤로 간다.
+const sortedItems = [...items].sort((a, b) => b.date.localeCompare(a.date));
+
+// 영문 제목·본문 (id 기준). 새 글을 추가하면 여기에도 넣어야 EN 화면에서 한글로 남지 않는다.
+const itemsEn: Record<string, { title: string; excerpt: string; source?: string }> = {
+  "kicem-2026": {
+    title: "KICEM Grand Prize and Two Papers Presented at KICEM 2026",
+    excerpt:
+      "We received the Grand Prize at the 2026 general meeting and awards ceremony of the Korea Institute of Construction Engineering and Management (KICEM) on November 5. At the annual conference held in Yeosu from November 4 to 6, we also presented two studies: one on verifying Vision AI safety events on construction sites using distance information and a VLM, and one on a site safety management system that links lightweight BIM with schedule and safety information.",
+    source: "KICEM",
+  },
+  "smart-construction-challenge-2026": {
+    title: "Innovation Award at the 2026 Smart Construction Challenge, Safety Management Category",
+    excerpt:
+      "ConTILab received the Innovation Award (President's Award of the Korea Authority of Land & Infrastructure Safety) in the Smart Safety Technology category of the 2026 Smart Construction Challenge, hosted by the Ministry of Land, Infrastructure and Transport. We demonstrated the full iSafeGuard monitoring flow: heavy equipment proximity detection, slab edge and opening danger zone detection, and automated AI safety reports.",
+    source: "2026 Smart Construction Challenge",
+  },
+  "aecbytes-2025": {
+    title: "AECbytes Features iSafe as a Real-World Example of Computer Vision for Construction Safety",
+    excerpt:
+      "In its feature on computer vision for construction safety monitoring and quality assurance, AECbytes presented ConTILab's iSafe platform as a real-world case. The article highlights that iSafeGuard, unlike generic systems, is trained to recognize hazards tied to specific construction tasks, and introduces the 3D virtual site review capability of iSafeMeta.",
+  },
+  "blog-detection-update-2026-11": {
+    title: "More Hazards Covered: Fire and Smoke, Loitering, and Workers Under Suspended Loads",
+    excerpt:
+      "iSafeGuard now detects more types of risk. We added fire and smoke alerts, loitering detection for people who stay inside a danger zone, and detection of workers entering the area beneath a crane load. When an event occurs, the footage before and after it is saved together so managers can review what happened right away.",
+  },
+  "blog-mobile-report-2026-11": {
+    title: "Mobile Monitoring and AI Daily and Weekly Safety Reports",
+    excerpt:
+      "The monitoring screen now works on a phone. Cameras with an active hazard move to the top in a larger view, and users sign in with phone verification. In addition, AI summarizes each day's detection records into daily and weekly reports by camera and by site, so managers only need to read the summary.",
+  },
+  "tips-2024": {
+    title: "ConTILab Selected for the TIPS Program to Advance iSafeGuard for Global Construction Safety",
+    excerpt:
+      "ConTILab was selected for the TIPS program of the Ministry of SMEs and Startups, receiving about KRW 500 million in R&D funding over two years. The project develops an on-device video AI solution to reduce serious industrial accidents, optimizing NPU-based AI camera hardware and hazard detection for small and mid-sized construction and industrial sites.",
+    source: "AVING",
+  },
+  "korea-build-2024": {
+    title: "Korea Build Week 2024: Live iSafeGuard Demonstration at KINTEX",
+    excerpt:
+      "We exhibited iSafeGuard at Korea Build Week 2024 (September 21 to 24) at KINTEX in Ilsan. Visitors from construction companies saw a live demonstration of real-time AI hazard detection on actual site camera footage.",
+  },
+  "metaverse-expo-2024": {
+    title: "Metaverse Expo 2024: iSafeMeta Unveiled at COEX Seoul",
+    excerpt:
+      "We presented iSafeMeta at Metaverse Expo 2024 (June 26 to 28) at COEX in Seoul, demonstrating a 3D digital twin training environment built from real construction site data and a multilingual AI avatar powered by iSafeLLM.",
+  },
+  "ces-2024": {
+    title: "CES 2024 Las Vegas: Global Debut of the iSafe Platform",
+    excerpt:
+      "ConTILab introduced the iSafe platform to a global audience at CES 2024 in Las Vegas (January 9 to 12). Unlike general-purpose intelligent CCTV, iSafeGuard automatically detects hazards specific to each construction process, which drew attention from international media.",
+    source: "AVING (English)",
+  },
+  "ces-2024-preview": {
+    title: "ConTILab Confirms CES 2024 Participation with a Zero-Accident Vision",
+    excerpt:
+      "ConTILab, a spin-off startup from the Construction Technology Innovation Laboratory at Chung-Ang University, will officially take part in CES 2024 in Las Vegas next January, presenting the iSafe platform to the global construction safety market.",
+    source: "ConTILab announcement",
+  },
+  "government-demo-2023": {
+    title: "iSafe Technology Validated in Nine Public and Private Projects in 2023",
+    excerpt:
+      "During 2023, the safety planning, training and monitoring functions of the iSafe platform were validated in more than seven major government research projects and two private construction projects in Korea.",
+  },
+  "hankyung-ces2024": {
+    title: "Video AI That Prevents Construction Accidents: Korea Economic Daily at CES 2024",
+    excerpt:
+      "The Korea Economic Daily covered ConTILab at CES 2024, reporting that iSafe uses video AI to detect a wide range of hazardous situations on construction sites in place of human observation, runs on cloud, server and mobile environments, and provides safety assessment information by construction process.",
+    source: "The Korea Economic Daily",
+  },
+  "ikld-news": {
+    title: "Kukto Ilbo Coverage: ConTILab's iSafe AI Solution for Construction Safety",
+    excerpt:
+      "Kukto Ilbo, a Korean trade newspaper for land and construction, reported on ConTILab's iSafe platform, introducing its technology and field applications as an AI solution for preventing construction site accidents.",
+    source: "Kukto Ilbo",
+  },
+  "video-contilab-intro": {
+    title: "ConTILab Official Video",
+    excerpt:
+      "An official video produced by ConTILab, introducing the key functions of the iSafe platform and our AI technology for construction site safety.",
+  },
+  "video-ces2024-aving": {
+    title: "ConTILab Unveils 'iSafe' Platform at CES 2024 (AVING Interview)",
+    excerpt:
+      "AVING's video coverage of the iSafe platform at CES 2024. ConTILab CEO Professor Chansik Park explains the key functions of iSafeGuard and iSafeMeta and the company's global market strategy.",
+  },
+  "video-isafe-demo": {
+    title: "iSafe Platform Demo: AI Hazard Detection on a Real Construction Site",
+    excerpt:
+      "A demo video showing iSafeGuard detecting missing helmets, danger zone intrusion, and collision risk between heavy equipment and workers in real time on an actual construction site.",
+  },
+  "blog-onycom-validation": {
+    title: "ONYCOM AI Model Validation Complete: mAP 0.751 and F1-score 0.824",
+    excerpt:
+      "In ONYCOM's AI model performance validation, we achieved mAP 0.751 and an F1-score of 0.824, with consistent results over three repeated runs across 14 key classes including cement trucks, excavators, tower cranes, workers and helmets.",
+  },
+  "blog-ktl-cert": {
+    title: "KTL Performance Certification: Real-Time 20 FPS and F1-score Above 0.90",
+    excerpt:
+      "iSafeGuard received performance certification from the Korea Testing Laboratory (KTL), officially confirming real-time detection at 20 FPS or higher and a hazard identification F1-score of 0.90 or higher.",
+  },
+  "blog-tips-rnd": {
+    title: "After TIPS: Our Direction and Roadmap for On-Device AI Cameras",
+    excerpt:
+      "Following our selection for the TIPS program, we outline our technical focus: lightweight AI inference on NPU boards, 48 hours of standalone battery operation, and LTE wireless transmission, an integrated hardware and software strategy that minimizes installation constraints on site.",
+  },
+  "blog-ces2025": {
+    title: "Applying for a CES 2025 Innovation Award with iSafeGuard",
+    excerpt:
+      "After taking part in CES 2024, we submitted iSafeGuard for a CES 2025 Innovation Award in the artificial intelligence category, building on a year of field validation and technical improvement.",
+  },
+  "blog-vietnam": {
+    title: "Preparing for Southeast Asia: Partnership Talks in Vietnam and Indonesia",
+    excerpt:
+      "Building on field validation in Korea, we are preparing to enter the Southeast Asian market. We are in partnership discussions in Vietnam and Indonesia, where construction safety regulation is tightening, and expect the multilingual support of iSafeMeta to be a key strength.",
+  },
+};
+
+const getCategoryLabels =(language: "ko" | "en"): Record<Category, string> => ({
   all: language === "ko" ? "전체" : "All",
   news: language === "ko" ? "뉴스" : "News",
   blog: language === "ko" ? "블로그" : "Blog",
@@ -207,7 +377,8 @@ const categoryColors: Record<string, string> = {
   media: "bg-red-100 text-red-700",
 };
 
-function NewsCard({ item, categoryLabels, language }: { item: NewsItem; categoryLabels: Record<Category, string>; language: "ko" | "en" }) {
+function NewsCard({ item: koItem, categoryLabels, language }: { item: NewsItem; categoryLabels: Record<Category, string>; language: "ko" | "en" }) {
+  const item = language === "en" && itemsEn[koItem.id] ? { ...koItem, ...itemsEn[koItem.id] } : koItem;
   return (
     <div className="bg-white rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-lg transition-all overflow-hidden flex flex-col">
       {/* YouTube embed */}
@@ -301,8 +472,8 @@ export default function NewsPage() {
   }, []);
 
   const filtered = activeCategory === "all"
-    ? items
-    : items.filter((i) => i.category === activeCategory);
+    ? sortedItems
+    : sortedItems.filter((i) => i.category === activeCategory);
 
   const counts = {
     all: items.length,
