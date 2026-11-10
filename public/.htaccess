@@ -1,5 +1,20 @@
 # ── 가비아 웹호스팅(Apache) 설정 — 정적 Next.js 익스포트용 ──
 
+# ── 주소 통합 ──
+# http → https, www → 대표 도메인. 인쇄물·QR의 기존 http 링크가 그대로 살아난다.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1) http 로 들어온 요청을 https 로 (가비아는 프록시 뒤라 X-Forwarded-Proto 도 함께 본다)
+  RewriteCond %{HTTPS} !=on [NC]
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+  # 2) www → contilab.co.kr (검색 색인이 두 주소로 갈리는 것을 막는다)
+  RewriteCond %{HTTP_HOST} ^www\.contilab\.co\.kr$ [NC]
+  RewriteRule ^(.*)$ https://contilab.co.kr/$1 [R=301,L]
+</IfModule>
+
 # 기본 문서
 DirectoryIndex index.html
 
@@ -12,7 +27,9 @@ ErrorDocument 404 /404.html
   Header set X-Content-Type-Options "nosniff"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
-  # HTTPS 적용 후 의미가 있으며, HTTP에서는 브라우저가 무시함
+  # SSL 인증서(Sectigo DV, SAN: contilab.co.kr + www) 설치 완료 후 활성화.
+  # 인증서가 없는 상태에서 켜면 브라우저가 https 를 영구 강제해 사이트가 열리지 않으므로,
+  # 인증서를 내리거나 만료시킬 계획이 있으면 이 줄을 먼저 주석 처리할 것.
   Header set Strict-Transport-Security "max-age=63072000; includeSubDomains"
 </IfModule>
 
