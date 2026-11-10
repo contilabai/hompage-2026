@@ -26,11 +26,11 @@ const items: NewsItem[] = [
     id: "kicem-2026",
     category: "news",
     date: "2026.11.05",
-    title: "한국건설관리학회 학회상 대상 수상, KICEM 2026 학술발표 2편",
+    title: "박찬식 대표, 2026 한국건설관리학회상 대상 수상 · KICEM 2026 학술발표 2편",
     excerpt:
-      "11월 5일 열린 한국건설관리학회 2026 정기총회 및 학회상 시상식에서 학회상 대상을 수상했습니다. 같은 기간 여수에서 열린 정기학술발표대회(11월 4~6일)에서는 '거리정보와 VLM을 활용한 건설현장 Vision AI 안전 이벤트 검증'과 '경량 BIM과 공정·안전정보 연계 기반 건설현장 안전관리 시스템 개발' 두 편의 연구를 발표했습니다.",
+      "콘티랩 박찬식 대표(중앙대학교 명예교수)가 11월 5일 한국건설관리학회 정기총회에서 2026 한국건설관리학회상 대상을 받았습니다. 대한민국 건설 기술 및 관리 분야 발전에 크게 공헌한 공로를 인정받은 것입니다. 같은 기간 여수에서 열린 정기학술발표대회(11월 4~6일)에서는 '거리정보와 VLM을 활용한 건설현장 Vision AI 안전 이벤트 검증'과 '경량 BIM과 공정·안전정보 연계 기반 건설현장 안전관리 시스템 개발' 두 편의 연구를 발표했습니다.",
     source: "한국건설관리학회",
-    tags: ["수상", "학술발표", "KICEM 2026"],
+    tags: ["수상", "학술발표", "한국건설관리학회"],
   },
   {
     id: "smart-construction-challenge-2026",
@@ -251,9 +251,9 @@ const sortedItems = [...items].sort((a, b) => b.date.localeCompare(a.date));
 // 영문 제목·본문 (id 기준). 새 글을 추가하면 여기에도 넣어야 EN 화면에서 한글로 남지 않는다.
 const itemsEn: Record<string, { title: string; excerpt: string; source?: string }> = {
   "kicem-2026": {
-    title: "KICEM Grand Prize and Two Papers Presented at KICEM 2026",
+    title: "CEO Chansik Park Receives the 2026 KICEM Grand Prize; Two Papers Presented at KICEM 2026",
     excerpt:
-      "We received the Grand Prize at the 2026 general meeting and awards ceremony of the Korea Institute of Construction Engineering and Management (KICEM) on November 5. At the annual conference held in Yeosu from November 4 to 6, we also presented two studies: one on verifying Vision AI safety events on construction sites using distance information and a VLM, and one on a site safety management system that links lightweight BIM with schedule and safety information.",
+      "ConTILab CEO Chansik Park (Professor Emeritus, Chung-Ang University) received the 2026 Grand Prize of the Korea Institute of Construction Engineering and Management (KICEM) at its general meeting on November 5, in recognition of his major contribution to the advancement of construction technology and management in Korea. At the annual conference held in Yeosu from November 4 to 6, the ConTILab team also presented two studies: one on verifying Vision AI safety events on construction sites using distance information and a VLM, and one on a site safety management system that links lightweight BIM with schedule and safety information.",
     source: "KICEM",
   },
   "smart-construction-challenge-2026": {
